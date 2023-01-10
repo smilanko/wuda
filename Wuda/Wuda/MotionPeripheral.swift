@@ -21,6 +21,7 @@ class MotionPeripheral: NSObject, ObservableObject, CBPeripheralManagerDelegate 
     private let quatPoint = simd_quatd(ix: 0, iy: 0, iz: -1, r: 0)
     
     @Published private(set) var point: SCNVector3 = SCNVector3(x: 0, y: 0, z: 0)
+    @Published private(set) var planeAngle: SCNVector3 = SCNVector3(x: 0, y: 0, z: 0)
     
     public static let shared = MotionPeripheral()
     
@@ -64,9 +65,15 @@ class MotionPeripheral: NSObject, ObservableObject, CBPeripheralManagerDelegate 
                     _ = arr2.withUnsafeMutableBytes { data.copyBytes(to: $0) }
                     let q = simd_quatd(ix: arr2[1], iy: arr2[2], iz: arr2[3], r: arr2[0])
                     let result = q * quatPoint * q.conjugate
+                    let pNorm = sqrt(pow(result.vector.w, 2) + pow(result.vector.x, 2) + pow(result.vector.y, 2) + pow(result.vector.z, 2))
                     self.point = SCNVector3(x: result.vector.x, y: result.vector.y, z: result.vector.z)
+                    self.planeAngle = SCNVector3(x: getPlaneAngle(axis: result.vector.x, pNorm: pNorm), y: getPlaneAngle(axis: result.vector.y, pNorm: pNorm), z: getPlaneAngle(axis: result.vector.z, pNorm: pNorm))
                 }
             }
         }
+    }
+    
+    private func getPlaneAngle(axis: Double, pNorm: Double) -> Double {
+        return Measurement(value: acos(axis / pNorm), unit: UnitAngle.degrees).converted(to: .radians).value
     }
 }

@@ -11,6 +11,7 @@ import SceneKit
 
 struct ExperimentationView: View {
     
+    @ObservedObject private var motionObserver = MotionPeripheral.shared
     @State private var pointColor = Color(.sRGB, red: 122/255, green: 39/255, blue: 161/255)
     @State private var sphericalScene : SphericalScene = SphericalScene()
     @State private var canUpdatePoints : Bool = true
@@ -35,37 +36,11 @@ struct ExperimentationView: View {
                 }
             }
             .padding()
-            SCNViewWrapper(canUpdatePoints: $canUpdatePoints, pointColor: $pointColor, scene: sphericalScene)
+            HStack {
+                SphericalView(canUpdatePoints: $canUpdatePoints, pointColor: $pointColor, scene: sphericalScene)
+            }
         }
         .padding()
-    }
-    
-}
-
-struct SCNViewWrapper: NSViewRepresentable {
-    
-    @ObservedObject private var motionObserver = MotionPeripheral.shared
-    @Binding var canUpdatePoints : Bool
-    @Binding var pointColor: Color
-    let scene: SCNScene
-
-    func makeNSView(context: Context) -> SCNView {
-        let view = SCNView()
-        view.scene = scene
-        view.allowsCameraControl = true
-        view.showsStatistics = true
-        view.autoenablesDefaultLighting = true
-        return view
-    }
-    
-    func updateNSView(_ nsView: SCNView, context: Context) {
-        if !canUpdatePoints { return }
-        let pointGeometry = SCNSphere(radius: 0.01)
-        pointGeometry.firstMaterial?.diffuse.contents = NSColor(pointColor)
-        let pointNode = SCNNode(geometry: pointGeometry)
-        pointNode.position = motionObserver.point
-        let sphere = nsView.scene?.rootNode.childNodes.first
-        sphere?.addChildNode(pointNode)
     }
     
 }
