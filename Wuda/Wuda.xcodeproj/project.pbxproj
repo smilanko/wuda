@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CF73BC3E296CFCFF00CC5012 /* ScatterPlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF73BC3D296CFCFF00CC5012 /* ScatterPlotView.swift */; };
+		CF73BC40296D1C8F00CC5012 /* ExperimentSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF73BC3F296D1C8F00CC5012 /* ExperimentSettings.swift */; };
+		CF73BC42296D1FA900CC5012 /* WudaConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF73BC41296D1FA900CC5012 /* WudaConstants.swift */; };
 		CFD5A5BE296BA87B00708441 /* WudaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD5A5BD296BA87B00708441 /* WudaApp.swift */; };
 		CFD5A5C2296BA87B00708441 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFD5A5C1296BA87B00708441 /* Assets.xcassets */; };
 		CFD5A5C5296BA87C00708441 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFD5A5C4296BA87C00708441 /* Preview Assets.xcassets */; };
@@ -16,6 +19,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CF73BC3D296CFCFF00CC5012 /* ScatterPlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScatterPlotView.swift; sourceTree = "<group>"; };
+		CF73BC3F296D1C8F00CC5012 /* ExperimentSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperimentSettings.swift; sourceTree = "<group>"; };
+		CF73BC41296D1FA900CC5012 /* WudaConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WudaConstants.swift; sourceTree = "<group>"; };
 		CFD5A5BA296BA87B00708441 /* Wuda.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wuda.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFD5A5BD296BA87B00708441 /* WudaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WudaApp.swift; sourceTree = "<group>"; };
 		CFD5A5C1296BA87B00708441 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -57,11 +63,14 @@
 			isa = PBXGroup;
 			children = (
 				CFD5A5C1296BA87B00708441 /* Assets.xcassets */,
+				CF73BC3F296D1C8F00CC5012 /* ExperimentSettings.swift */,
 				CFD5A5CE296BC2D400708441 /* ExperimentationView.swift */,
 				CFD5A5CC296BA8CF00708441 /* MotionPeripheral.swift */,
+				CF73BC3D296CFCFF00CC5012 /* ScatterPlotView.swift */,
 				CFD5A5D2296CBD4500708441 /* SphericalScene.swift */,
 				CFD5A5C6296BA87C00708441 /* Wuda.entitlements */,
 				CFD5A5BD296BA87B00708441 /* WudaApp.swift */,
+				CF73BC41296D1FA900CC5012 /* WudaConstants.swift */,
 				CFD5A5C3296BA87C00708441 /* Preview Content */,
 			);
 			path = Wuda;
@@ -146,9 +155,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				CFD5A5D3296CBD4500708441 /* SphericalScene.swift in Sources */,
+				CF73BC40296D1C8F00CC5012 /* ExperimentSettings.swift in Sources */,
 				CFD5A5BE296BA87B00708441 /* WudaApp.swift in Sources */,
+				CF73BC3E296CFCFF00CC5012 /* ScatterPlotView.swift in Sources */,
 				CFD5A5CD296BA8CF00708441 /* MotionPeripheral.swift in Sources */,
 				CFD5A5CF296BC2D400708441 /* ExperimentationView.swift in Sources */,
+				CF73BC42296D1FA900CC5012 /* WudaConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

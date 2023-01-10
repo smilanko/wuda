@@ -12,28 +12,28 @@ import simd
 
 struct SphericalView: NSViewRepresentable {
     
+    @ObservedObject private var settings = ExperimentSettings.shared
     @ObservedObject private var motionObserver = MotionPeripheral.shared
-    @Binding var canUpdatePoints : Bool
-    @Binding var pointColor: Color
+    
     let scene: SCNScene
 
     func makeNSView(context: Context) -> SCNView {
         let view = SCNView()
         view.scene = scene
         view.allowsCameraControl = true
-        view.showsStatistics = true
         view.autoenablesDefaultLighting = true
         return view
     }
     
     func updateNSView(_ nsView: SCNView, context: Context) {
-        if !canUpdatePoints { return }
-        let pointGeometry = SCNSphere(radius: 0.01)
-        pointGeometry.firstMaterial?.diffuse.contents = NSColor(pointColor)
-        let pointNode = SCNNode(geometry: pointGeometry)
-        pointNode.position = motionObserver.point
-        let sphere = nsView.scene?.rootNode.childNodes.first
-        sphere?.addChildNode(pointNode)
+        if !settings.canUpdatePoints { return }
+        if let sphere = nsView.scene?.rootNode.childNodes.first {
+            let pointGeometry = SCNSphere(radius: 0.01)
+            pointGeometry.firstMaterial?.diffuse.contents = NSColor(settings.pointColor)
+            let pointNode = SCNNode(geometry: pointGeometry)
+            pointNode.position = motionObserver.point
+            sphere.addChildNode(pointNode)
+        }
     }
     
 }

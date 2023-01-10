@@ -8,6 +8,7 @@
 import Foundation
 import CoreBluetooth
 import SceneKit
+import SwiftUI
 import simd
 
 class MotionPeripheral: NSObject, ObservableObject, CBPeripheralManagerDelegate {
@@ -18,8 +19,8 @@ class MotionPeripheral: NSObject, ObservableObject, CBPeripheralManagerDelegate 
     private var peripheralManager: CBPeripheralManager!
     private var motionService: CBMutableService!
     private var motionDataCharacteristic: CBMutableCharacteristic!
-    private let quatPoint = simd_quatd(ix: 0, iy: 0, iz: -1, r: 0)
     
+    @ObservedObject private var settings = ExperimentSettings.shared
     @Published private(set) var point: SCNVector3 = SCNVector3(x: 0, y: 0, z: 0)
     @Published private(set) var planeAngle: SCNVector3 = SCNVector3(x: 0, y: 0, z: 0)
     
@@ -64,7 +65,7 @@ class MotionPeripheral: NSObject, ObservableObject, CBPeripheralManagerDelegate 
                     var arr2 = Array<Double>(repeating: 0, count: data.count/MemoryLayout<UInt32>.stride)
                     _ = arr2.withUnsafeMutableBytes { data.copyBytes(to: $0) }
                     let q = simd_quatd(ix: arr2[1], iy: arr2[2], iz: arr2[3], r: arr2[0])
-                    let result = q * quatPoint * q.conjugate
+                    let result = q * settings.pointOptions[settings.pointOptionStrings.firstIndex(where: { $0 == settings.pointSelection })!] * q.conjugate
                     let pNorm = sqrt(pow(result.vector.w, 2) + pow(result.vector.x, 2) + pow(result.vector.y, 2) + pow(result.vector.z, 2))
                     self.point = SCNVector3(x: result.vector.x, y: result.vector.y, z: result.vector.z)
                     self.planeAngle = SCNVector3(x: getPlaneAngle(axis: result.vector.x, pNorm: pNorm), y: getPlaneAngle(axis: result.vector.y, pNorm: pNorm), z: getPlaneAngle(axis: result.vector.z, pNorm: pNorm))
@@ -74,6 +75,7 @@ class MotionPeripheral: NSObject, ObservableObject, CBPeripheralManagerDelegate 
     }
     
     private func getPlaneAngle(axis: Double, pNorm: Double) -> Double {
-        return Measurement(value: acos(axis / pNorm), unit: UnitAngle.degrees).converted(to: .radians).value
+        let val = settings.trigSelection == WudaConstants.cosFunction ? acos(axis / pNorm) : asin(axis / pNorm)
+        return Measurement(value: val, unit: UnitAngle.radians).converted(to: .degrees).value
     }
 }
