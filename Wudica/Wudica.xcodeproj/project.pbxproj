@@ -1,0 +1,463 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CFD5A597296B90B100708441 /* Wudica Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = CFD5A596296B90B100708441 /* Wudica Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CFD5A59C296B90B100708441 /* WudicaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD5A59B296B90B100708441 /* WudicaApp.swift */; };
+		CFD5A59E296B90B100708441 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD5A59D296B90B100708441 /* ContentView.swift */; };
+		CFD5A5A0296B90B200708441 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFD5A59F296B90B200708441 /* Assets.xcassets */; };
+		CFD5A5A3296B90B200708441 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFD5A5A2296B90B200708441 /* Preview Assets.xcassets */; };
+		CFD5A5AE296B918E00708441 /* MotionObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD5A5AD296B918E00708441 /* MotionObserver.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CFD5A598296B90B100708441 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CFD5A58A296B90B100708441 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CFD5A595296B90B100708441;
+			remoteInfo = "Wudica Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CFD5A5A9296B90B200708441 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				CFD5A597296B90B100708441 /* Wudica Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		CFD5A590296B90B100708441 /* Wudica.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wudica.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CFD5A596296B90B100708441 /* Wudica Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Wudica Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CFD5A59B296B90B100708441 /* WudicaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WudicaApp.swift; sourceTree = "<group>"; };
+		CFD5A59D296B90B100708441 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		CFD5A59F296B90B200708441 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CFD5A5A2296B90B200708441 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		CFD5A5AD296B918E00708441 /* MotionObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionObserver.swift; sourceTree = "<group>"; };
+		CFD5A5AF296BA2FB00708441 /* Wudica-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Wudica-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
+		CFD5A5B0296BA7F900708441 /* Wudica Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Wudica Watch App.entitlements"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CFD5A593296B90B100708441 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CFD5A589296B90B100708441 = {
+			isa = PBXGroup;
+			children = (
+				CFD5A59A296B90B100708441 /* Wudica Watch App */,
+				CFD5A591296B90B100708441 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CFD5A591296B90B100708441 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CFD5A590296B90B100708441 /* Wudica.app */,
+				CFD5A596296B90B100708441 /* Wudica Watch App.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CFD5A59A296B90B100708441 /* Wudica Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				CFD5A59F296B90B200708441 /* Assets.xcassets */,
+				CFD5A59D296B90B100708441 /* ContentView.swift */,
+				CFD5A5AD296B918E00708441 /* MotionObserver.swift */,
+				CFD5A5B0296BA7F900708441 /* Wudica Watch App.entitlements */,
+				CFD5A5AF296BA2FB00708441 /* Wudica-Watch-App-Info.plist */,
+				CFD5A59B296B90B100708441 /* WudicaApp.swift */,
+				CFD5A5A1296B90B200708441 /* Preview Content */,
+			);
+			path = "Wudica Watch App";
+			sourceTree = "<group>";
+		};
+		CFD5A5A1296B90B200708441 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				CFD5A5A2296B90B200708441 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CFD5A58F296B90B100708441 /* Wudica */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CFD5A5AA296B90B200708441 /* Build configuration list for PBXNativeTarget "Wudica" */;
+			buildPhases = (
+				CFD5A58E296B90B100708441 /* Resources */,
+				CFD5A5A9296B90B200708441 /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CFD5A599296B90B100708441 /* PBXTargetDependency */,
+			);
+			name = Wudica;
+			productName = Wudica;
+			productReference = CFD5A590296B90B100708441 /* Wudica.app */;
+			productType = "com.apple.product-type.application.watchapp2-container";
+		};
+		CFD5A595296B90B100708441 /* Wudica Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CFD5A5A6296B90B200708441 /* Build configuration list for PBXNativeTarget "Wudica Watch App" */;
+			buildPhases = (
+				CFD5A592296B90B100708441 /* Sources */,
+				CFD5A593296B90B100708441 /* Frameworks */,
+				CFD5A594296B90B100708441 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Wudica Watch App";
+			productName = "Wudica Watch App";
+			productReference = CFD5A596296B90B100708441 /* Wudica Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CFD5A58A296B90B100708441 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1420;
+				LastUpgradeCheck = 1420;
+				TargetAttributes = {
+					CFD5A58F296B90B100708441 = {
+						CreatedOnToolsVersion = 14.2;
+					};
+					CFD5A595296B90B100708441 = {
+						CreatedOnToolsVersion = 14.2;
+					};
+				};
+			};
+			buildConfigurationList = CFD5A58D296B90B100708441 /* Build configuration list for PBXProject "Wudica" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CFD5A589296B90B100708441;
+			productRefGroup = CFD5A591296B90B100708441 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CFD5A58F296B90B100708441 /* Wudica */,
+				CFD5A595296B90B100708441 /* Wudica Watch App */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CFD5A58E296B90B100708441 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CFD5A594296B90B100708441 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CFD5A5A3296B90B200708441 /* Preview Assets.xcassets in Resources */,
+				CFD5A5A0296B90B200708441 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CFD5A592296B90B100708441 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CFD5A5AE296B918E00708441 /* MotionObserver.swift in Sources */,
+				CFD5A59E296B90B100708441 /* ContentView.swift in Sources */,
+				CFD5A59C296B90B100708441 /* WudicaApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CFD5A599296B90B100708441 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CFD5A595296B90B100708441 /* Wudica Watch App */;
+			targetProxy = CFD5A598296B90B100708441 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		CFD5A5A4296B90B200708441 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		CFD5A5A5296B90B200708441 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		CFD5A5A7296B90B200708441 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Wudica Watch App/Wudica Watch App.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Wudica Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = YSM47RXQJK;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Wudica-Watch-App-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Wudica;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Send data from the watchos to the mac";
+				INFOPLIST_KEY_NSMotionUsageDescription = fitness;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKWatchOnly = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reasonable.Wudica.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 9.1;
+			};
+			name = Debug;
+		};
+		CFD5A5A8296B90B200708441 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Wudica Watch App/Wudica Watch App.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Wudica Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = YSM47RXQJK;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Wudica-Watch-App-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Wudica;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Send data from the watchos to the mac";
+				INFOPLIST_KEY_NSMotionUsageDescription = fitness;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKWatchOnly = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reasonable.Wudica.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 9.1;
+			};
+			name = Release;
+		};
+		CFD5A5AB296B90B200708441 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YSM47RXQJK;
+				INFOPLIST_KEY_CFBundleDisplayName = Wudica;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reasonable.Wudica;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		CFD5A5AC296B90B200708441 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YSM47RXQJK;
+				INFOPLIST_KEY_CFBundleDisplayName = Wudica;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reasonable.Wudica;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CFD5A58D296B90B100708441 /* Build configuration list for PBXProject "Wudica" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CFD5A5A4296B90B200708441 /* Debug */,
+				CFD5A5A5296B90B200708441 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CFD5A5A6296B90B200708441 /* Build configuration list for PBXNativeTarget "Wudica Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CFD5A5A7296B90B200708441 /* Debug */,
+				CFD5A5A8296B90B200708441 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CFD5A5AA296B90B200708441 /* Build configuration list for PBXNativeTarget "Wudica" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CFD5A5AB296B90B200708441 /* Debug */,
+				CFD5A5AC296B90B200708441 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CFD5A58A296B90B100708441 /* Project object */;
+}
