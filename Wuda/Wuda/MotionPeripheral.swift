@@ -34,7 +34,7 @@ class MotionPeripheral: NSObject, ObservableObject, CBPeripheralManagerDelegate 
         case .poweredOn:
             // Create the motion service and characteristic.
             motionService = CBMutableService(type: wudaPeripheralService, primary: true)
-            motionDataCharacteristic = CBMutableCharacteristic(type: wudaPeripheralMotionCharacteristicUuid, properties: [.writeWithoutResponse, .notify], value: nil, permissions: [.writeable])
+            motionDataCharacteristic = CBMutableCharacteristic(type: wudaPeripheralMotionCharacteristicUuid, properties: [.writeWithoutResponse, .notify], value: nil, permissions: [.writeable, .readable])
             motionService.characteristics = [motionDataCharacteristic]
             // Add the service to the peripheral manager.
             peripheralManager.add(motionService)

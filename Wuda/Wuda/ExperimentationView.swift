@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import SceneKit
 
-struct SceneView: View {
+struct ExperimentationView: View {
     
     @State private var pointColor: NSColor = .blue
     @State private var sphericalScene : SphericalScene = SphericalScene()

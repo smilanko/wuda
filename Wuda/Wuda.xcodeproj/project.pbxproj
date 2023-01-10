@@ -11,7 +11,7 @@
 		CFD5A5C2296BA87B00708441 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFD5A5C1296BA87B00708441 /* Assets.xcassets */; };
 		CFD5A5C5296BA87C00708441 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFD5A5C4296BA87C00708441 /* Preview Assets.xcassets */; };
 		CFD5A5CD296BA8CF00708441 /* MotionPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD5A5CC296BA8CF00708441 /* MotionPeripheral.swift */; };
-		CFD5A5CF296BC2D400708441 /* SceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD5A5CE296BC2D400708441 /* SceneView.swift */; };
+		CFD5A5CF296BC2D400708441 /* ExperimentationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD5A5CE296BC2D400708441 /* ExperimentationView.swift */; };
 		CFD5A5D3296CBD4500708441 /* SphericalScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD5A5D2296CBD4500708441 /* SphericalScene.swift */; };
 /* End PBXBuildFile section */
 
@@ -22,7 +22,7 @@
 		CFD5A5C4296BA87C00708441 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CFD5A5C6296BA87C00708441 /* Wuda.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Wuda.entitlements; sourceTree = "<group>"; };
 		CFD5A5CC296BA8CF00708441 /* MotionPeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionPeripheral.swift; sourceTree = "<group>"; };
-		CFD5A5CE296BC2D400708441 /* SceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneView.swift; sourceTree = "<group>"; };
+		CFD5A5CE296BC2D400708441 /* ExperimentationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperimentationView.swift; sourceTree = "<group>"; };
 		CFD5A5D2296CBD4500708441 /* SphericalScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphericalScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -57,8 +57,8 @@
 			isa = PBXGroup;
 			children = (
 				CFD5A5C1296BA87B00708441 /* Assets.xcassets */,
+				CFD5A5CE296BC2D400708441 /* ExperimentationView.swift */,
 				CFD5A5CC296BA8CF00708441 /* MotionPeripheral.swift */,
-				CFD5A5CE296BC2D400708441 /* SceneView.swift */,
 				CFD5A5D2296CBD4500708441 /* SphericalScene.swift */,
 				CFD5A5C6296BA87C00708441 /* Wuda.entitlements */,
 				CFD5A5BD296BA87B00708441 /* WudaApp.swift */,
@@ -148,7 +148,7 @@
 				CFD5A5D3296CBD4500708441 /* SphericalScene.swift in Sources */,
 				CFD5A5BE296BA87B00708441 /* WudaApp.swift in Sources */,
 				CFD5A5CD296BA8CF00708441 /* MotionPeripheral.swift in Sources */,
-				CFD5A5CF296BC2D400708441 /* SceneView.swift in Sources */,
+				CFD5A5CF296BC2D400708441 /* ExperimentationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
