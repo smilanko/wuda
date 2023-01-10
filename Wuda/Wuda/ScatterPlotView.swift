@@ -29,6 +29,7 @@ struct ScatterPlot: View {
                     x: .value("Sample", $0.x),
                     y: .value("Theta", $0.y)
                 )
+                .symbolSize(3)
             }
             .chartYAxisLabel("Theta")
             .chartXAxisLabel("Sample")
