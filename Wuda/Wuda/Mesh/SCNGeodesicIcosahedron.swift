@@ -11,7 +11,6 @@ import SceneKit
 class SCNGeodesicIcosahedron : SCNNode {
     
     private let pattern = GeodesicIcosahedron16()
-    private let radius = 0.99
     private let color1 = NSColor(red: 255/255,green: 206/255,blue: 97/255, alpha: 1.0)
     private let color2 = NSColor(red: 191/255, green: 52/255, blue: 117/255, alpha: 1.0)
     
@@ -22,8 +21,8 @@ class SCNGeodesicIcosahedron : SCNNode {
         let faces = pattern.generateFaces()
 
         var geometries = [SCNGeometry]()
+        var outlines = [SCNGeometry]()
         var centers = [SCNVector3]()
-        var crossProducts = [SCNVector3]()
         
         let totalIterations = faces.count / 3
         for i in 0..<totalIterations {
@@ -39,36 +38,29 @@ class SCNGeodesicIcosahedron : SCNNode {
             faceGeometry.firstMaterial?.diffuse.contents = interpolateColor(color1: color1, color2: color2, proportion: (1-center.y))
             geometries.append(faceGeometry)
             
-            // prepare cross products
-            let v1 = SCNVector3(x: faceVertices[1].x - faceVertices[0].x, y: faceVertices[1].y - faceVertices[0].y, z: faceVertices[1].z - faceVertices[0].z)
-            let v2 = SCNVector3(x: faceVertices[2].x - faceVertices[0].x, y: faceVertices[2].y - faceVertices[0].y, z: faceVertices[2].z - faceVertices[0].z)
-            let normal = normalize(vector: cross(vectorA: v1, vectorB: v2))
-            crossProducts.append(normal)
+            // prepare outlines
+            let outlineGeometry = SCNGeometry(sources: [SCNGeometrySource(vertices: faceVertices)], elements: [SCNGeometryElement(indices: [0, 1, 2].map{Int32($0)}, primitiveType: .line)])
+            outlineGeometry.materials = [SCNMaterial()]
+            outlineGeometry.firstMaterial?.diffuse.contents = NSColor.black
+            outlines.append(outlineGeometry)
         }
         
-        print(vertices.map{$0.y}.min()!)
-
-        let scaling = SCNMatrix4MakeScale(radius, radius, radius)
-        self.transform = scaling
         self.geometry = nil
-        self.name = "3D_Object"
+        self.name = "GeodesicIcosahedronMap"
         for idx in 0..<geometries.count {
-            let geo = geometries[idx]
-            var center = centers[idx]
-            let crossProduct = crossProducts[idx]
-
-//            let pointGeometry = SCNCylinder(radius: 0.02, height: 0.07)
-//            pointGeometry.firstMaterial?.diffuse.contents = NSColor.black
-//            let pointNode = SCNNode(geometry: pointGeometry)
-//            pointNode.position = center
-
-            let pointGeometry = SCNSphere(radius: 0.02)
-            pointGeometry.firstMaterial?.diffuse.contents = NSColor.black
-            let pointNode = SCNNode(geometry: pointGeometry)
-            pointNode.position = center
-
-            self.addChildNode(SCNNode(geometry: geo))
-            self.addChildNode(pointNode)
+            let textNode = createTriangleText("\(idx)")
+            textNode.position = centers[idx]
+            textNode.look(at: SCNVector3Zero)
+            textNode.name = "\(idx)"
+            
+            let geoNode = SCNNode(geometry: geometries[idx])
+            geoNode.name = "geo_\(idx)"
+            let outlineNode = SCNNode(geometry: outlines[idx])
+            outlineNode.name = "outline_\(idx)"
+            
+            self.addChildNode(geoNode)
+            self.addChildNode(outlineNode)
+            self.addChildNode(textNode)
         }
     }
     
@@ -85,11 +77,10 @@ class SCNGeodesicIcosahedron : SCNNode {
     
     private func createTriangleText(_ label: String) -> SCNNode {
         let txt = SCNText(string: label, extrusionDepth: 1)
-        txt.font = .systemFont(ofSize: 2)
-        txt.flatness = 0
+        txt.font = .boldSystemFont(ofSize: 3)
         txt.firstMaterial?.diffuse.contents = NSColor.black
         let node = SCNNode(geometry: txt)
-        node.scale = SCNVector3(0.01, 0.01, 0.01) // adjust the scale
+        node.scale = SCNVector3(0.01, 0.01, 0.001) // adjust the scale
         return node
     }
     
@@ -104,6 +95,10 @@ class SCNGeodesicIcosahedron : SCNNode {
     
     func dot(vectorA: SCNVector3, vectorB: SCNVector3) -> Double {
         return (vectorA.x * vectorB.x + vectorA.y * vectorB.y + vectorA.z * vectorB.z)
+    }
+    
+    func distance(vectorA: SCNVector3, vectorB: SCNVector3) -> Double {
+        return sqrt((vectorA.x - vectorB.x) * (vectorA.x - vectorB.x) + (vectorA.y - vectorB.y) * (vectorA.y - vectorB.y) + (vectorA.z - vectorB.z) * (vectorA.z - vectorB.z))
     }
     
 }

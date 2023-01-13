@@ -1,10 +1,12 @@
 //
-//  MeshPattern.swift
+//  GeodesicIcosahedron16.swift
 //  Wuda
 //
 //  Found on an online source:
 //  http://dmccooey.com/polyhedra/GeodesicIcosahedron16.html
-// // Geodesic Icosahedron Pattern 16 [5,2]
+//  A thank you to the author
+//
+// Geodesic Icosahedron Pattern 16 [5,2]
 
 import Foundation
 import SceneKit
