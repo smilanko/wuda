@@ -45,22 +45,20 @@ class SCNGeodesicIcosahedron : SCNNode {
             outlines.append(outlineGeometry)
         }
         
-        self.geometry = nil
-        self.name = "GeodesicIcosahedronMap"
         for idx in 0..<geometries.count {
-            let textNode = createTriangleText("\(idx)")
-            textNode.position = centers[idx]
-            textNode.look(at: SCNVector3Zero)
-            textNode.name = "\(idx)"
+            let centerPointNode = SCNNode(geometry: SCNSphere(radius: 0.005))
+            centerPointNode.geometry?.firstMaterial?.diffuse.contents = NSColor.black
+            centerPointNode.position = centers[idx]
             
-            let geoNode = SCNNode(geometry: geometries[idx])
-            geoNode.name = "geo_\(idx)"
-            let outlineNode = SCNNode(geometry: outlines[idx])
-            outlineNode.name = "outline_\(idx)"
+            let mapIdNode = createTriangleText("\(idx)")
+            mapIdNode.position = centers[idx]
+            mapIdNode.look(at: SCNVector3Zero)
+            mapIdNode.name = "\(idx)"
             
-            self.addChildNode(geoNode)
-            self.addChildNode(outlineNode)
-            self.addChildNode(textNode)
+            self.addChildNode(SCNNode(geometry: geometries[idx]))
+            self.addChildNode(SCNNode(geometry: outlines[idx]))
+            self.addChildNode(centerPointNode)
+            self.addChildNode(mapIdNode)
         }
     }
     
@@ -77,7 +75,7 @@ class SCNGeodesicIcosahedron : SCNNode {
     
     private func createTriangleText(_ label: String) -> SCNNode {
         let txt = SCNText(string: label, extrusionDepth: 1)
-        txt.font = .boldSystemFont(ofSize: 3)
+        txt.font = .systemFont(ofSize: 3)
         txt.firstMaterial?.diffuse.contents = NSColor.black
         let node = SCNNode(geometry: txt)
         node.scale = SCNVector3(0.01, 0.01, 0.001) // adjust the scale
