@@ -25,6 +25,11 @@ struct ExperimentationView: View {
             HStack {
                 HStack {
                     ColorPicker("Point Color", selection: $experimentState.pointColor)
+                    Button() {
+                        experimentState.pointColor = Color.random
+                    } label: {
+                        Image(systemName: "wand.and.stars")
+                    }
                     Button {
                         sphericalScene.clearPoints()
                         experimentState.clearScatterPlot.toggle()
@@ -45,12 +50,12 @@ struct ExperimentationView: View {
             HStack {
                 LogView {
                     List(experimentState.logMessages) { logMsg in
-                        Text(logMsg.id.isoDate() + " " + logMsg.type.rawValue + " " + logMsg.msg)
+                        Text(logMsg.id.isoDate + " " + logMsg.type.rawValue + " " + logMsg.msg)
                     }
                 }
                 PositionMap {
                     List(experimentState.positionsOnMap) { pt in
-                        Text(pt.id.isoDate() + " \(pt.position)")
+                        Text(pt.id.isoDate + " \(pt.position)")
                     }
                 }
             }.padding()
