@@ -10,6 +10,8 @@ import simd
 
 struct WudaConstants {
     
+    private init() {}
+    
     static let cosFunction = "acos"
     static let sinFunction = "asin"
 
@@ -30,5 +32,8 @@ struct WudaConstants {
     static let xAxis = "x-axis"
     static let yAxis = "y-axis"
     static let zAxis = "z-axis"
+    
+    static let rootNodeConstant = "ozone"
+    static let rootNodeForGeodasicMap = "geodesicIcosahedron"
     
 }

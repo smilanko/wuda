@@ -7,15 +7,16 @@
 
 import Foundation
 import SceneKit
+import SceneKit.SCNSceneRenderer
 import SwiftUI
 import simd
 
 struct SphericalView: NSViewRepresentable {
     
-    @ObservedObject private var settings = ExperimentSettings.shared
+    @ObservedObject private var settings = ExperimentState.shared
     @ObservedObject private var motionObserver = MotionPeripheral.shared
     
-    let centerPointsOnGeodesicIcosahedron : [SCNVector3]
+    let centerPointsOnGeodesicIcosahedron : [Int: SCNVector3]
     let scene: SCNScene
 
     func makeNSView(context: Context) -> SCNView {
@@ -23,12 +24,14 @@ struct SphericalView: NSViewRepresentable {
         view.scene = scene
         view.allowsCameraControl = true
         view.autoenablesDefaultLighting = true
+        view.showsStatistics = true
         return view
     }
     
     func updateNSView(_ nsView: SCNView, context: Context) {
         if !settings.canUpdatePoints { return }
         if let sphere = nsView.scene?.rootNode.childNodes.first {
+            if sphere.name != WudaConstants.rootNodeConstant { fatalError("[ERROR] Points must draw on the root! ") }
             let pointGeometry = SCNSphere(radius: 0.01)
             pointGeometry.firstMaterial?.diffuse.contents = NSColor(settings.pointColor)
             let pointNode = SCNNode(geometry: pointGeometry)
@@ -53,11 +56,12 @@ class SphericalScene : SCNScene {
         sphere.firstMaterial?.diffuse.contents = NSColor.black.withAlphaComponent(0.2)
         let sphereNode = SCNNode(geometry: sphere)
         sphereNode.position = SCNVector3(x: 0, y: 0, z: 0)
+        sphereNode.name = WudaConstants.rootNodeConstant
         
         let giRadius = radius - 0.05
         let geodesicIcosahedron = SCNGeodesicIcosahedron()
         geodesicIcosahedron.transform = SCNMatrix4MakeScale(giRadius, giRadius, giRadius)
-        geodesicIcosahedron.name = "geodesicIcosahedron"
+        geodesicIcosahedron.name = WudaConstants.rootNodeForGeodasicMap
         
         self.rootNode.addChildNode(sphereNode)
         self.rootNode.addChildNode(geodesicIcosahedron)

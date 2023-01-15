@@ -11,8 +11,8 @@ import SceneKit
 class SCNGeodesicIcosahedron : SCNNode {
     
     private let pattern = GeodesicIcosahedron16()
-    private let color1 = NSColor(red: 255/255,green: 206/255,blue: 97/255, alpha: 1.0)
-    private let color2 = NSColor(red: 191/255, green: 52/255, blue: 117/255, alpha: 1.0)
+    private let startColor = NSColor(red: 255/255,green: 206/255,blue: 97/255, alpha: 1.0)
+    private let endColor = NSColor(red: 191/255, green: 52/255, blue: 117/255, alpha: 1.0)
     
     override init() {
         super.init()
@@ -20,8 +20,7 @@ class SCNGeodesicIcosahedron : SCNNode {
         let vertices = pattern.generateVertices()
         let faces = pattern.generateFaces()
 
-        var geometries = [SCNGeometry]()
-        var outlines = [SCNGeometry]()
+        var faceGeometries = [SCNGeometry]()
         var centers = [SCNVector3]()
         
         let totalIterations = faces.count / 3
@@ -35,35 +34,28 @@ class SCNGeodesicIcosahedron : SCNNode {
             // prepare geometries
             let faceGeometry = SCNGeometry(sources: [SCNGeometrySource(vertices: faceVertices)], elements: [SCNGeometryElement(indices: [0, 1, 2].map{Int32($0)}, primitiveType: .triangles)])
             faceGeometry.materials = [SCNMaterial()]
-            faceGeometry.firstMaterial?.diffuse.contents = interpolateColor(color1: color1, color2: color2, proportion: (1-center.y))
-            geometries.append(faceGeometry)
-            
-            // prepare outlines
-            let outlineGeometry = SCNGeometry(sources: [SCNGeometrySource(vertices: faceVertices)], elements: [SCNGeometryElement(indices: [0, 1, 2].map{Int32($0)}, primitiveType: .line)])
-            outlineGeometry.materials = [SCNMaterial()]
-            outlineGeometry.firstMaterial?.diffuse.contents = NSColor.black
-            outlines.append(outlineGeometry)
+            faceGeometry.firstMaterial?.diffuse.contents = interpolateColor(color1: startColor, color2: endColor, proportion: (1-center.y))
+            faceGeometries.append(faceGeometry)
         }
         
-        for idx in 0..<geometries.count {
+        for idx in 0..<faceGeometries.count {
+            let mapNode = createText("\(idx)")
+            mapNode.position = centers[idx]
+            mapNode.look(at: SCNVector3Zero)
+            
             let centerPointNode = SCNNode(geometry: SCNSphere(radius: 0.005))
             centerPointNode.geometry?.firstMaterial?.diffuse.contents = NSColor.black
             centerPointNode.position = centers[idx]
-            
-            let mapIdNode = createTriangleText("\(idx)")
-            mapIdNode.position = centers[idx]
-            mapIdNode.look(at: SCNVector3Zero)
-            mapIdNode.name = "\(idx)"
-            
-            self.addChildNode(SCNNode(geometry: geometries[idx]))
-            self.addChildNode(SCNNode(geometry: outlines[idx]))
+            centerPointNode.name = "\(idx)"
+
+            self.addChildNode(SCNNode(geometry: faceGeometries[idx]))
+            self.addChildNode(mapNode)
             self.addChildNode(centerPointNode)
-            self.addChildNode(mapIdNode)
         }
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError("[ERROR] init(coder:) has not been implemented")
     }
     
     private func interpolateColor(color1: NSColor, color2: NSColor, proportion: Double) -> NSColor {
@@ -73,7 +65,7 @@ class SCNGeodesicIcosahedron : SCNNode {
         return NSColor(red: red, green: green, blue: blue, alpha: 1)
     }
     
-    private func createTriangleText(_ label: String) -> SCNNode {
+    private func createText(_ label: String) -> SCNNode {
         let txt = SCNText(string: label, extrusionDepth: 1)
         txt.font = .systemFont(ofSize: 3)
         txt.firstMaterial?.diffuse.contents = NSColor.black
@@ -85,18 +77,6 @@ class SCNGeodesicIcosahedron : SCNNode {
     func normalize(vector: SCNVector3) -> SCNVector3 {
         let length = sqrt(pow(vector.x, 2) + pow(vector.y, 2) + pow(vector.z, 2))
         return SCNVector3Make(vector.x / length, vector.y / length, vector.z / length)
-    }
-    
-    func cross(vectorA: SCNVector3, vectorB: SCNVector3) -> SCNVector3 {
-        return SCNVector3Make(vectorA.y * vectorB.z - vectorA.z * vectorB.y, -1 * (vectorA.x * vectorB.z - vectorA.z * vectorB.x), vectorA.x * vectorB.y - vectorA.y * vectorB.x)
-    }
-    
-    func dot(vectorA: SCNVector3, vectorB: SCNVector3) -> Double {
-        return (vectorA.x * vectorB.x + vectorA.y * vectorB.y + vectorA.z * vectorB.z)
-    }
-    
-    func distance(vectorA: SCNVector3, vectorB: SCNVector3) -> Double {
-        return sqrt((vectorA.x - vectorB.x) * (vectorA.x - vectorB.x) + (vectorA.y - vectorB.y) * (vectorA.y - vectorB.y) + (vectorA.z - vectorB.z) * (vectorA.z - vectorB.z))
     }
     
 }

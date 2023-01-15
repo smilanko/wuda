@@ -10,8 +10,13 @@ import SwiftUI
 @main
 struct WudaApp: App {
     var body: some Scene {
-        WindowGroup {
+        WindowGroup("Experimentation") {
             ExperimentationView()
+                .onAppear {
+                    NSWindow.allowsAutomaticWindowTabbing = false
+                }
+        }.commands {
+            CommandGroup(replacing: .newItem) { }
         }
     }
 }

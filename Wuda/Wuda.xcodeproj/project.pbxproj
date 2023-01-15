@@ -7,9 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CF73BC3E296CFCFF00CC5012 /* ScatterPlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF73BC3D296CFCFF00CC5012 /* ScatterPlotView.swift */; };
-		CF73BC40296D1C8F00CC5012 /* ExperimentSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF73BC3F296D1C8F00CC5012 /* ExperimentSettings.swift */; };
+		CF44F96C29745FB900EF96E2 /* LogMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF44F96B29745FB900EF96E2 /* LogMessage.swift */; };
+		CF44F97229746B9000EF96E2 /* LogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF44F97129746B9000EF96E2 /* LogView.swift */; };
+		CF73BC40296D1C8F00CC5012 /* ExperimentState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF73BC3F296D1C8F00CC5012 /* ExperimentState.swift */; };
 		CF73BC42296D1FA900CC5012 /* WudaConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF73BC41296D1FA900CC5012 /* WudaConstants.swift */; };
+		CF903A5F296F57F90018D17D /* SCNGeodesicIcosahedron.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF903A5E296F57F90018D17D /* SCNGeodesicIcosahedron.swift */; };
+		CF903A62296F583D0018D17D /* GeodesicIcosahedron16.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF903A61296F583D0018D17D /* GeodesicIcosahedron16.swift */; };
 		CFD5A5BE296BA87B00708441 /* WudaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD5A5BD296BA87B00708441 /* WudaApp.swift */; };
 		CFD5A5C2296BA87B00708441 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFD5A5C1296BA87B00708441 /* Assets.xcassets */; };
 		CFD5A5C5296BA87C00708441 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFD5A5C4296BA87C00708441 /* Preview Assets.xcassets */; };
@@ -19,9 +22,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		CF73BC3D296CFCFF00CC5012 /* ScatterPlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScatterPlotView.swift; sourceTree = "<group>"; };
-		CF73BC3F296D1C8F00CC5012 /* ExperimentSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperimentSettings.swift; sourceTree = "<group>"; };
+		CF44F96B29745FB900EF96E2 /* LogMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogMessage.swift; sourceTree = "<group>"; };
+		CF44F97129746B9000EF96E2 /* LogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogView.swift; sourceTree = "<group>"; };
+		CF73BC3F296D1C8F00CC5012 /* ExperimentState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperimentState.swift; sourceTree = "<group>"; };
 		CF73BC41296D1FA900CC5012 /* WudaConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WudaConstants.swift; sourceTree = "<group>"; };
+		CF903A5E296F57F90018D17D /* SCNGeodesicIcosahedron.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNGeodesicIcosahedron.swift; sourceTree = "<group>"; };
+		CF903A61296F583D0018D17D /* GeodesicIcosahedron16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeodesicIcosahedron16.swift; sourceTree = "<group>"; };
 		CFD5A5BA296BA87B00708441 /* Wuda.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wuda.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFD5A5BD296BA87B00708441 /* WudaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WudaApp.swift; sourceTree = "<group>"; };
 		CFD5A5C1296BA87B00708441 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -43,6 +49,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CF44F96A29745AD000EF96E2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CF73BC3F296D1C8F00CC5012 /* ExperimentState.swift */,
+				CF903A61296F583D0018D17D /* GeodesicIcosahedron16.swift */,
+				CF44F96B29745FB900EF96E2 /* LogMessage.swift */,
+				CF73BC41296D1FA900CC5012 /* WudaConstants.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		CF44F96D2974632B00EF96E2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CFD5A5CE296BC2D400708441 /* ExperimentationView.swift */,
+				CF44F97129746B9000EF96E2 /* LogView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CF44F97029746AC000EF96E2 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				CFD5A5D2296CBD4500708441 /* SphericalScene.swift */,
+				CF903A5E296F57F90018D17D /* SCNGeodesicIcosahedron.swift */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
 		CFD5A5B1296BA87B00708441 = {
 			isa = PBXGroup;
 			children = (
@@ -62,15 +97,13 @@
 		CFD5A5BC296BA87B00708441 /* Wuda */ = {
 			isa = PBXGroup;
 			children = (
+				CF44F96A29745AD000EF96E2 /* Model */,
+				CF44F97029746AC000EF96E2 /* Scene */,
+				CF44F96D2974632B00EF96E2 /* View */,
 				CFD5A5C1296BA87B00708441 /* Assets.xcassets */,
-				CF73BC3F296D1C8F00CC5012 /* ExperimentSettings.swift */,
-				CFD5A5CE296BC2D400708441 /* ExperimentationView.swift */,
 				CFD5A5CC296BA8CF00708441 /* MotionPeripheral.swift */,
-				CF73BC3D296CFCFF00CC5012 /* ScatterPlotView.swift */,
-				CFD5A5D2296CBD4500708441 /* SphericalScene.swift */,
 				CFD5A5C6296BA87C00708441 /* Wuda.entitlements */,
 				CFD5A5BD296BA87B00708441 /* WudaApp.swift */,
-				CF73BC41296D1FA900CC5012 /* WudaConstants.swift */,
 				CFD5A5C3296BA87C00708441 /* Preview Content */,
 			);
 			path = Wuda;
@@ -154,12 +187,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF903A62296F583D0018D17D /* GeodesicIcosahedron16.swift in Sources */,
 				CFD5A5D3296CBD4500708441 /* SphericalScene.swift in Sources */,
-				CF73BC40296D1C8F00CC5012 /* ExperimentSettings.swift in Sources */,
+				CF73BC40296D1C8F00CC5012 /* ExperimentState.swift in Sources */,
 				CFD5A5BE296BA87B00708441 /* WudaApp.swift in Sources */,
-				CF73BC3E296CFCFF00CC5012 /* ScatterPlotView.swift in Sources */,
+				CF44F96C29745FB900EF96E2 /* LogMessage.swift in Sources */,
 				CFD5A5CD296BA8CF00708441 /* MotionPeripheral.swift in Sources */,
+				CF903A5F296F57F90018D17D /* SCNGeodesicIcosahedron.swift in Sources */,
 				CFD5A5CF296BC2D400708441 /* ExperimentationView.swift in Sources */,
+				CF44F97229746B9000EF96E2 /* LogView.swift in Sources */,
 				CF73BC42296D1FA900CC5012 /* WudaConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

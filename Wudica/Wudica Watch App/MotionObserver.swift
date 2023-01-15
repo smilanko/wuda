@@ -17,6 +17,13 @@ class MotionObserver : NSObject, ObservableObject, CBCentralManagerDelegate, CBP
     @Published private(set) var y: Double = 0.0
     @Published private(set) var z: Double = 0.0
 
+    @Published private(set) var gx: Double = 0.0
+    @Published private(set) var gy: Double = 0.0
+    @Published private(set) var gz: Double = 0.0
+    
+    
+    @Published public var isRunning: Bool = false
+    
     private var motionManager: CMMotionManager = CMMotionManager()
     private let healthStore = HKHealthStore()
     
@@ -32,18 +39,21 @@ class MotionObserver : NSObject, ObservableObject, CBCentralManagerDelegate, CBP
     override init() {
         super.init()
         peripheralManager = CBCentralManager(delegate: self, queue: nil)
-
+        let workoutConfiguration = HKWorkoutConfiguration()
+        workoutConfiguration.activityType = .highIntensityIntervalTraining
+        workoutConfiguration.locationType = .unknown
         do {
-            let workoutConfiguration = HKWorkoutConfiguration()
-            workoutConfiguration.activityType = .highIntensityIntervalTraining
-            workoutConfiguration.locationType = .unknown
             workoutSession = try HKWorkoutSession(healthStore: healthStore, configuration: workoutConfiguration)
-            workoutSession!.startActivity(with: Date())
         } catch {
-            print("## error:: \(error)")
+            print("[ERROR] Cannot start workout session \(error) 😥")
         }
-        
+    }
+    
+    public func start() {
+        workoutSession!.startActivity(with: Date())
+        print("[INFO] Starting workout")
         if motionManager.isDeviceMotionAvailable {
+            isRunning = true
             motionManager.deviceMotionUpdateInterval = 0.01
             motionManager.startDeviceMotionUpdates(to: .main) { (motion, error) in
                 guard let motion = motion else {
@@ -53,14 +63,24 @@ class MotionObserver : NSObject, ObservableObject, CBCentralManagerDelegate, CBP
                 self.x = motion.attitude.quaternion.x
                 self.y = motion.attitude.quaternion.y
                 self.z = motion.attitude.quaternion.z
-                self.send(motionData: [motion.attitude.quaternion.w, motion.attitude.quaternion.x, motion.attitude.quaternion.y, motion.attitude.quaternion.z])
+                self.gx = motion.gravity.x
+                self.gy = motion.gravity.y
+                self.gz = motion.gravity.z
+                self.send(motionData: [motion.gravity.x, motion.gravity.y, motion.gravity.z, motion.attitude.quaternion.w, motion.attitude.quaternion.x, motion.attitude.quaternion.y, motion.attitude.quaternion.z])
             }
         }
     }
     
+    public func stop() {
+        print("[INFO] Ending workout")
+        isRunning = false
+        workoutSession?.stopActivity(with: Date())
+        motionManager.stopDeviceMotionUpdates()
+    }
+    
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         if central.state == .poweredOn {
-            print("## powered on, so scanning")
+            print("[INFO] Powered on and scanning")
             peripheralManager.scanForPeripherals(withServices: [CBUUID(string: wudaPeripheralService)])
         }
     }
@@ -72,13 +92,13 @@ class MotionObserver : NSObject, ObservableObject, CBCentralManagerDelegate, CBP
     }
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        print("## looking for the wuda service");
+        print("[INFO] I am looking for my wuda! Where is wuda? ☹️")
         peripheral.discoverServices([CBUUID(string: wudaPeripheralService)])
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         guard let services = peripheral.services else { return }
-        print("## we found a service");
+        print("[INFO] I found my wuda! 🥰🥰")
         for service in services {
             peripheral.discoverCharacteristics([CBUUID(string: wudaPeripheralMotionCharacteristic)], for: service)
         }
@@ -86,7 +106,7 @@ class MotionObserver : NSObject, ObservableObject, CBCentralManagerDelegate, CBP
 
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         guard let characteristics = service.characteristics else { return }
-        print("## we discovered characterisitcs");
+        print("[INFO] I discovered  wuda's characteristics")
         for characteristic in characteristics {
             motionCharacteristic = characteristic
             motionPeripheral.setNotifyValue(true, for: characteristic)
@@ -94,7 +114,9 @@ class MotionObserver : NSObject, ObservableObject, CBCentralManagerDelegate, CBP
     }
     
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
-        print("## we tried to send: \(error.debugDescription )")
+        if let error = error {
+            print("[ERROR] Wuda sent me something, but with an error: \(error)")
+        }
     }
     
     func send(motionData: [Double]) {
