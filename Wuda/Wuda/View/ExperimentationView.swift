@@ -42,9 +42,16 @@ struct ExperimentationView: View {
             }.padding()
             // visuals
             SphericalView(centerPointsOnGeodesicIcosahedron: centerPointsOnGeodesicIcosahedron, scene: sphericalScene)
-            LogView {
-                List(experimentState.logMessages) { logMsg in
-                    Text(logMsg.msg)
+            HStack {
+                LogView {
+                    List(experimentState.logMessages) { logMsg in
+                        Text(logMsg.id.isoDate() + " " + logMsg.msg)
+                    }
+                }
+                PositionMap {
+                    List(experimentState.positionsOnMap) { pt in
+                        Text(pt.id.isoDate() + " \(pt.position)")
+                    }
                 }
             }.padding()
         }

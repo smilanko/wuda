@@ -1,5 +1,5 @@
 //
-//  LogMessage.swift
+//  PositionOnMap.swift
 //  Wuda
 //
 //  Created by Slobodan Milanko
@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct LogMessage : Identifiable {
+struct PositionOnMap  : Identifiable {
     
     let id = Date()
-    let msg : String
+    let position : Int
     
 }

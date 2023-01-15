@@ -17,6 +17,7 @@ class ExperimentState: ObservableObject {
     @Published var pointColor = Color(.sRGB, red: 122/255, green: 39/255, blue: 161/255)
     @Published var clearScatterPlot: Bool = true
     @Published private(set) var logMessages : [LogMessage] = []
+    @Published private(set) var positionsOnMap: [PositionOnMap ] = []
     
     public let axisOptions = [WudaConstants.xAxis, WudaConstants.yAxis, WudaConstants.zAxis]
     public let trigOptions = [WudaConstants.cosFunction, WudaConstants.sinFunction]
@@ -29,6 +30,10 @@ class ExperimentState: ObservableObject {
     
     public func addLogMessage(msg: String) {
         logMessages.append(LogMessage(msg: msg))
+    }
+    
+    public func addPointOnMap(newPt: Int) {
+        positionsOnMap.append(PositionOnMap (position: newPt))
     }
     
 }

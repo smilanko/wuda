@@ -1,5 +1,5 @@
 //
-//  LogView.swift
+//  PositionMap.swift
 //  Wuda
 //
 //  Created by Slobodan Milanko
@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import SceneKit
 
-struct LogView <Content: View>: View {
+struct PositionMap <Content: View>: View {
     
     @State private var isExpanded = false
     @ViewBuilder let expandableView : Content
@@ -21,8 +21,8 @@ struct LogView <Content: View>: View {
                     self.isExpanded.toggle()
                 }
             }){
-                Text("Logs")
-                Image(systemName: "chevron.down.circle.fill")
+                Text("Position Map")
+                Image(systemName: "map.circle.fill")
             }
             
             if self.isExpanded {

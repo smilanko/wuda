@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		CF44F96C29745FB900EF96E2 /* LogMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF44F96B29745FB900EF96E2 /* LogMessage.swift */; };
 		CF44F97229746B9000EF96E2 /* LogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF44F97129746B9000EF96E2 /* LogView.swift */; };
+		CF44F9742974794E00EF96E2 /* PositionMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF44F9732974794E00EF96E2 /* PositionMap.swift */; };
+		CF44F976297479A700EF96E2 /* PositionOnMap .swift in Sources */ = {isa = PBXBuildFile; fileRef = CF44F975297479A700EF96E2 /* PositionOnMap .swift */; };
+		CF44F97929747F3300EF96E2 /* Date+Formatted.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF44F97829747F3300EF96E2 /* Date+Formatted.swift */; };
 		CF73BC40296D1C8F00CC5012 /* ExperimentState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF73BC3F296D1C8F00CC5012 /* ExperimentState.swift */; };
 		CF73BC42296D1FA900CC5012 /* WudaConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF73BC41296D1FA900CC5012 /* WudaConstants.swift */; };
 		CF903A5F296F57F90018D17D /* SCNGeodesicIcosahedron.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF903A5E296F57F90018D17D /* SCNGeodesicIcosahedron.swift */; };
@@ -24,6 +27,9 @@
 /* Begin PBXFileReference section */
 		CF44F96B29745FB900EF96E2 /* LogMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogMessage.swift; sourceTree = "<group>"; };
 		CF44F97129746B9000EF96E2 /* LogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogView.swift; sourceTree = "<group>"; };
+		CF44F9732974794E00EF96E2 /* PositionMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionMap.swift; sourceTree = "<group>"; };
+		CF44F975297479A700EF96E2 /* PositionOnMap .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PositionOnMap .swift"; sourceTree = "<group>"; };
+		CF44F97829747F3300EF96E2 /* Date+Formatted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Formatted.swift"; sourceTree = "<group>"; };
 		CF73BC3F296D1C8F00CC5012 /* ExperimentState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperimentState.swift; sourceTree = "<group>"; };
 		CF73BC41296D1FA900CC5012 /* WudaConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WudaConstants.swift; sourceTree = "<group>"; };
 		CF903A5E296F57F90018D17D /* SCNGeodesicIcosahedron.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNGeodesicIcosahedron.swift; sourceTree = "<group>"; };
@@ -53,8 +59,8 @@
 			isa = PBXGroup;
 			children = (
 				CF73BC3F296D1C8F00CC5012 /* ExperimentState.swift */,
-				CF903A61296F583D0018D17D /* GeodesicIcosahedron16.swift */,
 				CF44F96B29745FB900EF96E2 /* LogMessage.swift */,
+				CF44F975297479A700EF96E2 /* PositionOnMap .swift */,
 				CF73BC41296D1FA900CC5012 /* WudaConstants.swift */,
 			);
 			path = Model;
@@ -65,6 +71,7 @@
 			children = (
 				CFD5A5CE296BC2D400708441 /* ExperimentationView.swift */,
 				CF44F97129746B9000EF96E2 /* LogView.swift */,
+				CF44F9732974794E00EF96E2 /* PositionMap.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -72,10 +79,19 @@
 		CF44F97029746AC000EF96E2 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				CF903A61296F583D0018D17D /* GeodesicIcosahedron16.swift */,
 				CFD5A5D2296CBD4500708441 /* SphericalScene.swift */,
 				CF903A5E296F57F90018D17D /* SCNGeodesicIcosahedron.swift */,
 			);
 			path = Scene;
+			sourceTree = "<group>";
+		};
+		CF44F97729747F2500EF96E2 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				CF44F97829747F3300EF96E2 /* Date+Formatted.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		CFD5A5B1296BA87B00708441 = {
@@ -97,6 +113,7 @@
 		CFD5A5BC296BA87B00708441 /* Wuda */ = {
 			isa = PBXGroup;
 			children = (
+				CF44F97729747F2500EF96E2 /* Extensions */,
 				CF44F96A29745AD000EF96E2 /* Model */,
 				CF44F97029746AC000EF96E2 /* Scene */,
 				CF44F96D2974632B00EF96E2 /* View */,
@@ -191,7 +208,10 @@
 				CFD5A5D3296CBD4500708441 /* SphericalScene.swift in Sources */,
 				CF73BC40296D1C8F00CC5012 /* ExperimentState.swift in Sources */,
 				CFD5A5BE296BA87B00708441 /* WudaApp.swift in Sources */,
+				CF44F97929747F3300EF96E2 /* Date+Formatted.swift in Sources */,
 				CF44F96C29745FB900EF96E2 /* LogMessage.swift in Sources */,
+				CF44F976297479A700EF96E2 /* PositionOnMap .swift in Sources */,
+				CF44F9742974794E00EF96E2 /* PositionMap.swift in Sources */,
 				CFD5A5CD296BA8CF00708441 /* MotionPeripheral.swift in Sources */,
 				CF903A5F296F57F90018D17D /* SCNGeodesicIcosahedron.swift in Sources */,
 				CFD5A5CF296BC2D400708441 /* ExperimentationView.swift in Sources */,
