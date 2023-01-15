@@ -45,7 +45,7 @@ struct ExperimentationView: View {
             HStack {
                 LogView {
                     List(experimentState.logMessages) { logMsg in
-                        Text(logMsg.id.isoDate() + " " + logMsg.msg)
+                        Text(logMsg.id.isoDate() + " " + logMsg.type.rawValue + " " + logMsg.msg)
                     }
                 }
                 PositionMap {
@@ -66,7 +66,7 @@ struct ExperimentationView: View {
                 if let nodeName = nodeOfInterest.name, let faceId = Int(nodeName) {
                     centerPointsOnGeodesicIcosahedron[faceId] = nodeOfInterest.position
                 } else {
-                    fatalError("[ERROR] Could not find the center of a face")
+                    experimentState.addLogMessage(type: .error, msg: "Could not find the center of a face")
                 }
             }
         }

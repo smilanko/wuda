@@ -12,6 +12,7 @@
 		CF44F9742974794E00EF96E2 /* PositionMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF44F9732974794E00EF96E2 /* PositionMap.swift */; };
 		CF44F976297479A700EF96E2 /* PositionOnMap .swift in Sources */ = {isa = PBXBuildFile; fileRef = CF44F975297479A700EF96E2 /* PositionOnMap .swift */; };
 		CF44F97929747F3300EF96E2 /* Date+Formatted.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF44F97829747F3300EF96E2 /* Date+Formatted.swift */; };
+		CF44F97B2974C16600EF96E2 /* SphericalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF44F97A2974C16600EF96E2 /* SphericalView.swift */; };
 		CF73BC40296D1C8F00CC5012 /* ExperimentState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF73BC3F296D1C8F00CC5012 /* ExperimentState.swift */; };
 		CF73BC42296D1FA900CC5012 /* WudaConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF73BC41296D1FA900CC5012 /* WudaConstants.swift */; };
 		CF903A5F296F57F90018D17D /* SCNGeodesicIcosahedron.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF903A5E296F57F90018D17D /* SCNGeodesicIcosahedron.swift */; };
@@ -30,6 +31,7 @@
 		CF44F9732974794E00EF96E2 /* PositionMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionMap.swift; sourceTree = "<group>"; };
 		CF44F975297479A700EF96E2 /* PositionOnMap .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PositionOnMap .swift"; sourceTree = "<group>"; };
 		CF44F97829747F3300EF96E2 /* Date+Formatted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Formatted.swift"; sourceTree = "<group>"; };
+		CF44F97A2974C16600EF96E2 /* SphericalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphericalView.swift; sourceTree = "<group>"; };
 		CF73BC3F296D1C8F00CC5012 /* ExperimentState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperimentState.swift; sourceTree = "<group>"; };
 		CF73BC41296D1FA900CC5012 /* WudaConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WudaConstants.swift; sourceTree = "<group>"; };
 		CF903A5E296F57F90018D17D /* SCNGeodesicIcosahedron.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNGeodesicIcosahedron.swift; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 				CFD5A5CE296BC2D400708441 /* ExperimentationView.swift */,
 				CF44F97129746B9000EF96E2 /* LogView.swift */,
 				CF44F9732974794E00EF96E2 /* PositionMap.swift */,
+				CF44F97A2974C16600EF96E2 /* SphericalView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -209,6 +212,7 @@
 				CF73BC40296D1C8F00CC5012 /* ExperimentState.swift in Sources */,
 				CFD5A5BE296BA87B00708441 /* WudaApp.swift in Sources */,
 				CF44F97929747F3300EF96E2 /* Date+Formatted.swift in Sources */,
+				CF44F97B2974C16600EF96E2 /* SphericalView.swift in Sources */,
 				CF44F96C29745FB900EF96E2 /* LogMessage.swift in Sources */,
 				CF44F976297479A700EF96E2 /* PositionOnMap .swift in Sources */,
 				CF44F9742974794E00EF96E2 /* PositionMap.swift in Sources */,

@@ -11,37 +11,6 @@ import SceneKit.SCNSceneRenderer
 import SwiftUI
 import simd
 
-struct SphericalView: NSViewRepresentable {
-    
-    @ObservedObject private var settings = ExperimentState.shared
-    @ObservedObject private var motionObserver = MotionPeripheral.shared
-    
-    let centerPointsOnGeodesicIcosahedron : [Int: SCNVector3]
-    let scene: SCNScene
-
-    func makeNSView(context: Context) -> SCNView {
-        let view = SCNView()
-        view.scene = scene
-        view.allowsCameraControl = true
-        view.autoenablesDefaultLighting = true
-        view.showsStatistics = true
-        return view
-    }
-    
-    func updateNSView(_ nsView: SCNView, context: Context) {
-        if !settings.canUpdatePoints { return }
-        if let sphere = nsView.scene?.rootNode.childNodes.first {
-            if sphere.name != WudaConstants.rootNodeConstant { fatalError("[ERROR] Points must draw on the root! ") }
-            let pointGeometry = SCNSphere(radius: 0.01)
-            pointGeometry.firstMaterial?.diffuse.contents = NSColor(settings.pointColor)
-            let pointNode = SCNNode(geometry: pointGeometry)
-            pointNode.position = motionObserver.point
-            sphere.addChildNode(pointNode)
-        }
-    }
-    
-}
-
 class SphericalScene : SCNScene {
     
     private let xAxisColor = NSColor.red

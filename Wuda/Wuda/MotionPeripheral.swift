@@ -42,18 +42,18 @@ class MotionPeripheral: NSObject, ObservableObject, CBPeripheralManagerDelegate 
             peripheralManager.add(motionService)
             // Start advertising the service.
             peripheralManager.startAdvertising([CBAdvertisementDataServiceUUIDsKey: [wudaPeripheralService]])
-            experimentState.addLogMessage(msg: "[INFO] Advertising to wudica 🥰")
+            experimentState.addLogMessage(type: .info, msg: "Advertising to wudica 🥰")
         case .poweredOff, .resetting, .unauthorized, .unsupported:
             // Stop advertising the service.
             peripheralManager.stopAdvertising()
-            experimentState.addLogMessage(msg: "[ERROR] Stopping service. Bye wudica 🛌")
+            experimentState.addLogMessage(type: .info, msg: "Stopping service. Bye wudica 🛌")
         default:
             break
         }
     }
     
     func peripheralManager(_ peripheral: CBPeripheralManager, didReceiveRead request: CBATTRequest) {
-        experimentState.addLogMessage(msg: "[INFO] Wudica sent me a read request 💌")
+        experimentState.addLogMessage(type: .info, msg: "Wudica sent me a read request 💌")
     }
     
     func peripheralManager(_ peripheral: CBPeripheralManager, didReceiveWrite requests: [CBATTRequest]) {

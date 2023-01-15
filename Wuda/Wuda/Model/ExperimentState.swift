@@ -28,8 +28,8 @@ class ExperimentState: ObservableObject {
     
     private init() {}
     
-    public func addLogMessage(msg: String) {
-        logMessages.append(LogMessage(msg: msg))
+    public func addLogMessage(type: LogMessageType, msg: String) {
+        logMessages.append(LogMessage(type: type, msg: msg))
     }
     
     public func addPointOnMap(newPt: Int) {
