@@ -11,11 +11,17 @@ import SceneKit
 
 struct ExperimentationView: View {
     
-    @ObservedObject private var experimentState = ExperimentState.shared
+    @ObservedObject private var motionController = MotionController.shared
+    @ObservedObject private var logController = LogController.shared
     
     @State private var sphericalScene : SphericalScene = SphericalScene()
     @State private var centerPointsOnGeodesicIcosahedron : [Int: SCNVector3] = [:]
     @State private var anglePlaneIdx : Double = 0.0
+    @State private var canUpdatePoints : Bool = true
+    @State private var pointColor = Color(.sRGB, red: 122/255, green: 39/255, blue: 161/255)
+    @State private var clearScatterPlot: Bool = true
+    @State private var latestMotionPoint : SCNVector3 = SCNVector3Zero
+    @State private var closestFace : Int = 0
 
     let colors : [Color] = [Color.red, Color.blue, Color.orange]
     
@@ -24,57 +30,43 @@ struct ExperimentationView: View {
             // controls
             HStack {
                 HStack {
-                    ColorPicker("Point Color", selection: $experimentState.pointColor)
+                    ColorPicker("Point Color", selection: $pointColor)
                     Button() {
-                        experimentState.pointColor = Color.random
+                        pointColor = Color.random
                     } label: {
                         Image(systemName: "wand.and.stars")
                     }
                     Button {
                         sphericalScene.clearPoints()
-                        experimentState.clearScatterPlot.toggle()
+                        clearScatterPlot.toggle()
                     } label: {
                         Text("Clear")
                         Image(systemName: "trash.square.fill").foregroundColor(.red)
                     }
                     Button {
-                        experimentState.canUpdatePoints.toggle()
+                        canUpdatePoints.toggle()
                     } label: {
-                        let isRunning = experimentState.canUpdatePoints
-                        Image(systemName: isRunning ? "stop.circle.fill" : "flag.circle.fill" ).foregroundColor(isRunning ? .red : .green)
+                        Image(systemName: canUpdatePoints ? "stop.circle.fill" : "flag.circle.fill" ).foregroundColor(canUpdatePoints ? .red : .green)
+                    }
+                    HStack {
+                        Text("Closest to ") + Text("\(closestFace)").foregroundColor(.red)
                     }
                 }
             }.padding()
             // visuals
-            SphericalView(centerPointsOnGeodesicIcosahedron: centerPointsOnGeodesicIcosahedron, scene: sphericalScene)
-            HStack {
-                LogView {
-                    List(experimentState.logMessages) { logMsg in
-                        Text(logMsg.id.isoDate + " " + logMsg.type.rawValue + " " + logMsg.msg)
-                    }
-                }
-                PositionMap {
-                    List(experimentState.positionsOnMap) { pt in
-                        Text(pt.id.isoDate + " \(pt.position)")
-                    }
+            SphericalView(canUpdatePoints: $canUpdatePoints, pointColor: $pointColor, latestPoint: $latestMotionPoint, scene: sphericalScene)
+            // log views
+            LogView {
+                List(logController.logMessages) { logMsg in
+                    Text(logMsg.id.isoDate + " " + logMsg.type.rawValue + " " + logMsg.msg)
                 }
             }.padding()
-        }
-    }
-    
-    private func getChildrenFromScene() {
-        // prepare the centers
-        if let geodesicIcosahedron = sphericalScene.rootNode.childNodes.first(where: { $0.name == WudaConstants.rootNodeForGeodasicMap }) {
-            let geoChildren = geodesicIcosahedron.childNodes
-            for mapEntry in stride(from: 0, to:geoChildren.count, by: 3) {
-                let nodeOfInterest = geoChildren[mapEntry + 2]
-                if let nodeName = nodeOfInterest.name, let faceId = Int(nodeName) {
-                    centerPointsOnGeodesicIcosahedron[faceId] = nodeOfInterest.position
-                } else {
-                    experimentState.addLogMessage(type: .error, msg: "Could not find the center of a face")
-                }
+        }.onReceive(motionController.$positions, perform: { newPoints in
+            if let lastPoint = newPoints.last {
+                latestMotionPoint = SCNVector3Make(lastPoint.x, lastPoint.y, lastPoint.z)
+                closestFace = sphericalScene.getClosestFaceToPoint(pt: latestMotionPoint)
             }
-        }
+        })
     }
     
 }

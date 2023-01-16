@@ -1,5 +1,5 @@
 //
-//  MotionPeripheral.swift
+//  MotionController.swift
 //  Wuda
 //
 //  Created by Slobodan Milanko
@@ -7,24 +7,25 @@
 
 import Foundation
 import CoreBluetooth
-import SceneKit
 import SwiftUI
 import simd
 
-class MotionPeripheral: NSObject, ObservableObject, CBPeripheralManagerDelegate {
+class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate {
 
-    @ObservedObject private var experimentState = ExperimentState.shared
-    @Published private(set) var point: SCNVector3 = SCNVector3(x: 0, y: 0, z: 0)
-    @Published private(set) var planeAngle: SCNVector3 = SCNVector3(x: 0, y: 0, z: 0)
-    @Published private(set) var pointVector: simd_quatd?
+    @ObservedObject private var logController = LogController.shared
+    @Published private(set) var positions : [Position] = []
     
     private var wudaPeripheralService = CBUUID(string: "12345678-1234-1234-1234-123456789012")
     private var wudaPeripheralMotionCharacteristicUuid = CBUUID(string: "12345678-1234-1234-1234-123456789013")
+    private var smartWatchGravityEntries : [simd_quatd] = []
+    private var smartWatchRotationEntries : [simd_quatd] = []
+    
+    private var smartWatchPointVector : simd_quatd?
     private var peripheralManager: CBPeripheralManager!
     private var motionService: CBMutableService!
     private var motionDataCharacteristic: CBMutableCharacteristic!
 
-    public static let shared = MotionPeripheral()
+    public static let shared = MotionController()
     
     private override init() {
         super.init()
@@ -42,18 +43,18 @@ class MotionPeripheral: NSObject, ObservableObject, CBPeripheralManagerDelegate 
             peripheralManager.add(motionService)
             // Start advertising the service.
             peripheralManager.startAdvertising([CBAdvertisementDataServiceUUIDsKey: [wudaPeripheralService]])
-            experimentState.addLogMessage(type: .info, msg: "Advertising to wudica 🥰")
+            logController.addLogMessage(type: .info, msg: "Advertising to wudica 🥰")
         case .poweredOff, .resetting, .unauthorized, .unsupported:
             // Stop advertising the service.
             peripheralManager.stopAdvertising()
-            experimentState.addLogMessage(type: .info, msg: "Stopping service. Bye wudica 🛌")
+            logController.addLogMessage(type: .info, msg: "Stopping service. Bye wudica 🛌")
         default:
             break
         }
     }
     
     func peripheralManager(_ peripheral: CBPeripheralManager, didReceiveRead request: CBATTRequest) {
-        experimentState.addLogMessage(type: .info, msg: "Wudica sent me a read request 💌")
+        logController.addLogMessage(type: .info, msg: "Wudica sent me a read request 💌")
     }
     
     func peripheralManager(_ peripheral: CBPeripheralManager, didReceiveWrite requests: [CBATTRequest]) {
@@ -64,23 +65,20 @@ class MotionPeripheral: NSObject, ObservableObject, CBPeripheralManagerDelegate 
                     // Use the motion data in your macOS app.
                     var arr2 = Array<Double>(repeating: 0, count: data.count/MemoryLayout<UInt32>.stride)
                     _ = arr2.withUnsafeMutableBytes { data.copyBytes(to: $0) }
-                    if let pointVector = pointVector {
-                        let q = simd_quatd(ix: arr2[4], iy: arr2[5], iz: arr2[6], r: arr2[3])
-                        let result = q * pointVector * q.conjugate
-                        let pNorm = sqrt(pow(result.vector.w, 2) + pow(result.vector.x, 2) + pow(result.vector.y, 2) + pow(result.vector.z, 2))
-                        self.point = SCNVector3(x: result.vector.x, y: result.vector.y, z: result.vector.z)
-                        self.planeAngle = SCNVector3(x: getPlaneAngle(axis: result.vector.x, pNorm: pNorm), y: getPlaneAngle(axis: result.vector.y, pNorm: pNorm), z: getPlaneAngle(axis: result.vector.z, pNorm: pNorm))
-                    } else {
-//                        pointVector = simd_quatd(ix: -1, iy: 0, iz: 0, r: 0) // static
-                        pointVector = simd_quatd(ix: arr2[0], iy: arr2[1], iz: arr2[2], r: 0) // gravity
-                    }
+                    addPosition(gravity: simd_quatd(ix: arr2[0], iy: arr2[1], iz: arr2[2], r: 0), rotation: simd_quatd(ix: arr2[4], iy: arr2[5], iz: arr2[6], r: arr2[3]))
                 }
             }
         }
     }
     
-    private func getPlaneAngle(axis: Double, pNorm: Double) -> Double {
-        let val = experimentState.trigSelection == WudaConstants.cosFunction ? acos(axis / pNorm) : asin(axis / pNorm)
-        return Measurement(value: val, unit: UnitAngle.radians).converted(to: .degrees).value
+    public func addPosition(gravity: simd_quatd, rotation: simd_quatd) {
+        smartWatchGravityEntries.append(gravity)
+        smartWatchRotationEntries.append(rotation)
+        if smartWatchPointVector == nil { smartWatchPointVector = gravity }
+        if let smartWatchPointVector = smartWatchPointVector {
+            let result = rotation * smartWatchPointVector * rotation.conjugate
+            positions.append(Position(x: result.vector.x, y: result.vector.y, z: result.vector.z))
+        }
     }
+
 }

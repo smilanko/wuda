@@ -1,5 +1,5 @@
 //
-//  WudaConstants.swift
+//  Constants.swift
 //  Wuda
 //
 //  Created by Slobodan Milanko
