@@ -6,12 +6,11 @@
 //  http://dmccooey.com/polyhedra/GeodesicIcosahedron16.html
 //  A thank you to the author
 //
-// Geodesic Icosahedron Pattern 16 [5,2]
 
 import Foundation
 import SceneKit
 
-class GeodesicIcosahedron16 {
+class GeodesicIcosahedron16 : Pattern {
     
     let C0  = 0.02793331013872616754305125101251
     let C1  = 0.0423443632321508843023753934720

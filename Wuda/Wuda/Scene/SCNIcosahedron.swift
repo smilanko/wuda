@@ -8,15 +8,22 @@
 import Foundation
 import SceneKit
 
-class SCNGeodesicIcosahedron : SCNNode {
+enum IcosahedronPattern {
+    case geodasicPattern1
+    case geodasicPattern2
+    case geodasicPattern8
+    case geodasicPattern16
+}
+
+class SCNIcosahedron : SCNNode {
     
-    private let pattern = GeodesicIcosahedron16()
     private let startColor = NSColor(red: 255/255,green: 206/255,blue: 97/255, alpha: 1.0)
     private let endColor = NSColor(red: 191/255, green: 52/255, blue: 117/255, alpha: 1.0)
     
-    override init() {
+    init(isoPattern: IcosahedronPattern) {
         super.init()
         
+        let pattern : Pattern = getPatternFromType(isoPattern: isoPattern)
         let vertices = pattern.generateVertices()
         let faces = pattern.generateFaces()
 
@@ -56,6 +63,19 @@ class SCNGeodesicIcosahedron : SCNNode {
     
     required init?(coder: NSCoder) {
         fatalError("[ERROR] init(coder:) has not been implemented")
+    }
+    
+    private func getPatternFromType(isoPattern : IcosahedronPattern) -> Pattern {
+        switch isoPattern {
+        case .geodasicPattern1:
+            return GeodesicIcosahedron1()
+        case .geodasicPattern2:
+            return GeodesicIcosahedron2()
+        case .geodasicPattern8:
+            return GeodesicIcosahedron8()
+        case .geodasicPattern16:
+            return GeodesicIcosahedron16()
+        }
     }
     
     private func interpolateColor(color1: NSColor, color2: NSColor, proportion: Double) -> NSColor {

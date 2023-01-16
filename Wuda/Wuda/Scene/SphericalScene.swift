@@ -26,8 +26,8 @@ class SphericalScene : SCNScene {
         sphereNode.position = SCNVector3(x: 0, y: 0, z: 0)
         sphereNode.name = Constants.rootNodeConstant
         
-        let giRadius = radius - 0.05
-        let geodesicIcosahedron = SCNGeodesicIcosahedron()
+        let giRadius = radius - 0.06
+        let geodesicIcosahedron = SCNIcosahedron(isoPattern: .geodasicPattern16)
         geodesicIcosahedron.transform = SCNMatrix4MakeScale(giRadius, giRadius, giRadius)
         geodesicIcosahedron.name = Constants.rootNodeForGeodasicMap
         
