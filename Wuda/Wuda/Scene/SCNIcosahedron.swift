@@ -11,6 +11,7 @@ import SceneKit
 enum IcosahedronPattern {
     case geodasicPattern1
     case geodasicPattern2
+    case geodasicPattern4
     case geodasicPattern8
     case geodasicPattern16
 }
@@ -68,6 +69,8 @@ class SCNIcosahedron : SCNNode {
             return GeodesicIcosahedron1()
         case .geodasicPattern2:
             return GeodesicIcosahedron2()
+        case .geodasicPattern4:
+            return GeodesicIcosahedron4()
         case .geodasicPattern8:
             return GeodesicIcosahedron8()
         case .geodasicPattern16:

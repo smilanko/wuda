@@ -1,5 +1,5 @@
 //
-//  GeodesicIcosahedron1.swift
+//  GeodesicIcosahedron2.swift
 //  Wuda
 //
 //  Found on an online source:
