@@ -13,6 +13,7 @@ import simd
 
 class SphericalScene : SCNScene {
     
+    @ObservedObject private var logController = LogController.shared
     private let atmosphereColor : NSColor = NSColor(red: 192/255, green: 210/255, blue: 218/255, alpha: 1)
     private var faceToCenterMapping : [Int: SCNVector3] = [:]
     private let radius = 1.0
@@ -23,8 +24,14 @@ class SphericalScene : SCNScene {
         let sphere = SCNSphere(radius: radius)
         sphere.firstMaterial?.diffuse.contents = atmosphereColor.withAlphaComponent(0.2)
         let sphereNode = SCNNode(geometry: sphere)
-        sphereNode.position = SCNVector3(x: 0, y: 0, z: 0)
+        sphereNode.position = SCNVector3Zero
         sphereNode.name = Constants.rootNodeConstant
+        
+        let meshSphere = SCNSphere(radius: radius - 0.01)
+        meshSphere.firstMaterial?.diffuse.contents = NSColor.clear
+        let meshNode = SCNNode(geometry: meshSphere)
+        meshNode.position = SCNVector3Zero
+        meshNode.name = Constants.rootNodeForMesh
         
         let giRadius = radius - 0.06
         let geodesicIcosahedron = SCNIcosahedron(isoPattern: .geodasicPattern16)
@@ -40,15 +47,58 @@ class SphericalScene : SCNScene {
         }
         
         self.rootNode.addChildNode(sphereNode)
+        self.rootNode.addChildNode(meshNode)
         self.rootNode.addChildNode(geodesicIcosahedron)
     }
     
+    public func addPoint(latestPoint: SCNVector3, pointColor: Color) {
+        if let sphere = self.rootNode.childNodes.first {
+            if sphere.name != Constants.rootNodeConstant {
+                logController.addLogMessage(type: .fatal, msg: "Points must draw on the root!")
+            }
+            let pointGeometry = SCNSphere(radius: 0.01)
+            pointGeometry.firstMaterial?.diffuse.contents = NSColor(pointColor)
+            let pointNode = SCNNode(geometry: pointGeometry)
+            pointNode.position = latestPoint
+            sphere.addChildNode(pointNode)
+        }
+    }
+    
     public func clearPoints() {
+        logController.addLogMessage(type: .info, msg: "Clearing sphere")
         if let sphere = self.rootNode.childNodes.first {
             sphere.enumerateChildNodes { (node, stop) in
                 node.removeFromParentNode()
             }
         }
+    }
+    
+    public func clearMesh() {
+        logController.addLogMessage(type: .info, msg: "Clearing mesh")
+        if let mesh = self.rootNode.childNodes.first(where: { $0.name == Constants.rootNodeForMesh }) {
+            mesh.enumerateChildNodes { (node, stop) in
+                node.removeFromParentNode()
+            }
+        }
+    }
+    
+    public func generatePointCloud() {
+        logController.addLogMessage(type: .info, msg: "Converting points on sphere to line mesh")
+        var vertexData: [SCNVector3] = []
+        if let sphere = self.rootNode.childNodes.first, let mesh = self.rootNode.childNodes.first(where: { $0.name == Constants.rootNodeForMesh }) {
+            sphere.enumerateChildNodes { (node, obj) in
+                vertexData.append(node.position)
+            }
+
+            let vertexSource = SCNGeometrySource(vertices: vertexData)
+            let indices = (0..<vertexData.count).map { Int32($0) }
+            let lineElement = SCNGeometryElement(indices: indices, primitiveType: .line)
+            let lineGeometry = SCNGeometry(sources: [vertexSource], elements: [lineElement])
+            lineGeometry.firstMaterial?.diffuse.contents = NSColor.black
+            let lineNode = SCNNode(geometry: lineGeometry)
+            mesh.addChildNode(lineNode)
+        }
+        
     }
     
     public func getClosestFaceToPoint(pt: SCNVector3) -> Int {

@@ -39,6 +39,7 @@ struct Constants {
     public let pointOptionStrings = [quatPointXMinStr, quatPointXPlusStr, quatPointYMinStr, quatPointYPlusStr, quatPointZMinStr, quatPointZPlusStr]
     
     static let rootNodeConstant = "ozone"
+    static let rootNodeForMesh = "mesh"
     static let rootNodeForGeodasicMap = "geodesicIcosahedron"
     
 }

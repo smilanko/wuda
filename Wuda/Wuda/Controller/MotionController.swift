@@ -14,6 +14,7 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
 
     @ObservedObject private var logController = LogController.shared
     @Published private(set) var positions : [Position] = []
+    @Published private(set) var pauseDataUpdates: Bool = false
     
     private var wudaPeripheralService = CBUUID(string: "12345678-1234-1234-1234-123456789012")
     private var wudaPeripheralMotionCharacteristicUuid = CBUUID(string: "12345678-1234-1234-1234-123456789013")
@@ -58,6 +59,7 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
     }
     
     func peripheralManager(_ peripheral: CBPeripheralManager, didReceiveWrite requests: [CBATTRequest]) {
+        if pauseDataUpdates { return }
         for request in requests {
             if request.characteristic == motionDataCharacteristic {
                 // The watchOS app wrote to the motion data characteristic, read the new value.
@@ -79,6 +81,10 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
             let result = rotation * smartWatchPointVector * rotation.conjugate
             positions.append(Position(x: result.vector.x, y: result.vector.y, z: result.vector.z))
         }
+    }
+    
+    public func toggleUpdates() {
+        pauseDataUpdates.toggle()
     }
 
 }
