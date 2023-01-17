@@ -61,7 +61,7 @@ struct ExperimentationView: View {
                     }
                 }
                 // position on map
-                (Text("(x👉, y👆, z🫵)") + Text("\tCurrent Position: ") + Text("\(closestFace)").foregroundColor(.red))
+                (Text("(x+👉, y+👆, z-🫵)") + Text("\tCurrent Position: ") + Text("\(closestFace)").foregroundColor(.red))
             }.padding()
         }.onReceive(motionController.$positions, perform: { newPoints in
             if let lastPoint = newPoints.last {
