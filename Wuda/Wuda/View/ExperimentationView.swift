@@ -48,18 +48,6 @@ struct ExperimentationView: View {
                         Text(motionController.pauseDataUpdates ? "Resume" : "Pause")
                         Image(systemName: motionController.pauseDataUpdates ? "flag.circle.fill" : "stop.circle.fill"  ).foregroundColor(motionController.pauseDataUpdates ? .green : .red)
                     }
-                    Button() {
-                        sphericalScene.generatePointCloud()
-                    } label: {
-                        Text("Build mesh")
-                        Image(systemName: "skew")
-                    }
-                    Button() {
-                        sphericalScene.clearMesh()
-                    } label: {
-                        Text("Clear mesh")
-                        Image(systemName: "trash.square.fill").foregroundColor(.red)
-                    }
                 }
             }.padding()
             // visuals

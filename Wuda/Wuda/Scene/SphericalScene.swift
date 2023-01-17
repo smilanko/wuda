@@ -73,34 +73,6 @@ class SphericalScene : SCNScene {
         }
     }
     
-    public func clearMesh() {
-        logController.addLogMessage(type: .info, msg: "Clearing mesh")
-        if let mesh = self.rootNode.childNodes.first(where: { $0.name == Constants.rootNodeForMesh }) {
-            mesh.enumerateChildNodes { (node, stop) in
-                node.removeFromParentNode()
-            }
-        }
-    }
-    
-    public func generatePointCloud() {
-        logController.addLogMessage(type: .info, msg: "Converting points on sphere to line mesh")
-        var vertexData: [SCNVector3] = []
-        if let sphere = self.rootNode.childNodes.first, let mesh = self.rootNode.childNodes.first(where: { $0.name == Constants.rootNodeForMesh }) {
-            sphere.enumerateChildNodes { (node, obj) in
-                vertexData.append(node.position)
-            }
-
-            let vertexSource = SCNGeometrySource(vertices: vertexData)
-            let indices = (0..<vertexData.count).map { Int32($0) }
-            let lineElement = SCNGeometryElement(indices: indices, primitiveType: .line)
-            let lineGeometry = SCNGeometry(sources: [vertexSource], elements: [lineElement])
-            lineGeometry.firstMaterial?.diffuse.contents = NSColor.black
-            let lineNode = SCNNode(geometry: lineGeometry)
-            mesh.addChildNode(lineNode)
-        }
-        
-    }
-    
     public func getClosestFaceToPoint(pt: SCNVector3) -> Int {
         var closestKey : Int = 0
         var closestDist : Float = Float.infinity
