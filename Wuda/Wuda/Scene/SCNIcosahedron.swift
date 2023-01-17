@@ -17,9 +17,6 @@ enum IcosahedronPattern {
 
 class SCNIcosahedron : SCNNode {
     
-    private let startColor = NSColor(red: 255/255,green: 206/255,blue: 97/255, alpha: 1.0)
-    private let endColor = NSColor(red: 191/255, green: 52/255, blue: 117/255, alpha: 1.0)
-    
     init(isoPattern: IcosahedronPattern) {
         super.init()
         
@@ -41,7 +38,7 @@ class SCNIcosahedron : SCNNode {
             // prepare geometries
             let faceGeometry = SCNGeometry(sources: [SCNGeometrySource(vertices: faceVertices)], elements: [SCNGeometryElement(indices: [0, 1, 2].map{Int32($0)}, primitiveType: .triangles)])
             faceGeometry.materials = [SCNMaterial()]
-            faceGeometry.firstMaterial?.diffuse.contents = interpolateColor(color1: startColor, color2: endColor, proportion: (1-center.y))
+            faceGeometry.firstMaterial?.diffuse.contents = interpolateColor(color1: Constants.gradientStartColor, color2: Constants.gradientEndColor, proportion: (1-center.y))
             faceGeometries.append(faceGeometry)
         }
         

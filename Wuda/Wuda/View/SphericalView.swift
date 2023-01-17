@@ -18,7 +18,7 @@ struct SphericalView: NSViewRepresentable {
         view.scene = scene
         view.allowsCameraControl = true
         view.autoenablesDefaultLighting = true
-        view.showsStatistics = true
+        view.showsStatistics = false
         view.backgroundColor = .clear
         return view
     }

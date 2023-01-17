@@ -19,9 +19,9 @@ struct ExperimentationView: View {
     @State private var anglePlaneIdx : Double = 0.0
     @State private var pointColor = Color(.sRGB, red: 122/255, green: 39/255, blue: 161/255)
     @State private var clearScatterPlot: Bool = true
-    @State private var closestFace : Int = 0
-
-    let colors : [Color] = [Color.red, Color.blue, Color.orange]
+    @State private var closestFace : Int = -1
+    
+    private let gradient = Gradient(colors: [ Color(Constants.gradientStartColor), Color(Constants.gradientEndColor) ])
     
     var body: some View {
         VStack {
@@ -52,15 +52,16 @@ struct ExperimentationView: View {
             }.padding()
             // visuals
             SphericalView(scene: sphericalScene)
-            // position on map
+            
             HStack {
-                Text("Current position on the map ") + Text("\(closestFace)").foregroundColor(.red)
-            }
-            // log views
-            LogView {
-                List(logController.logMessages) { logMsg in
-                    Text(logMsg.id.isoDate + " " + logMsg.type.rawValue + " " + logMsg.msg)
+                // log views
+                LogView {
+                    List(logController.logMessages) { logMsg in
+                        Text(logMsg.id.isoDate + " " + logMsg.type.rawValue + " " + logMsg.msg)
+                    }
                 }
+                // position on map
+                (Text("(x👉, y👆, z🫵)") + Text("\tCurrent Position: ") + Text("\(closestFace)").foregroundColor(.red))
             }.padding()
         }.onReceive(motionController.$positions, perform: { newPoints in
             if let lastPoint = newPoints.last {
