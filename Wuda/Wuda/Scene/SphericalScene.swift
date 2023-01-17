@@ -27,12 +27,6 @@ class SphericalScene : SCNScene {
         sphereNode.position = SCNVector3Zero
         sphereNode.name = Constants.rootNodeConstant
         
-        let meshSphere = SCNSphere(radius: radius - 0.01)
-        meshSphere.firstMaterial?.diffuse.contents = NSColor.clear
-        let meshNode = SCNNode(geometry: meshSphere)
-        meshNode.position = SCNVector3Zero
-        meshNode.name = Constants.rootNodeForMesh
-        
         let giRadius = radius - 0.06
         let geodesicIcosahedron = SCNIcosahedron(isoPattern: .geodasicPattern16)
         geodesicIcosahedron.transform = SCNMatrix4MakeScale(giRadius, giRadius, giRadius)
@@ -47,7 +41,6 @@ class SphericalScene : SCNScene {
         }
         
         self.rootNode.addChildNode(sphereNode)
-        self.rootNode.addChildNode(meshNode)
         self.rootNode.addChildNode(geodesicIcosahedron)
     }
     
