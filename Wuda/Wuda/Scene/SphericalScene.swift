@@ -22,6 +22,7 @@ class SphericalScene : SCNScene {
     init(isoPattern: IcosahedronPattern) {
         super.init()
         
+        logController.addLogMessage(type: .info, msg: "Preparing the spherical scene")
         let sphere = SCNSphere(radius: radius)
         sphere.firstMaterial?.diffuse.contents = Constants.atmosphereColor.withAlphaComponent(0.2)
         let sphereNode = SCNNode(geometry: sphere)
@@ -86,15 +87,12 @@ class SphericalScene : SCNScene {
             if let telescope = anglesSphere.childNodes.first(where: { $0.name == Constants.rootNodeForTelescope }) {
                 telescope.look(at: latestPoint, up: SCNVector3(0, 1, 0), localFront: SCNVector3(0, 1, 0))
             }
-            
             // redraw our axis
             anglesSphere.childNodes.filter({ $0.name != Constants.rootNodeForTelescope }).forEach({ $0.removeFromParentNode() })
             anglesSphere.addChildNode(createAxisAngle(angles[0], pos: SCNVector3(0.05,0,0)))
             anglesSphere.addChildNode(createAxisAngle(angles[1], pos: SCNVector3(0,0.05,0)))
             anglesSphere.addChildNode(createAxisAngle(angles[2], pos: SCNVector3(-0.05,0,-0.05)))
         }
-
-
     }
     
     public func clearPoints() {

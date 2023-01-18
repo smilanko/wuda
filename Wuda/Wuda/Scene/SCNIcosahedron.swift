@@ -7,6 +7,7 @@
 
 import Foundation
 import SceneKit
+import SwiftUI
 
 enum IcosahedronPattern {
     case geodasicPattern1
@@ -18,11 +19,13 @@ enum IcosahedronPattern {
 
 class SCNIcosahedron : SCNNode, Icosahedron {
     
+    @ObservedObject private var logController = LogController.shared
     private var facesCount : Int = 0
     
     init(isoPattern: IcosahedronPattern) {
         super.init()
         
+        logController.addLogMessage(type: .info, msg: "Preparing the icosahedron")
         let pattern = getPatternFromType(isoPattern: isoPattern)
         let vertices = pattern.generateVertices()
         let faces = pattern.generateFaces()

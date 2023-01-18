@@ -76,7 +76,10 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
     public func addPosition(gravity: simd_quatd, rotation: simd_quatd) {
         smartWatchGravityEntries.append(gravity)
         smartWatchRotationEntries.append(rotation)
-        if smartWatchPointVector == nil { smartWatchPointVector = gravity }
+        if smartWatchPointVector == nil {
+            smartWatchPointVector = gravity
+            logController.addLogMessage(type: .info, msg: "Wudica sent an init!")
+        }
         if let smartWatchPointVector = smartWatchPointVector {
             let result = rotation * smartWatchPointVector * rotation.conjugate
             let norm = (result.vector.x * result.vector.x) + (result.vector.y * result.vector.y) + (result.vector.z * result.vector.z)
