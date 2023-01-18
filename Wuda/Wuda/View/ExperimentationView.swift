@@ -14,7 +14,7 @@ struct ExperimentationView: View {
     @ObservedObject private var motionController = MotionController.shared
     @ObservedObject private var logController = LogController.shared
     
-    @State private var sphericalScene : SphericalScene = SphericalScene()
+    @State private var sphericalScene : SphericalScene = SphericalScene(isoPattern: .geodasicPattern8)
     @State private var centerPointsOnGeodesicIcosahedron : [Int: SCNVector3] = [:]
     @State private var anglePlaneIdx : Double = 0.0
     @State private var pointColor = Color(.sRGB, red: 122/255, green: 39/255, blue: 161/255)
