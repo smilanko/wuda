@@ -72,6 +72,9 @@ struct ExperimentationView: View {
             }.padding()
             
         }
+        .onChange(of: pointColor, perform: { newColor in
+            sphericalScene.updatePointColors(newColor: NSColor(newColor))
+        })
         .onReceive(motionController.$positions, perform: { newPoints in
             if let lastPoint = newPoints.last {
                 let latestMotionPoint = SCNVector3Make(lastPoint.x, lastPoint.y, lastPoint.z)

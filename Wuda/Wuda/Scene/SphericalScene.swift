@@ -74,6 +74,15 @@ class SphericalScene : SCNScene {
         }
     }
     
+    public func updatePointColors(newColor: NSColor) {
+        logController.addLogMessage(type: .info, msg: "Updating sphere color")
+        if let sphere = self.rootNode.childNodes.first {
+            sphere.enumerateChildNodes { (node, stop) in
+                node.geometry?.firstMaterial?.diffuse.contents = newColor
+            }
+        }
+    }
+    
     public func getClosestFaceToPoint(pt: SCNVector3) -> Int {
         var closestKey : Int = 0
         var closestDist : Float = Float.infinity
