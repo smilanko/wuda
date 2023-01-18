@@ -59,9 +59,9 @@ struct ExperimentationView: View {
                 ForEach(faces) { face in
                     ZStack {
                         Square(color: pointColor.opacity(face.count / totalEntries )).border(.black.opacity(0.2))
-                        Text("\(face.id)").opacity(0.2)
+                        Text("\(face.id)").opacity(0.7)
                     }
-                }.background(Color(Constants.atmosphereColor.withAlphaComponent(0.15)))
+                }.background(Color(Constants.atmosphereColor).opacity(0.15))
             }).frame(maxWidth: .infinity)
 
             // log views
