@@ -79,12 +79,17 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
         if smartWatchPointVector == nil { smartWatchPointVector = gravity }
         if let smartWatchPointVector = smartWatchPointVector {
             let result = rotation * smartWatchPointVector * rotation.conjugate
-            positions.append(Position(x: result.vector.x, y: result.vector.y, z: result.vector.z))
+            let norm = (result.vector.x * result.vector.x) + (result.vector.y * result.vector.y) + (result.vector.z * result.vector.z)
+            positions.append(Position(x: result.vector.x, y: result.vector.y, z: result.vector.z, xAngle: getAngle(axis: result.vector.x, norm: norm), yAngle: getAngle(axis: result.vector.y, norm: norm), zAngle: getAngle(axis: result.vector.z, norm: norm)))
         }
     }
     
     public func toggleUpdates() {
         pauseDataUpdates.toggle()
+    }
+    
+    private func getAngle(axis: Double, norm: Double) -> Double {
+        return Measurement(value: acos(axis / norm), unit: UnitAngle.radians).converted(to: .degrees).value
     }
 
 }

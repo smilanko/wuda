@@ -42,6 +42,19 @@ class SphericalScene : SCNScene {
             }
         }
         
+        let anglesSphere = SCNSphere(radius: radius - 0.8)
+        anglesSphere.firstMaterial?.diffuse.contents = Constants.atmosphereColor.withAlphaComponent(0.3)
+        let anglesSphereNode = SCNNode(geometry: anglesSphere)
+        anglesSphereNode.position = SCNVector3Zero
+        anglesSphereNode.name = Constants.rootNodeForAngles
+        
+        let telescopeGeometry = SCNCylinder(radius: 0.005, height: 0.05)
+        telescopeGeometry.firstMaterial?.diffuse.contents = NSColor.black
+        let telescopeNode = SCNNode(geometry: telescopeGeometry)
+        telescopeNode.name = Constants.rootNodeForTelescope
+        telescopeNode.look(at: SCNVector3(1, 0, 0))
+        anglesSphereNode.addChildNode(telescopeNode)
+        
         let camera = SCNCamera()
         let cameraNode = SCNNode()
         cameraNode.camera = camera
@@ -49,6 +62,7 @@ class SphericalScene : SCNScene {
         
         self.rootNode.addChildNode(sphereNode)
         self.rootNode.addChildNode(geodesicIcosahedron)
+        self.rootNode.addChildNode(anglesSphereNode)
         self.rootNode.addChildNode(cameraNode)
     }
     
@@ -63,6 +77,23 @@ class SphericalScene : SCNScene {
             pointNode.position = latestPoint
             sphere.addChildNode(pointNode)
         }
+    }
+    
+    public func addAngle(latestPoint: SCNVector3, angles: [Double]) {
+        if let anglesSphere = self.rootNode.childNodes.first(where: { $0.name == Constants.rootNodeForAngles }) {
+            // update our telescope
+            if let telescope = anglesSphere.childNodes.first(where: { $0.name == Constants.rootNodeForTelescope }) {
+                telescope.look(at: latestPoint, up: SCNVector3(0, 1, 0), localFront: SCNVector3(0, 1, 0))
+            }
+            
+            // redraw our axis
+            anglesSphere.childNodes.filter({ $0.name != Constants.rootNodeForTelescope }).forEach({ $0.removeFromParentNode() })
+            anglesSphere.addChildNode(createAxisAngle(angles[0], pos: SCNVector3(0.1,0,0)))
+            anglesSphere.addChildNode(createAxisAngle(angles[1], pos: SCNVector3(0,0.1,0)))
+            anglesSphere.addChildNode(createAxisAngle(angles[2], pos: SCNVector3(0,0,0.1)))
+        }
+
+
     }
     
     public func clearPoints() {
@@ -98,6 +129,16 @@ class SphericalScene : SCNScene {
     
     public func getTotalFaces() -> Int {
         return totalFaces
+    }
+    
+    private func createAxisAngle(_ degrees: Double, pos: SCNVector3) -> SCNNode {
+        let txt = SCNText(string: String(format: "%.2f", degrees), extrusionDepth: 1)
+        txt.font = .systemFont(ofSize: 3)
+        txt.firstMaterial?.diffuse.contents = NSColor.black
+        let node = SCNNode(geometry: txt)
+        node.scale = SCNVector3(0.01, 0.01, 0.001) // adjust the scale
+        node.position = pos
+        return node
     }
 
     required init?(coder: NSCoder) {

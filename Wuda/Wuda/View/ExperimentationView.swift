@@ -50,7 +50,7 @@ struct ExperimentationView: View {
                 }
             }.padding()
             // the sphere
-            SphericalView(scene: sphericalScene)
+            SphericalView(scene: sphericalScene).padding()
             
             // the map
             let totalEntries = Double(faces.filter({ $0.count > 0 }).count)
@@ -61,7 +61,7 @@ struct ExperimentationView: View {
                         Text("\(face.id)").opacity(0.7)
                     }
                 }.background(Color(Constants.atmosphereColor).opacity(0.15))
-            }).frame(maxWidth: .infinity)
+            }).padding().frame(maxWidth: .infinity)
 
             // log views
             LogView {
@@ -79,6 +79,7 @@ struct ExperimentationView: View {
                 let latestMotionPoint = SCNVector3Make(lastPoint.x, lastPoint.y, lastPoint.z)
                 let closestFace = sphericalScene.getClosestFaceToPoint(pt: latestMotionPoint)
                 sphericalScene.addPoint(latestPoint: latestMotionPoint, pointColor: pointColor)
+                sphericalScene.addAngle(latestPoint: latestMotionPoint, angles: [lastPoint.xAngle, lastPoint.yAngle, lastPoint.zAngle])
                 faces[closestFace].count += 1
             }
         })

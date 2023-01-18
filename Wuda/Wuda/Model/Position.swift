@@ -12,4 +12,7 @@ struct Position : Identifiable {
     let x : Double
     let y : Double
     let z : Double
+    let xAngle : Double
+    let yAngle : Double
+    let zAngle : Double
 }
