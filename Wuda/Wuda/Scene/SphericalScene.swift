@@ -42,8 +42,9 @@ class SphericalScene : SCNScene {
             }
         }
         
-        let anglesSphere = SCNSphere(radius: radius - 0.8)
-        anglesSphere.firstMaterial?.diffuse.contents = Constants.atmosphereColor.withAlphaComponent(0.3)
+        let anglesSphere = SCNSphere(radius: radius - 0.7)
+        anglesSphere.firstMaterial?.diffuse.contents = Constants.atmosphereColor
+        anglesSphere.firstMaterial?.isDoubleSided = true
         let anglesSphereNode = SCNNode(geometry: anglesSphere)
         anglesSphereNode.position = SCNVector3Zero
         anglesSphereNode.name = Constants.rootNodeForAngles
@@ -88,9 +89,9 @@ class SphericalScene : SCNScene {
             
             // redraw our axis
             anglesSphere.childNodes.filter({ $0.name != Constants.rootNodeForTelescope }).forEach({ $0.removeFromParentNode() })
-            anglesSphere.addChildNode(createAxisAngle(angles[0], pos: SCNVector3(0.1,0,0)))
-            anglesSphere.addChildNode(createAxisAngle(angles[1], pos: SCNVector3(0,0.1,0)))
-            anglesSphere.addChildNode(createAxisAngle(angles[2], pos: SCNVector3(0,0,0.1)))
+            anglesSphere.addChildNode(createAxisAngle(angles[0], pos: SCNVector3(0.05,0,0)))
+            anglesSphere.addChildNode(createAxisAngle(angles[1], pos: SCNVector3(0,0.05,0)))
+            anglesSphere.addChildNode(createAxisAngle(angles[2], pos: SCNVector3(-0.05,0,-0.05)))
         }
 
 
@@ -136,7 +137,7 @@ class SphericalScene : SCNScene {
         txt.font = .systemFont(ofSize: 3)
         txt.firstMaterial?.diffuse.contents = NSColor.black
         let node = SCNNode(geometry: txt)
-        node.scale = SCNVector3(0.01, 0.01, 0.001) // adjust the scale
+        node.scale = SCNVector3(0.005, 0.005, 0.001) // adjust the scale
         node.position = pos
         return node
     }
