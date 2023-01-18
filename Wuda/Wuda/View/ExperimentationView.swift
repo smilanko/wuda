@@ -18,7 +18,6 @@ struct ExperimentationView: View {
     @State private var sphericalScene : SphericalScene = SphericalScene(isoPattern: .geodasicPattern4)
     @State private var rows : [GridItem] = []
     @State private var faces : [FaceOnMap] = []
-    @State private var closestFace : Int = -1
 
     var body: some View {
         VStack {
@@ -78,7 +77,7 @@ struct ExperimentationView: View {
         .onReceive(motionController.$positions, perform: { newPoints in
             if let lastPoint = newPoints.last {
                 let latestMotionPoint = SCNVector3Make(lastPoint.x, lastPoint.y, lastPoint.z)
-                closestFace = sphericalScene.getClosestFaceToPoint(pt: latestMotionPoint)
+                let closestFace = sphericalScene.getClosestFaceToPoint(pt: latestMotionPoint)
                 sphericalScene.addPoint(latestPoint: latestMotionPoint, pointColor: pointColor)
                 faces[closestFace].count += 1
             }

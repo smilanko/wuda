@@ -23,7 +23,7 @@ class SphericalScene : SCNScene {
         super.init()
         
         let sphere = SCNSphere(radius: radius)
-        sphere.firstMaterial?.diffuse.contents = Constants.atmosphereColor.withAlphaComponent(0.15)
+        sphere.firstMaterial?.diffuse.contents = Constants.atmosphereColor.withAlphaComponent(0.2)
         let sphereNode = SCNNode(geometry: sphere)
         sphereNode.position = SCNVector3Zero
         sphereNode.name = Constants.rootNodeConstant
