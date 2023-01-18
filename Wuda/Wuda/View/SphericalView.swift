@@ -20,6 +20,8 @@ struct SphericalView: NSViewRepresentable {
         view.autoenablesDefaultLighting = true
         view.showsStatistics = false
         view.backgroundColor = .clear
+        // show the world axis
+        view.debugOptions = [SCNDebugOptions(rawValue: 2048)]
         return view
     }
     

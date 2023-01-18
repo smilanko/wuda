@@ -22,6 +22,9 @@
 		CFBF23A42975F40500006A9A /* GeodesicIcosahedron2.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBF23A32975F40500006A9A /* GeodesicIcosahedron2.swift */; };
 		CFBF23A62975F4F900006A9A /* GeodesicIcosahedron8.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBF23A52975F4F900006A9A /* GeodesicIcosahedron8.swift */; };
 		CFBF23B029776A4700006A9A /* GeodesicIcosahedron4.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBF23AF29776A4700006A9A /* GeodesicIcosahedron4.swift */; };
+		CFCC13742977865800144668 /* SquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFCC13732977865800144668 /* SquareView.swift */; };
+		CFCC137629778ECF00144668 /* Icosahedron.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFCC137529778ECF00144668 /* Icosahedron.swift */; };
+		CFCC13782977964300144668 /* FaceOnMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFCC13772977964300144668 /* FaceOnMap.swift */; };
 		CFD5A5BE296BA87B00708441 /* WudaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD5A5BD296BA87B00708441 /* WudaApp.swift */; };
 		CFD5A5C2296BA87B00708441 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFD5A5C1296BA87B00708441 /* Assets.xcassets */; };
 		CFD5A5C5296BA87C00708441 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFD5A5C4296BA87C00708441 /* Preview Assets.xcassets */; };
@@ -46,6 +49,9 @@
 		CFBF23A32975F40500006A9A /* GeodesicIcosahedron2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeodesicIcosahedron2.swift; sourceTree = "<group>"; };
 		CFBF23A52975F4F900006A9A /* GeodesicIcosahedron8.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeodesicIcosahedron8.swift; sourceTree = "<group>"; };
 		CFBF23AF29776A4700006A9A /* GeodesicIcosahedron4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeodesicIcosahedron4.swift; sourceTree = "<group>"; };
+		CFCC13732977865800144668 /* SquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareView.swift; sourceTree = "<group>"; };
+		CFCC137529778ECF00144668 /* Icosahedron.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icosahedron.swift; sourceTree = "<group>"; };
+		CFCC13772977964300144668 /* FaceOnMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceOnMap.swift; sourceTree = "<group>"; };
 		CFD5A5BA296BA87B00708441 /* Wuda.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wuda.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFD5A5BD296BA87B00708441 /* WudaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WudaApp.swift; sourceTree = "<group>"; };
 		CFD5A5C1296BA87B00708441 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -71,6 +77,7 @@
 			isa = PBXGroup;
 			children = (
 				CF73BC41296D1FA900CC5012 /* Constants.swift */,
+				CFCC13772977964300144668 /* FaceOnMap.swift */,
 				CF44F975297479A700EF96E2 /* Position.swift */,
 			);
 			path = Model;
@@ -82,6 +89,7 @@
 				CFD5A5CE296BC2D400708441 /* ExperimentationView.swift */,
 				CF44F97129746B9000EF96E2 /* LogView.swift */,
 				CF44F97A2974C16600EF96E2 /* SphericalView.swift */,
+				CFCC13732977865800144668 /* SquareView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -90,6 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				CFBF239C2975E77A00006A9A /* Patterns */,
+				CFCC137529778ECF00144668 /* Icosahedron.swift */,
 				CF903A5E296F57F90018D17D /* SCNIcosahedron.swift */,
 				CFD5A5D2296CBD4500708441 /* SphericalScene.swift */,
 			);
@@ -246,12 +255,15 @@
 				CF44F97929747F3300EF96E2 /* Date+Formatted.swift in Sources */,
 				CFBF23A02975E8B200006A9A /* Pattern.swift in Sources */,
 				CF44F97B2974C16600EF96E2 /* SphericalView.swift in Sources */,
+				CFCC137629778ECF00144668 /* Icosahedron.swift in Sources */,
 				CF44F9802974D0E200EF96E2 /* LogController.swift in Sources */,
 				CFBF23A62975F4F900006A9A /* GeodesicIcosahedron8.swift in Sources */,
 				CF44F976297479A700EF96E2 /* Position.swift in Sources */,
+				CFCC13742977865800144668 /* SquareView.swift in Sources */,
 				CFBF23A42975F40500006A9A /* GeodesicIcosahedron2.swift in Sources */,
 				CFBF23B029776A4700006A9A /* GeodesicIcosahedron4.swift in Sources */,
 				CFBF239E2975E7A000006A9A /* GeodesicIcosahedron1.swift in Sources */,
+				CFCC13782977964300144668 /* FaceOnMap.swift in Sources */,
 				CFD5A5CD296BA8CF00708441 /* MotionController.swift in Sources */,
 				CF903A5F296F57F90018D17D /* SCNIcosahedron.swift in Sources */,
 				CFD5A5CF296BC2D400708441 /* ExperimentationView.swift in Sources */,

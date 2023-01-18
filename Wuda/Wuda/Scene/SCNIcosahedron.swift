@@ -16,20 +16,22 @@ enum IcosahedronPattern {
     case geodasicPattern16
 }
 
-class SCNIcosahedron : SCNNode {
+class SCNIcosahedron : SCNNode, Icosahedron {
+    
+    private var facesCount : Int = 0
     
     init(isoPattern: IcosahedronPattern) {
         super.init()
         
-        let pattern : Pattern = getPatternFromType(isoPattern: isoPattern)
+        let pattern = getPatternFromType(isoPattern: isoPattern)
         let vertices = pattern.generateVertices()
         let faces = pattern.generateFaces()
 
         var faceGeometries = [SCNGeometry]()
         var centers = [SCNVector3]()
         
-        let totalIterations = faces.count / 3
-        for i in 0..<totalIterations {
+        facesCount = faces.count / 3
+        for i in 0..<facesCount {
             let faceVertices = [vertices[Int(faces[i*3])], vertices[Int(faces[i*3+1])], vertices[Int(faces[i*3+2])]]
             
             // prepare centers
@@ -94,10 +96,14 @@ class SCNIcosahedron : SCNNode {
         return node
     }
     
-    func normalize(vector: SCNVector3) -> SCNVector3 {
+    private func normalize(vector: SCNVector3) -> SCNVector3 {
         let length = sqrt(pow(vector.x, 2) + pow(vector.y, 2) + pow(vector.z, 2))
         return SCNVector3Make(vector.x / length, vector.y / length, vector.z / length)
     }
     
+    func getFacesCount() -> Int {
+        return facesCount
+    }
+
 }
 

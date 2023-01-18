@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct WudaApp: App {
     var body: some Scene {
-        WindowGroup("Experimentation") {
+        WindowGroup("Wuda") {
             ExperimentationView()
                 .onAppear {
                     NSWindow.allowsAutomaticWindowTabbing = false

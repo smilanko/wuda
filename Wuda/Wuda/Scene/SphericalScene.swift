@@ -14,7 +14,8 @@ import simd
 class SphericalScene : SCNScene {
     
     @ObservedObject private var logController = LogController.shared
-    private let atmosphereColor : NSColor = NSColor(red: 192/255, green: 210/255, blue: 218/255, alpha: 1)
+    
+    private var totalFaces : Int = 0
     private var faceToCenterMapping : [Int: SCNVector3] = [:]
     private let radius = 1.0
     
@@ -22,7 +23,7 @@ class SphericalScene : SCNScene {
         super.init()
         
         let sphere = SCNSphere(radius: radius)
-        sphere.firstMaterial?.diffuse.contents = atmosphereColor.withAlphaComponent(0.2)
+        sphere.firstMaterial?.diffuse.contents = Constants.atmosphereColor.withAlphaComponent(0.15)
         let sphereNode = SCNNode(geometry: sphere)
         sphereNode.position = SCNVector3Zero
         sphereNode.name = Constants.rootNodeConstant
@@ -31,6 +32,7 @@ class SphericalScene : SCNScene {
         let geodesicIcosahedron = SCNIcosahedron(isoPattern: isoPattern)
         geodesicIcosahedron.transform = SCNMatrix4MakeScale(giRadius, giRadius, giRadius)
         geodesicIcosahedron.name = Constants.rootNodeForGeodasicMap
+        totalFaces = geodesicIcosahedron.getFacesCount()
         
         let geoChildren = geodesicIcosahedron.childNodes
         for mapEntry in stride(from: 0, to:geoChildren.count, by: 3) {
@@ -40,8 +42,14 @@ class SphericalScene : SCNScene {
             }
         }
         
+        let camera = SCNCamera()
+        let cameraNode = SCNNode()
+        cameraNode.camera = camera
+        cameraNode.position = SCNVector3(0, 0, 2)
+        
         self.rootNode.addChildNode(sphereNode)
         self.rootNode.addChildNode(geodesicIcosahedron)
+        self.rootNode.addChildNode(cameraNode)
     }
     
     public func addPoint(latestPoint: SCNVector3, pointColor: Color) {
@@ -77,6 +85,10 @@ class SphericalScene : SCNScene {
             }
         })
         return closestKey
+    }
+    
+    public func getTotalFaces() -> Int {
+        return totalFaces
     }
 
     required init?(coder: NSCoder) {

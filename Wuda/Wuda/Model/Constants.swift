@@ -13,6 +13,8 @@ struct Constants {
     
     private init() {}
     
+    public static let squareSize : CGFloat = 15.0
+    
     public static let xAxis = "x-axis"
     public static let yAxis = "y-axis"
     public static let zAxis = "z-axis"
@@ -44,5 +46,6 @@ struct Constants {
     
     public static let gradientStartColor = NSColor(red: 255/255,green: 206/255,blue: 97/255, alpha: 1.0)
     public static let gradientEndColor = NSColor(red: 191/255, green: 52/255, blue: 117/255, alpha: 1.0)
+    public static let atmosphereColor = NSColor(red: 192/255, green: 210/255, blue: 218/255, alpha: 1)
     
 }

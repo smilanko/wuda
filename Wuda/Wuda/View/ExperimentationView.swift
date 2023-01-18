@@ -14,17 +14,15 @@ struct ExperimentationView: View {
     @ObservedObject private var motionController = MotionController.shared
     @ObservedObject private var logController = LogController.shared
     
-    @State private var sphericalScene : SphericalScene = SphericalScene(isoPattern: .geodasicPattern8)
-    @State private var centerPointsOnGeodesicIcosahedron : [Int: SCNVector3] = [:]
-    @State private var anglePlaneIdx : Double = 0.0
     @State private var pointColor = Color(.sRGB, red: 122/255, green: 39/255, blue: 161/255)
-    @State private var clearScatterPlot: Bool = true
+    @State private var sphericalScene : SphericalScene = SphericalScene(isoPattern: .geodasicPattern4)
+    @State private var rows : [GridItem] = []
+    @State private var faces : [FaceOnMap] = []
     @State private var closestFace : Int = -1
-    
-    private let gradient = Gradient(colors: [ Color(Constants.gradientStartColor), Color(Constants.gradientEndColor) ])
-    
+
     var body: some View {
         VStack {
+            
             // controls
             HStack {
                 HStack {
@@ -37,7 +35,9 @@ struct ExperimentationView: View {
                     }
                     Button {
                         sphericalScene.clearPoints()
-                        clearScatterPlot.toggle()
+                        faces.forEach({ entry in
+                            faces[entry.id].count = 0
+                        })
                     } label: {
                         Text("Clear Points")
                         Image(systemName: "trash.square.fill").foregroundColor(.red)
@@ -50,26 +50,44 @@ struct ExperimentationView: View {
                     }
                 }
             }.padding()
-            // visuals
+            // the sphere
             SphericalView(scene: sphericalScene)
             
-            HStack {
-                // log views
-                LogView {
-                    List(logController.logMessages) { logMsg in
-                        Text(logMsg.id.isoDate + " " + logMsg.type.rawValue + " " + logMsg.msg)
+            // the map
+            let totalEntries = Double(faces.filter({ $0.count > 0 }).count)
+            LazyHGrid(rows: rows, alignment: .center, spacing: 0, pinnedViews: [], content: {
+                ForEach(faces) { face in
+                    ZStack {
+                        Square(color: pointColor.opacity(face.count / totalEntries )).border(.black.opacity(0.2))
+                        Text("\(face.id)").opacity(0.2)
                     }
+                }.background(Color(Constants.atmosphereColor.withAlphaComponent(0.15)))
+            }).frame(maxWidth: .infinity)
+
+            // log views
+            LogView {
+                List(logController.logMessages) { logMsg in
+                    Text(logMsg.id.isoDate + " " + logMsg.type.rawValue + " " + logMsg.msg)
                 }
-                // position on map
-                (Text("(x+👉, y+👆, z-🫵)") + Text("\tCurrent Position: ") + Text("\(closestFace)").foregroundColor(.red))
             }.padding()
-        }.onReceive(motionController.$positions, perform: { newPoints in
+            
+        }
+        .onReceive(motionController.$positions, perform: { newPoints in
             if let lastPoint = newPoints.last {
                 let latestMotionPoint = SCNVector3Make(lastPoint.x, lastPoint.y, lastPoint.z)
                 closestFace = sphericalScene.getClosestFaceToPoint(pt: latestMotionPoint)
                 sphericalScene.addPoint(latestPoint: latestMotionPoint, pointColor: pointColor)
+                faces[closestFace].count += 1
             }
         })
+        .onAppear {
+            for idx in 0..<sphericalScene.getTotalFaces() {
+                faces.append(FaceOnMap(id: idx, count: 0))
+            }
+            for _ in 0..<(sphericalScene.getTotalFaces() / 20) {
+                rows.append(GridItem(.fixed(Constants.squareSize), spacing: 0, alignment: .center))
+            }
+        }
     }
     
 }
