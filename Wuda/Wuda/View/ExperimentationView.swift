@@ -36,10 +36,23 @@ struct ExperimentationView: View {
                         Image(systemName: "wand.and.stars")
                     }
                     Button {
+                        let currentUpdateState = motionController.pauseDataUpdates
+                        if !currentUpdateState {
+                            logController.addLogMessage(type: .info, msg: "Pausing data updates while cleaning")
+                            motionController.toggleUpdates()
+                        }
+                        // clear the sphere
                         sphericalScene.clearPoints()
+                        // clear the face map
                         faces.forEach({ entry in
                             faces[entry.id].count = 0
                         })
+                        // clear the memory
+                        motionController.clearMemory()
+                        if motionController.pauseDataUpdates != currentUpdateState {
+                            logController.addLogMessage(type: .info, msg: "Cleanup complete. Enabling data updates")
+                            motionController.toggleUpdates()
+                        }
                     } label: {
                         Text("Clear Points")
                         Image(systemName: "trash.square.fill").foregroundColor(.red)
@@ -53,7 +66,7 @@ struct ExperimentationView: View {
                 }
             }.padding()
 
-            // quaternions
+            // quaternion shift
             HStack {
                 Text("shift = ( ")
                 Stepper(value: $xShift, in: 0...360) { Text("x:\(Int(xShift)),") }.disabled( yShift > 0 || zShift > 0)
@@ -61,10 +74,10 @@ struct ExperimentationView: View {
                 Stepper(value: $zShift, in: 0...360) { Text("z:\(Int(zShift))") }.disabled( xShift > 0 || yShift > 0)
                 Text(" )")
             }
-            // the sphere
+            // sphere with the points
             SphericalView(scene: sphericalScene).padding()
             
-            // the map
+            // map of faces
             let totalEntries = Double(faces.filter({ $0.count > 0 }).count)
             LazyHGrid(rows: rows, alignment: .center, spacing: 0, pinnedViews: [], content: {
                 ForEach(faces) { face in
@@ -75,7 +88,7 @@ struct ExperimentationView: View {
                 }.background(Color(Constants.atmosphereColor).opacity(0.15))
             }).padding().frame(maxWidth: .infinity)
 
-            // log views
+            // logs
             LogView {
                 List(logController.logMessages) { logMsg in
                     Text(logMsg.id.isoDate + " " + logMsg.type.rawValue + " " + logMsg.msg)
@@ -84,18 +97,25 @@ struct ExperimentationView: View {
             
         }
         .onChange(of: pointColor, perform: { newColor in
+            // when we change the color, we need to change the scene
+            // the map will change by itself, since it binds to pointColor
             sphericalScene.updatePointColors(newColor: NSColor(newColor))
         })
         .onChange(of: xShift, perform: { newX in
+            // only shift along the x axis
             motionController.updateShift(x: newX, y: 0, z: 0)
         })
         .onChange(of: yShift, perform: { newY in
+            // only shift along the y axis
             motionController.updateShift(x: 0, y: newY, z: 0)
         })
         .onChange(of: zShift, perform: { newZ in
+            // only shift along the z axis
             motionController.updateShift(x: 0, y: 0, z: newZ)
         })
         .onReceive(motionController.$positions, perform: { newPoints in
+            // when we receive a new position form the motion controller,
+            // we have to update the sphere ( 3d ), the angle ( 2d ), the map ( 1d )
             if let lastPoint = newPoints.last {
                 let latestMotionPoint = SCNVector3Make(lastPoint.x, lastPoint.y, lastPoint.z)
                 let closestFace = sphericalScene.getClosestFaceToPoint(pt: latestMotionPoint)
@@ -105,9 +125,11 @@ struct ExperimentationView: View {
             }
         })
         .onAppear {
+            // build the number of faces for our 1d map
             for idx in 0..<sphericalScene.getTotalFaces() {
                 faces.append(FaceOnMap(id: idx, count: 0))
             }
+            // build the map using a grid system
             for _ in 0..<(sphericalScene.getTotalFaces() / 20) {
                 rows.append(GridItem(.fixed(Constants.squareSize), spacing: 0, alignment: .center))
             }

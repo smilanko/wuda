@@ -32,6 +32,7 @@
 		CFD5A5CD296BA8CF00708441 /* MotionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD5A5CC296BA8CF00708441 /* MotionController.swift */; };
 		CFD5A5CF296BC2D400708441 /* ExperimentationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD5A5CE296BC2D400708441 /* ExperimentationView.swift */; };
 		CFD5A5D3296CBD4500708441 /* SphericalScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD5A5D2296CBD4500708441 /* SphericalScene.swift */; };
+		CFEF2600297A0BF800A3D8CF /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF25FF297A0BF800A3D8CF /* History.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +63,7 @@
 		CFD5A5CC296BA8CF00708441 /* MotionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionController.swift; sourceTree = "<group>"; };
 		CFD5A5CE296BC2D400708441 /* ExperimentationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperimentationView.swift; sourceTree = "<group>"; };
 		CFD5A5D2296CBD4500708441 /* SphericalScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphericalScene.swift; sourceTree = "<group>"; };
+		CFEF25FF297A0BF800A3D8CF /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 			children = (
 				CF73BC41296D1FA900CC5012 /* Constants.swift */,
 				CFCC13772977964300144668 /* FaceOnMap.swift */,
+				CFEF25FF297A0BF800A3D8CF /* History.swift */,
 				CF44F975297479A700EF96E2 /* Position.swift */,
 			);
 			path = Model;
@@ -268,6 +271,7 @@
 				CFBF23B029776A4700006A9A /* GeodesicIcosahedron4.swift in Sources */,
 				CFBF239E2975E7A000006A9A /* GeodesicIcosahedron1.swift in Sources */,
 				CFCC13782977964300144668 /* FaceOnMap.swift in Sources */,
+				CFEF2600297A0BF800A3D8CF /* History.swift in Sources */,
 				CFD5A5CD296BA8CF00708441 /* MotionController.swift in Sources */,
 				CF903A5F296F57F90018D17D /* SCNIcosahedron.swift in Sources */,
 				CFD5A5CF296BC2D400708441 /* ExperimentationView.swift in Sources */,

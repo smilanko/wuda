@@ -13,6 +13,7 @@
 		CFD5A5A0296B90B200708441 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFD5A59F296B90B200708441 /* Assets.xcassets */; };
 		CFD5A5A3296B90B200708441 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFD5A5A2296B90B200708441 /* Preview Assets.xcassets */; };
 		CFD5A5AE296B918E00708441 /* MotionObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD5A5AD296B918E00708441 /* MotionObserver.swift */; };
+		CFEF25FE297A07C500A3D8CF /* OrientationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF25FD297A07C400A3D8CF /* OrientationCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		CFD5A5AD296B918E00708441 /* MotionObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionObserver.swift; sourceTree = "<group>"; };
 		CFD5A5AF296BA2FB00708441 /* Wudica-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Wudica-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
 		CFD5A5B0296BA7F900708441 /* Wudica Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Wudica Watch App.entitlements"; sourceTree = "<group>"; };
+		CFEF25FD297A07C400A3D8CF /* OrientationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 				CFD5A59F296B90B200708441 /* Assets.xcassets */,
 				CFD5A59D296B90B100708441 /* ContentView.swift */,
 				CFD5A5AD296B918E00708441 /* MotionObserver.swift */,
+				CFEF25FD297A07C400A3D8CF /* OrientationCoordinator.swift */,
 				CFD5A5B0296BA7F900708441 /* Wudica Watch App.entitlements */,
 				CFD5A5AF296BA2FB00708441 /* Wudica-Watch-App-Info.plist */,
 				CFD5A59B296B90B100708441 /* WudicaApp.swift */,
@@ -202,6 +205,7 @@
 				CFD5A5AE296B918E00708441 /* MotionObserver.swift in Sources */,
 				CFD5A59E296B90B100708441 /* ContentView.swift in Sources */,
 				CFD5A59C296B90B100708441 /* WudicaApp.swift in Sources */,
+				CFEF25FE297A07C500A3D8CF /* OrientationCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

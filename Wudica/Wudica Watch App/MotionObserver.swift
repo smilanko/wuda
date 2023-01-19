@@ -9,6 +9,7 @@ import Foundation
 import CoreMotion
 import CoreBluetooth
 import HealthKit
+import WatchKit
 
 class MotionObserver : NSObject, ObservableObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
@@ -24,17 +25,17 @@ class MotionObserver : NSObject, ObservableObject, CBCentralManagerDelegate, CBP
     
     @Published public var isRunning: Bool = false
     
-    private var motionManager: CMMotionManager = CMMotionManager()
+    private let motionManager: CMMotionManager = CMMotionManager()
     private let healthStore = HKHealthStore()
+    private let wudaPeripheralService: String = "12345678-1234-1234-1234-123456789012"
+    private let wudaPeripheralMotionCharacteristic: String = "12345678-1234-1234-1234-123456789013"
     
     private var peripheralManager: CBCentralManager!
     private var motionPeripheral: CBPeripheral!
     private var transferCharacteristic: CBMutableCharacteristic!
     private var motionCharacteristic: CBCharacteristic?
     private var workoutSession: HKWorkoutSession?
-    
-    private var wudaPeripheralService: String = "12345678-1234-1234-1234-123456789012"
-    private var wudaPeripheralMotionCharacteristic: String = "12345678-1234-1234-1234-123456789013"
+    private var currentHandOrientation : Double = 0.0
 
     override init() {
         super.init()
@@ -51,11 +52,12 @@ class MotionObserver : NSObject, ObservableObject, CBCentralManagerDelegate, CBP
     
     public func start() {
         workoutSession!.startActivity(with: Date())
+        currentHandOrientation = OrientationCoordinator().standardize(wristLocation: WKInterfaceDevice.current().wristLocation, crownLocation: WKInterfaceDevice.current().crownOrientation)
         print("[INFO] Starting workout")
         if motionManager.isDeviceMotionAvailable {
             isRunning = true
             motionManager.deviceMotionUpdateInterval = 0.01
-            motionManager.startDeviceMotionUpdates(to: .main) { (motion, error) in
+            motionManager.startDeviceMotionUpdates(using: .xArbitraryCorrectedZVertical, to: .main) { (motion, error) in
                 guard let motion = motion else {
                     return
                 }
@@ -66,7 +68,7 @@ class MotionObserver : NSObject, ObservableObject, CBCentralManagerDelegate, CBP
                 self.gx = motion.gravity.x
                 self.gy = motion.gravity.y
                 self.gz = motion.gravity.z
-                self.send(motionData: [motion.gravity.x, motion.gravity.y, motion.gravity.z, motion.attitude.quaternion.w, motion.attitude.quaternion.x, motion.attitude.quaternion.y, motion.attitude.quaternion.z])
+                self.send(motionData: [motion.gravity.x, motion.gravity.y, motion.gravity.z, motion.attitude.quaternion.w, motion.attitude.quaternion.x, motion.attitude.quaternion.y, motion.attitude.quaternion.z, self.currentHandOrientation, Double(Date().timeIntervalSince1970)])
             }
         }
     }

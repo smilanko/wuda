@@ -15,6 +15,7 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
     @ObservedObject private var logController = LogController.shared
     @Published private(set) var positions : [Position] = []
     @Published private(set) var pauseDataUpdates: Bool = false
+    @Published private(set) var dataHistory : [History] = []
     
     private var wudaPeripheralService = CBUUID(string: "12345678-1234-1234-1234-123456789012")
     private var wudaPeripheralMotionCharacteristicUuid = CBUUID(string: "12345678-1234-1234-1234-123456789013")
@@ -68,13 +69,16 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
                     // Use the motion data in your macOS app.
                     var arr2 = Array<Double>(repeating: 0, count: data.count/MemoryLayout<UInt32>.stride)
                     _ = arr2.withUnsafeMutableBytes { data.copyBytes(to: $0) }
-                    addPosition(gravity: simd_quatd(ix: arr2[0], iy: arr2[1], iz: arr2[2], r: 0), rotation: simd_quatd(ix: arr2[4], iy: arr2[5], iz: arr2[6], r: arr2[3]))
+                    let gravity: simd_quatd = simd_quatd(ix: arr2[0], iy: arr2[1], iz: arr2[2], r: 0)
+                    let rotation: simd_quatd = simd_quatd(ix: arr2[4], iy: arr2[5], iz: arr2[6], r: arr2[3])
+                    addPosition(gravity: gravity, rotation: rotation)
+                    addFullHistory(gravity: gravity, rotation: rotation, orientation: arr2[7], ts: arr2[8])
                 }
             }
         }
     }
     
-    public func addPosition(gravity: simd_quatd, rotation: simd_quatd) {
+    private func addPosition(gravity: simd_quatd, rotation: simd_quatd) {
         smartWatchGravityEntries.append(gravity)
         smartWatchRotationEntries.append(rotation)
         if smartWatchPointVector == nil {
@@ -89,6 +93,19 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
             let norm = (result.vector.x * result.vector.x) + (result.vector.y * result.vector.y) + (result.vector.z * result.vector.z)
             positions.append(Position(x: result.vector.x, y: result.vector.y, z: result.vector.z, xAngle: getAngle(axis: result.vector.x, norm: norm), yAngle: getAngle(axis: result.vector.y, norm: norm), zAngle: getAngle(axis: result.vector.z, norm: norm)))
         }
+    }
+    
+    private func addFullHistory(gravity: simd_quatd, rotation: simd_quatd, orientation: Double, ts: Double) {
+        dataHistory.append(History(gravity: gravity, rotation: rotation, orientation: orientation, time: ts))
+    }
+    
+    private func getAngle(axis: Double, norm: Double) -> Double {
+        return Measurement(value: acos(axis / norm), unit: UnitAngle.radians).converted(to: .degrees).value
+    }
+    
+    public func clearMemory() {
+        dataHistory.removeAll()
+        positions.removeAll()
     }
     
     public func toggleUpdates() {
@@ -121,10 +138,6 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
         logController.addLogMessage(type: .info, msg: "Quaternion shifting disabled")
         quaternionShift = nil
         return
-    }
-    
-    private func getAngle(axis: Double, norm: Double) -> Double {
-        return Measurement(value: acos(axis / norm), unit: UnitAngle.radians).converted(to: .degrees).value
     }
 
 }
