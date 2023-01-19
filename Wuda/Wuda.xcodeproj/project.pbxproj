@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CF05014B2978D9F8001E245F /* simd+Formatted.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF05014A2978D9F8001E245F /* simd+Formatted.swift */; };
 		CF44F97229746B9000EF96E2 /* LogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF44F97129746B9000EF96E2 /* LogView.swift */; };
 		CF44F976297479A700EF96E2 /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF44F975297479A700EF96E2 /* Position.swift */; };
 		CF44F97929747F3300EF96E2 /* Date+Formatted.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF44F97829747F3300EF96E2 /* Date+Formatted.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CF05014A2978D9F8001E245F /* simd+Formatted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "simd+Formatted.swift"; sourceTree = "<group>"; };
 		CF44F97129746B9000EF96E2 /* LogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogView.swift; sourceTree = "<group>"; };
 		CF44F975297479A700EF96E2 /* Position.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
 		CF44F97829747F3300EF96E2 /* Date+Formatted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Formatted.swift"; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				CF44F97C2974C79200EF96E2 /* Color+Random.swift */,
 				CF44F97829747F3300EF96E2 /* Date+Formatted.swift */,
 				CF44F9832974EDAE00EF96E2 /* SCNVector3+Distance.swift */,
+				CF05014A2978D9F8001E245F /* simd+Formatted.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -252,6 +255,7 @@
 				CF44F97D2974C79200EF96E2 /* Color+Random.swift in Sources */,
 				CFD5A5BE296BA87B00708441 /* WudaApp.swift in Sources */,
 				CF44F9842974EDAE00EF96E2 /* SCNVector3+Distance.swift in Sources */,
+				CF05014B2978D9F8001E245F /* simd+Formatted.swift in Sources */,
 				CF44F97929747F3300EF96E2 /* Date+Formatted.swift in Sources */,
 				CFBF23A02975E8B200006A9A /* Pattern.swift in Sources */,
 				CF44F97B2974C16600EF96E2 /* SphericalView.swift in Sources */,

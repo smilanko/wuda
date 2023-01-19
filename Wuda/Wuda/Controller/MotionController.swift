@@ -22,6 +22,7 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
     private var smartWatchRotationEntries : [simd_quatd] = []
     
     private var smartWatchPointVector : simd_quatd?
+    private var quaternionShift : simd_quatd?
     private var peripheralManager: CBPeripheralManager!
     private var motionService: CBMutableService!
     private var motionDataCharacteristic: CBMutableCharacteristic!
@@ -81,7 +82,10 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
             logController.addLogMessage(type: .info, msg: "Wudica sent an init!")
         }
         if let smartWatchPointVector = smartWatchPointVector {
-            let result = rotation * smartWatchPointVector * rotation.conjugate
+            var result = rotation * smartWatchPointVector * rotation.conjugate
+            if let quaternionShift = quaternionShift {
+                result = quaternionShift * result * quaternionShift.conjugate
+            }
             let norm = (result.vector.x * result.vector.x) + (result.vector.y * result.vector.y) + (result.vector.z * result.vector.z)
             positions.append(Position(x: result.vector.x, y: result.vector.y, z: result.vector.z, xAngle: getAngle(axis: result.vector.x, norm: norm), yAngle: getAngle(axis: result.vector.y, norm: norm), zAngle: getAngle(axis: result.vector.z, norm: norm)))
         }
@@ -89,6 +93,34 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
     
     public func toggleUpdates() {
         pauseDataUpdates.toggle()
+    }
+    
+    public func updateShift(x: Double, y: Double, z: Double) {
+        if x != 0 {
+            let radX = Measurement(value: x, unit: UnitAngle.degrees).converted(to: .radians).value / 2.0
+            quaternionShift = simd_quatd(ix: sin(radX), iy: 0, iz: 0, r: cos(radX))
+            logController.addLogMessage(type: .warning, msg: quaternionShift!.prettyPrint)
+            return
+        }
+        
+        if y != 0 {
+            let radY = Measurement(value: y, unit: UnitAngle.degrees).converted(to: .radians).value / 2.0
+            quaternionShift = simd_quatd(ix: 0, iy: sin(radY), iz: 0, r: cos(radY))
+            logController.addLogMessage(type: .warning, msg: quaternionShift!.prettyPrint)
+            return
+        }
+        
+        if z != 0 {
+            let radZ = Measurement(value: z, unit: UnitAngle.degrees).converted(to: .radians).value / 2.0
+            quaternionShift = simd_quatd(ix: 0, iy: 0, iz: sin(radZ), r: cos(radZ))
+            logController.addLogMessage(type: .warning, msg: quaternionShift!.prettyPrint)
+            return
+        }
+        
+        // convert angle to rads
+        logController.addLogMessage(type: .info, msg: "Quaternion shifting disabled")
+        quaternionShift = nil
+        return
     }
     
     private func getAngle(axis: Double, norm: Double) -> Double {

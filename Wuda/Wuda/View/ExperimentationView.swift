@@ -18,7 +18,10 @@ struct ExperimentationView: View {
     @State private var sphericalScene : SphericalScene = SphericalScene(isoPattern: .geodasicPattern4)
     @State private var rows : [GridItem] = []
     @State private var faces : [FaceOnMap] = []
-
+    @State private var xShift : Double = 0.0
+    @State private var yShift : Double = 0.0
+    @State private var zShift : Double = 0.0
+    
     var body: some View {
         VStack {
             
@@ -49,6 +52,15 @@ struct ExperimentationView: View {
                     }
                 }
             }.padding()
+
+            // quaternions
+            HStack {
+                Text("shift = ( ")
+                Stepper(value: $xShift, in: 0...360) { Text("x:\(Int(xShift)),") }.disabled( yShift > 0 || zShift > 0)
+                Stepper(value: $yShift, in: 0...360) { Text("y:\(Int(yShift)),") }.disabled( xShift > 0 || zShift > 0)
+                Stepper(value: $zShift, in: 0...360) { Text("z:\(Int(zShift))") }.disabled( xShift > 0 || yShift > 0)
+                Text(" )")
+            }
             // the sphere
             SphericalView(scene: sphericalScene).padding()
             
@@ -73,6 +85,15 @@ struct ExperimentationView: View {
         }
         .onChange(of: pointColor, perform: { newColor in
             sphericalScene.updatePointColors(newColor: NSColor(newColor))
+        })
+        .onChange(of: xShift, perform: { newX in
+            motionController.updateShift(x: newX, y: 0, z: 0)
+        })
+        .onChange(of: yShift, perform: { newY in
+            motionController.updateShift(x: 0, y: newY, z: 0)
+        })
+        .onChange(of: zShift, perform: { newZ in
+            motionController.updateShift(x: 0, y: 0, z: newZ)
         })
         .onReceive(motionController.$positions, perform: { newPoints in
             if let lastPoint = newPoints.last {
