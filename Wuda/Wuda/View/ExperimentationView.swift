@@ -63,6 +63,11 @@ struct ExperimentationView: View {
                         Text(motionController.pauseDataUpdates ? "Resume" : "Pause")
                         Image(systemName: motionController.pauseDataUpdates ? "flag.circle.fill" : "stop.circle.fill"  ).foregroundColor(motionController.pauseDataUpdates ? .green : .red)
                     }
+                    Button {
+                        // export faces and history!!!
+                    } label : {
+                        Text("Export!")
+                    }
                 }
             }.padding()
 

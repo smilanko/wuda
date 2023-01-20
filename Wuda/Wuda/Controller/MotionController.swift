@@ -22,7 +22,7 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
     private var smartWatchGravityEntries : [simd_quatd] = []
     private var smartWatchRotationEntries : [simd_quatd] = []
     
-    private var smartWatchPointVector : simd_quatd?
+    private var initialSmartWatchPosition : simd_quatd?
     private var quaternionShift : simd_quatd?
     private var peripheralManager: CBPeripheralManager!
     private var motionService: CBMutableService!
@@ -69,34 +69,49 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
                     // Use the motion data in your macOS app.
                     var arr2 = Array<Double>(repeating: 0, count: data.count/MemoryLayout<UInt32>.stride)
                     _ = arr2.withUnsafeMutableBytes { data.copyBytes(to: $0) }
-                    let gravity: simd_quatd = simd_quatd(ix: arr2[0], iy: arr2[1], iz: arr2[2], r: 0)
-                    let rotation: simd_quatd = simd_quatd(ix: arr2[4], iy: arr2[5], iz: arr2[6], r: arr2[3])
-                    addPosition(gravity: gravity, rotation: rotation)
-                    addFullHistory(gravity: gravity, rotation: rotation, orientation: arr2[7], ts: arr2[8])
+                    if arr2[0] == 0 {
+                        // this is the end signal, i.e the user clicked stop on the smartwatch
+                        // next time the user clicks start, they will provide the starting posion
+                        initialSmartWatchPosition = nil
+                        logController.addLogMessage(type: .info, msg: "Wudica sent a de-init!")
+                        return
+                    }
+                    
+                    if arr2[0] != 1 {
+                        // the first item is reserved for the state ( 1 running, 0 not running )
+                        fatalError("What signal is this?")
+                    }
+                    
+                    let gravity: simd_quatd = simd_quatd(ix: arr2[1], iy: arr2[2], iz: arr2[3], r: 0)
+                    let rotation: simd_quatd = simd_quatd(ix: arr2[5], iy: arr2[6], iz: arr2[7], r: arr2[4])
+                    addPosition(gravity: gravity, rotation: rotation, orientation: arr2[8], ts: arr2[9])
                 }
             }
         }
     }
     
-    private func addPosition(gravity: simd_quatd, rotation: simd_quatd) {
+    private func addPosition(gravity: simd_quatd, rotation: simd_quatd, orientation: Double, ts: Double) {
         smartWatchGravityEntries.append(gravity)
         smartWatchRotationEntries.append(rotation)
-        if smartWatchPointVector == nil {
-            smartWatchPointVector = gravity
+        if initialSmartWatchPosition == nil {
+            initialSmartWatchPosition = gravity
             logController.addLogMessage(type: .info, msg: "Wudica sent an init!")
+            
+            if !positions.isEmpty || !dataHistory.isEmpty {
+                logController.addLogMessage(type: .severe, msg: "Mixing data! Initial smartwatch position changed, yet memory holds old data!")
+            }
+            
         }
-        if let smartWatchPointVector = smartWatchPointVector {
-            var result = rotation * smartWatchPointVector * rotation.conjugate
+        if let initialSmartWatchPosition = initialSmartWatchPosition {
+            var result = rotation * initialSmartWatchPosition * rotation.conjugate
             if let quaternionShift = quaternionShift {
                 result = quaternionShift * result * quaternionShift.conjugate
             }
             let norm = (result.vector.x * result.vector.x) + (result.vector.y * result.vector.y) + (result.vector.z * result.vector.z)
-            positions.append(Position(x: result.vector.x, y: result.vector.y, z: result.vector.z, xAngle: getAngle(axis: result.vector.x, norm: norm), yAngle: getAngle(axis: result.vector.y, norm: norm), zAngle: getAngle(axis: result.vector.z, norm: norm)))
+            let position = Position(x: result.vector.x, y: result.vector.y, z: result.vector.z, xAngle: getAngle(axis: result.vector.x, norm: norm), yAngle: getAngle(axis: result.vector.y, norm: norm), zAngle: getAngle(axis: result.vector.z, norm: norm))
+            positions.append(position)
+            dataHistory.append(History(gravity: gravity, rotation: rotation, position: position, orientation: orientation, time: ts))
         }
-    }
-    
-    private func addFullHistory(gravity: simd_quatd, rotation: simd_quatd, orientation: Double, ts: Double) {
-        dataHistory.append(History(gravity: gravity, rotation: rotation, orientation: orientation, time: ts))
     }
     
     private func getAngle(axis: Double, norm: Double) -> Double {

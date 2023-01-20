@@ -12,6 +12,7 @@ enum LogMessageType : String {
     case info = "[INFO]"
     case error = "[ERROR]"
     case fatal = "[FATAL]"
+    case severe = "[SEVERE]"
     case warning = "[WARNING]"
 }
 

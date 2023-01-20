@@ -11,6 +11,7 @@ import simd
 struct History {
     let gravity: simd_quatd
     let rotation: simd_quatd
+    let position : Position
     let orientation : Double
     let time : Double
 }

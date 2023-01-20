@@ -35,7 +35,7 @@ class MotionObserver : NSObject, ObservableObject, CBCentralManagerDelegate, CBP
     private var transferCharacteristic: CBMutableCharacteristic!
     private var motionCharacteristic: CBCharacteristic?
     private var workoutSession: HKWorkoutSession?
-    private var currentHandOrientation : Double = 0.0
+    private var currentHandOrientation: Double = 0.0
 
     override init() {
         super.init()
@@ -68,7 +68,7 @@ class MotionObserver : NSObject, ObservableObject, CBCentralManagerDelegate, CBP
                 self.gx = motion.gravity.x
                 self.gy = motion.gravity.y
                 self.gz = motion.gravity.z
-                self.send(motionData: [motion.gravity.x, motion.gravity.y, motion.gravity.z, motion.attitude.quaternion.w, motion.attitude.quaternion.x, motion.attitude.quaternion.y, motion.attitude.quaternion.z, self.currentHandOrientation, Double(Date().timeIntervalSince1970)])
+                self.send(motionData: [self.isRunning ? 1.0 : 0.0, motion.gravity.x, motion.gravity.y, motion.gravity.z, motion.attitude.quaternion.w, motion.attitude.quaternion.x, motion.attitude.quaternion.y, motion.attitude.quaternion.z, self.currentHandOrientation, Double(Date().timeIntervalSince1970)])
             }
         }
     }
