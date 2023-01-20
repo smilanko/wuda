@@ -33,6 +33,7 @@
 		CFD5A5CF296BC2D400708441 /* ExperimentationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD5A5CE296BC2D400708441 /* ExperimentationView.swift */; };
 		CFD5A5D3296CBD4500708441 /* SphericalScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD5A5D2296CBD4500708441 /* SphericalScene.swift */; };
 		CFEF2600297A0BF800A3D8CF /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF25FF297A0BF800A3D8CF /* History.swift */; };
+		CFEF2602297A3F0400A3D8CF /* MotionDataFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF2601297A3F0400A3D8CF /* MotionDataFile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,7 @@
 		CFD5A5CE296BC2D400708441 /* ExperimentationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperimentationView.swift; sourceTree = "<group>"; };
 		CFD5A5D2296CBD4500708441 /* SphericalScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphericalScene.swift; sourceTree = "<group>"; };
 		CFEF25FF297A0BF800A3D8CF /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
+		CFEF2601297A3F0400A3D8CF /* MotionDataFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionDataFile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 				CF73BC41296D1FA900CC5012 /* Constants.swift */,
 				CFCC13772977964300144668 /* FaceOnMap.swift */,
 				CFEF25FF297A0BF800A3D8CF /* History.swift */,
+				CFEF2601297A3F0400A3D8CF /* MotionDataFile.swift */,
 				CF44F975297479A700EF96E2 /* Position.swift */,
 			);
 			path = Model;
@@ -254,6 +257,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF903A62296F583D0018D17D /* GeodesicIcosahedron16.swift in Sources */,
+				CFEF2602297A3F0400A3D8CF /* MotionDataFile.swift in Sources */,
 				CFD5A5D3296CBD4500708441 /* SphericalScene.swift in Sources */,
 				CF44F97D2974C79200EF96E2 /* Color+Random.swift in Sources */,
 				CFD5A5BE296BA87B00708441 /* WudaApp.swift in Sources */,

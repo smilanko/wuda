@@ -9,11 +9,11 @@ import Foundation
 import SwiftUI
 
 enum LogMessageType : String {
-    case info = "[INFO]"
-    case error = "[ERROR]"
-    case fatal = "[FATAL]"
-    case severe = "[SEVERE]"
-    case warning = "[WARNING]"
+    case info = "[INFO]" // good to know
+    case warning = "[WARNING]" // good to think about
+    case error = "[ERROR]" // something bad
+    case fatal = "[FATAL]" // something really bad
+    case severe = "[SEVERE]" // something really really bad
 }
 
 struct LogMessage : Identifiable {

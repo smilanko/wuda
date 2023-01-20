@@ -21,6 +21,8 @@ struct ExperimentationView: View {
     @State private var xShift : Double = 0.0
     @State private var yShift : Double = 0.0
     @State private var zShift : Double = 0.0
+    @State private var exportFile = false
+    @State private var motionFile : MotionDataFile?
     
     var body: some View {
         VStack {
@@ -64,9 +66,11 @@ struct ExperimentationView: View {
                         Image(systemName: motionController.pauseDataUpdates ? "flag.circle.fill" : "stop.circle.fill"  ).foregroundColor(motionController.pauseDataUpdates ? .green : .red)
                     }
                     Button {
-                        // export faces and history!!!
+                        motionFile = MotionDataFile(allHistory: motionController.dataHistory)
+                        exportFile.toggle()
                     } label : {
-                        Text("Export!")
+                        Text("Export")
+                        Image(systemName: "doc.circle.fill")
                     }
                 }
             }.padding()
@@ -139,6 +143,13 @@ struct ExperimentationView: View {
                 rows.append(GridItem(.fixed(Constants.squareSize), spacing: 0, alignment: .center))
             }
         }
+        .fileExporter(isPresented: $exportFile, document: motionFile, contentType: .plainText, defaultFilename: "wudica_export", onCompletion: { (result) in
+            if case .success = result {
+                logController.addLogMessage(type: .info, msg: "Exported data file")
+            } else {
+                logController.addLogMessage(type: .error, msg: "Cannot export data")
+            }
+        })
     }
     
 }

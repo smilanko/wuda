@@ -100,7 +100,6 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
             if !positions.isEmpty || !dataHistory.isEmpty {
                 logController.addLogMessage(type: .severe, msg: "Mixing data! Initial smartwatch position changed, yet memory holds old data!")
             }
-            
         }
         if let initialSmartWatchPosition = initialSmartWatchPosition {
             var result = rotation * initialSmartWatchPosition * rotation.conjugate
