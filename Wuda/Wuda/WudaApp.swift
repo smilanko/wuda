@@ -15,8 +15,10 @@ struct WudaApp: App {
                 .onAppear {
                     NSWindow.allowsAutomaticWindowTabbing = false
                 }
-        }.commands {
-            CommandGroup(replacing: .newItem) { }
+        }
+        
+        Window("Quaternion Shifts", id: "shift") {
+            QuaternionShiftView()
         }
     }
 }

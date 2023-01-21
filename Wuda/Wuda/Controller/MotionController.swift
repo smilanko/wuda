@@ -10,6 +10,17 @@ import CoreBluetooth
 import SwiftUI
 import simd
 
+enum Reference: String, CaseIterable, Identifiable {
+    var id: Self { self }
+    case smartWatch = "smartWatch"
+    case zminus = "0,0,-1"
+    case yminus = "0,-1,0"
+    case xminus = "-1,0,0"
+    case zplus = "0,0,1"
+    case yplus = "0,1,0"
+    case xplus = "1,0,0"
+}
+
 class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate {
 
     @ObservedObject private var logController = LogController.shared
@@ -17,11 +28,11 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
     @Published private(set) var pauseDataUpdates: Bool = false
     @Published private(set) var dataHistory : [History] = []
     @Published private(set) var initialSmartWatchPosition : simd_quatd?
-    @Published private(set) var quaternionShift : simd_quatd = simd_quatd(ix: 0, iy: 0, iz: 0, r: 1)
+    @Published private(set) var quaternionShift : simd_quatd?
+    @Published var defaultPoint : Reference = .zminus
     
     private let wudaPeripheralService = CBUUID(string: "12345678-1234-1234-1234-123456789012")
     private let wudaPeripheralMotionCharacteristicUuid = CBUUID(string: "12345678-1234-1234-1234-123456789013")
-    private let desiredPosition = simd_quatd(ix: 0, iy: 0, iz: -1, r: 0)
     private var smartWatchGravityEntries : [simd_quatd] = []
     private var smartWatchRotationEntries : [simd_quatd] = []
 
@@ -102,12 +113,16 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
                 logController.addLogMessage(type: .severe, msg: "Mixing data! Initial smartwatch position changed, yet memory holds old data!")
             }
         }
-        if let initialSmartWatchPosition = initialSmartWatchPosition {
-            var result = rotation * quaternionShift * simd_quatd(ix: 0, iy: 0, iz: -1, r: 0) * quaternionShift.conjugate * rotation.conjugate
-//            let result = rotation * initialSmartWatchPosition * rotation.conjugate
-
-            let norm = (result.vector.w * result.vector.w) + (result.vector.x * result.vector.x) + (result.vector.y * result.vector.y) + (result.vector.z * result.vector.z)
-            let position = Position(x: result.vector.x, y: result.vector.y, z: result.vector.z, xAngle: getAngle(axis: result.vector.x, norm: norm), yAngle: getAngle(axis: result.vector.y, norm: norm), zAngle: getAngle(axis: result.vector.z, norm: norm))
+        if let point = getPoint() {
+            var result : simd_quatd?
+            if let quaternionShift = quaternionShift {
+                result = rotation * quaternionShift * point * quaternionShift.conjugate * rotation.conjugate
+            } else {
+                result = rotation * point * rotation.conjugate
+            }
+            
+            let norm = (result!.vector.w * result!.vector.w) + (result!.vector.x * result!.vector.x) + (result!.vector.y * result!.vector.y) + (result!.vector.z * result!.vector.z)
+            let position = Position(x: result!.vector.x, y: result!.vector.y, z: result!.vector.z, xAngle: getAngle(axis: result!.vector.x, norm: norm), yAngle: getAngle(axis: result!.vector.y, norm: norm), zAngle: getAngle(axis: result!.vector.z, norm: norm))
             positions.append(position)
             dataHistory.append(History(gravity: gravity, rotation: rotation, position: position, orientation: orientation, time: ts))
         }
@@ -115,6 +130,25 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
     
     private func getAngle(axis: Double, norm: Double) -> Double {
         return Measurement(value: acos(axis / norm), unit: UnitAngle.radians).converted(to: .degrees).value
+    }
+    
+    public func getPoint() -> simd_quatd? {
+        switch defaultPoint {
+            case .zminus:
+                return simd_quatd(ix: 0, iy: 0, iz: -1, r: 0)
+            case .zplus:
+                return simd_quatd(ix: 0, iy: 0, iz: 1, r: 0)
+            case .yminus:
+                return simd_quatd(ix: 0, iy: -1, iz: 0, r: 0)
+            case .yplus:
+                return simd_quatd(ix: 0, iy: 1, iz: 0, r: 0)
+            case .xminus:
+                return simd_quatd(ix: -1, iy: 0, iz: 0, r: 0)
+            case .xplus:
+                return simd_quatd(ix: 1, iy: 0, iz: 0, r: 0)
+            case .smartWatch:
+                return initialSmartWatchPosition
+        }
     }
     
     public func clearMemory() {
@@ -126,34 +160,15 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
         pauseDataUpdates.toggle()
     }
     
-    public func updateShift(x: Double, y: Double, z: Double, isConj: Bool) {
-        if x != 0 {
-            let radX = Measurement(value: x, unit: UnitAngle.degrees).converted(to: .radians).value / 2.0
-            quaternionShift = simd_quatd(ix: sin(radX), iy: 0, iz: 0, r: cos(radX))
-            if isConj { quaternionShift = quaternionShift.conjugate }
-            logController.addLogMessage(type: .warning, msg: "shift=" + quaternionShift.prettyPrint)
+    public func updateShift(q: simd_quatd?) {
+        if let q = q {
+            quaternionShift = q
+            logController.addLogMessage(type: .warning, msg: "shift=" + q.prettyPrint)
             return
         }
         
-        if y != 0 {
-            let radY = Measurement(value: y, unit: UnitAngle.degrees).converted(to: .radians).value / 2.0
-            quaternionShift = simd_quatd(ix: 0, iy: sin(radY), iz: 0, r: cos(radY))
-            if isConj { quaternionShift = quaternionShift.conjugate }
-            logController.addLogMessage(type: .warning, msg: "shift=" + quaternionShift.prettyPrint)
-            return
-        }
-        
-        if z != 0 {
-            let radZ = Measurement(value: z, unit: UnitAngle.degrees).converted(to: .radians).value / 2.0
-            quaternionShift = simd_quatd(ix: 0, iy: 0, iz: sin(radZ), r: cos(radZ))
-            if isConj { quaternionShift = quaternionShift.conjugate }
-            logController.addLogMessage(type: .warning, msg: "shift=" + quaternionShift.prettyPrint)
-            return
-        }
-        
-        // convert angle to rads
         logController.addLogMessage(type: .info, msg: "Quaternion shifting disabled")
-        quaternionShift = simd_quatd(ix: 0, iy: 0, iz: 0, r: 1)
+        quaternionShift = nil
         return
     }
 

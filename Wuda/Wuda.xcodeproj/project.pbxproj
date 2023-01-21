@@ -34,6 +34,8 @@
 		CFD5A5D3296CBD4500708441 /* SphericalScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD5A5D2296CBD4500708441 /* SphericalScene.swift */; };
 		CFEF2600297A0BF800A3D8CF /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF25FF297A0BF800A3D8CF /* History.swift */; };
 		CFEF2602297A3F0400A3D8CF /* MotionDataFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF2601297A3F0400A3D8CF /* MotionDataFile.swift */; };
+		CFEF2604297B8C3B00A3D8CF /* QuaternionShiftView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF2603297B8C3B00A3D8CF /* QuaternionShiftView.swift */; };
+		CFEF2606297B8E5100A3D8CF /* QuaternionShift.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF2605297B8E5100A3D8CF /* QuaternionShift.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +68,8 @@
 		CFD5A5D2296CBD4500708441 /* SphericalScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphericalScene.swift; sourceTree = "<group>"; };
 		CFEF25FF297A0BF800A3D8CF /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		CFEF2601297A3F0400A3D8CF /* MotionDataFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionDataFile.swift; sourceTree = "<group>"; };
+		CFEF2603297B8C3B00A3D8CF /* QuaternionShiftView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuaternionShiftView.swift; sourceTree = "<group>"; };
+		CFEF2605297B8E5100A3D8CF /* QuaternionShift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuaternionShift.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +91,7 @@
 				CFEF25FF297A0BF800A3D8CF /* History.swift */,
 				CFEF2601297A3F0400A3D8CF /* MotionDataFile.swift */,
 				CF44F975297479A700EF96E2 /* Position.swift */,
+				CFEF2605297B8E5100A3D8CF /* QuaternionShift.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -98,6 +103,7 @@
 				CF44F97129746B9000EF96E2 /* LogView.swift */,
 				CF44F97A2974C16600EF96E2 /* SphericalView.swift */,
 				CFCC13732977865800144668 /* SquareView.swift */,
+				CFEF2603297B8C3B00A3D8CF /* QuaternionShiftView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -262,6 +268,7 @@
 				CF44F97D2974C79200EF96E2 /* Color+Random.swift in Sources */,
 				CFD5A5BE296BA87B00708441 /* WudaApp.swift in Sources */,
 				CF44F9842974EDAE00EF96E2 /* SCNVector3+Distance.swift in Sources */,
+				CFEF2606297B8E5100A3D8CF /* QuaternionShift.swift in Sources */,
 				CF05014B2978D9F8001E245F /* simd+Formatted.swift in Sources */,
 				CF44F97929747F3300EF96E2 /* Date+Formatted.swift in Sources */,
 				CFBF23A02975E8B200006A9A /* Pattern.swift in Sources */,
@@ -271,6 +278,7 @@
 				CFBF23A62975F4F900006A9A /* GeodesicIcosahedron8.swift in Sources */,
 				CF44F976297479A700EF96E2 /* Position.swift in Sources */,
 				CFCC13742977865800144668 /* SquareView.swift in Sources */,
+				CFEF2604297B8C3B00A3D8CF /* QuaternionShiftView.swift in Sources */,
 				CFBF23A42975F40500006A9A /* GeodesicIcosahedron2.swift in Sources */,
 				CFBF23B029776A4700006A9A /* GeodesicIcosahedron4.swift in Sources */,
 				CFBF239E2975E7A000006A9A /* GeodesicIcosahedron1.swift in Sources */,

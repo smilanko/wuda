@@ -18,10 +18,6 @@ struct ExperimentationView: View {
     @State private var sphericalScene : SphericalScene = SphericalScene(isoPattern: .geodasicPattern4)
     @State private var rows : [GridItem] = []
     @State private var faces : [FaceOnMap] = []
-    @State private var xShift : Double = 0.0
-    @State private var yShift : Double = 0.0
-    @State private var zShift : Double = 0.0
-    @State private var isConjugate : Bool = false
     @State private var exportFile = false
     @State private var motionFile : MotionDataFile?
     
@@ -76,25 +72,6 @@ struct ExperimentationView: View {
                 }
             }.padding()
 
-            // initial orientation
-            Text("orientation = ") + Text("\(motionController.initialSmartWatchPosition?.prettyPrint ?? "(unknown)")")
-            Text("shift = ") + Text(motionController.quaternionShift.prettyPrint)
-            
-            // quaternion shift
-            HStack {
-                Stepper(value: $xShift, in: 0...360) { Text("x:\(Int(xShift)),") }.disabled( yShift > 0 || zShift > 0)
-                Stepper(value: $yShift, in: 0...360) { Text("y:\(Int(yShift)),") }.disabled( xShift > 0 || zShift > 0)
-                Stepper(value: $zShift, in: 0...360) { Text("z:\(Int(zShift))") }.disabled( xShift > 0 || yShift > 0)
-                Button {
-                    xShift = 0; yShift = 0; zShift = 0; isConjugate = false
-                } label: {
-                    Text("Reset")
-                    Image(systemName: "trash.square.fill")
-                }
-                Toggle(isOn: $isConjugate) {
-                    Text("Conjugate")
-                }.toggleStyle(CheckboxToggleStyle())
-            }
             // sphere with the points
             SphericalView(scene: sphericalScene).padding()
             
@@ -121,21 +98,6 @@ struct ExperimentationView: View {
             // when we change the color, we need to change the scene
             // the map will change by itself, since it binds to pointColor
             sphericalScene.updatePointColors(newColor: NSColor(newColor))
-        })
-        .onChange(of: xShift, perform: { newX in
-            // only shift along the x axis
-            motionController.updateShift(x: newX, y: 0, z: 0, isConj: isConjugate)
-        })
-        .onChange(of: yShift, perform: { newY in
-            // only shift along the y axis
-            motionController.updateShift(x: 0, y: newY, z: 0, isConj: isConjugate)
-        })
-        .onChange(of: zShift, perform: { newZ in
-            // only shift along the z axis
-            motionController.updateShift(x: 0, y: 0, z: newZ, isConj: isConjugate)
-        })
-        .onChange(of: isConjugate, perform: { newToggle in
-            motionController.updateShift(x: xShift, y: yShift, z: zShift, isConj: newToggle)
         })
         .onReceive(motionController.$positions, perform: { newPoints in
             // when we receive a new position form the motion controller,
