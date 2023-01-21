@@ -14,6 +14,7 @@ struct MotionDataFile: FileDocument {
     static var readableContentTypes = [UTType.plainText]
     var text = ""
 
+    // TODO:: export the map in here?
     init(allHistory : [History]) {
         // prepare the header
         text += "gravity_x,gravity_y,gravity_z,rotation_w,rotation_x,rotation_y,rotation_z,position_x,position_y,position_z,x_angle,y_angle,z_angle,wrist_orientation,time\n"
