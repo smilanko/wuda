@@ -31,10 +31,11 @@ struct QuaternionShiftView: View {
                 Text(Reference.smartWatch.rawValue).tag(Reference.smartWatch)
             }
             Divider()
+            Text("You can permute your signal using quaternions. The interface has buttons to adjust the x, y, and z axes in degrees, and you can only edit one axis at a time. Clicking the Add button allows you to add additional quaternions to the stack.").lineLimit(nil).multilineTextAlignment(.center).padding()
             HStack {
-                Stepper(value: $x, in: 0...360) { Text("x:\(Int(x)),") }.disabled( y > 0 || z > 0)
-                Stepper(value: $y, in: 0...360) { Text("y:\(Int(y)),") }.disabled( x > 0 || z > 0)
-                Stepper(value: $z, in: 0...360) { Text("z:\(Int(z))") }.disabled( x > 0 || y > 0)
+                Stepper(value: $x, in: 0...360) { Text("x:\(Int(x))\u{00B0},") }.disabled( y > 0 || z > 0)
+                Stepper(value: $y, in: 0...360) { Text("y:\(Int(y))\u{00B0},") }.disabled( x > 0 || z > 0)
+                Stepper(value: $z, in: 0...360) { Text("z:\(Int(z))\u{00B0}") }.disabled( x > 0 || y > 0)
                 Toggle(isOn: $isConjugate) {
                     Text("Conjugate")
                 }.toggleStyle(CheckboxToggleStyle())
@@ -46,7 +47,7 @@ struct QuaternionShiftView: View {
                 } label: {
                     Text("Add")
                     Image(systemName: "plus.square.fill.on.square.fill")
-                }.disabled((x + y + z) == 0)
+                }
             }
             List(shifts, id:\.id) { shift in
                 HStack {
@@ -63,8 +64,9 @@ struct QuaternionShiftView: View {
             }
             Divider()
             // initial orientation
-            (Text("p = ") + Text("\(motionController.getPoint()?.prettyPrint ?? "(unknown)")"))
-            (Text("shift = ") + Text(motionController.quaternionShift?.prettyPrint ?? "(none)"))
+            (Text("p = ") + Text("\(motionController.getPoint()?.prettyPrint ?? "(will update)")"))
+            (Text("q = ") + Text(motionController.quaternionShift?.prettyPrint ?? "(none)"))
+            (Text("qpq' = ") + Text(motionController.permutedResult?.prettyPrint ?? "(dynamic)"))
         }.padding()
         .onChange(of: shifts, perform: { newShifts in
             if newShifts.isEmpty {

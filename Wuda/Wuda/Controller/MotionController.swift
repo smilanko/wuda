@@ -29,6 +29,7 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
     @Published private(set) var dataHistory : [History] = []
     @Published private(set) var initialSmartWatchPosition : simd_quatd?
     @Published private(set) var quaternionShift : simd_quatd?
+    @Published private(set) var permutedResult : simd_quatd?
     @Published var defaultPoint : Reference = .zminus
     
     private let wudaPeripheralService = CBUUID(string: "12345678-1234-1234-1234-123456789012")
@@ -116,7 +117,8 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
         if let point = getPoint() {
             var result : simd_quatd?
             if let quaternionShift = quaternionShift {
-                result = rotation * quaternionShift * point * quaternionShift.conjugate * rotation.conjugate
+                permutedResult = quaternionShift * point * quaternionShift.conjugate
+                result = rotation * permutedResult! * rotation.conjugate
             } else {
                 result = rotation * point * rotation.conjugate
             }

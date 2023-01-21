@@ -24,8 +24,10 @@ extension simd_quatd {
         } else if z != 0 {
             let rads = Measurement(value: z, unit: UnitAngle.degrees).converted(to: .radians).value / 2.0
             return simd_quatd(ix: 0, iy: 0, iz: sin(rads), r: cos(rads))
+        } else {
+            return simd_quatd(ix: 0, iy: 0, iz: 0, r: 1)
         }
-        fatalError("This contructor is a helper for the quaternion shifting view")
+        
     }
     
 }
