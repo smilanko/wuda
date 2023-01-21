@@ -120,7 +120,7 @@ struct ExperimentationView: View {
                 rows.append(GridItem(.fixed(Constants.squareSize), spacing: 0, alignment: .center))
             }
         }
-        .fileExporter(isPresented: $exportFile, document: motionFile, contentType: .plainText, defaultFilename: "wuda_barbell_curls", onCompletion: { (result) in
+        .fileExporter(isPresented: $exportFile, document: motionFile, contentType: .plainText, defaultFilename: motionController.activityName, onCompletion: { (result) in
             if case .success = result {
                 logController.addLogMessage(type: .info, msg: "Exported data file")
             } else {

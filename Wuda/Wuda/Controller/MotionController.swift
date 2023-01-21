@@ -30,6 +30,8 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
     @Published private(set) var initialSmartWatchPosition : simd_quatd?
     @Published private(set) var quaternionShift : simd_quatd?
     @Published private(set) var permutedResult : simd_quatd?
+    
+    @Published var activityName : String = ""
     @Published var defaultPoint : Reference = .zminus
     
     private let wudaPeripheralService = CBUUID(string: "12345678-1234-1234-1234-123456789012")

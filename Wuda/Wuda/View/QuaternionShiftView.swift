@@ -30,6 +30,7 @@ struct QuaternionShiftView: View {
                 Text(Reference.zplus.rawValue).tag(Reference.zplus)
                 Text(Reference.smartWatch.rawValue).tag(Reference.smartWatch)
             }
+            
             Divider()
             Text("You can permute your signal using quaternions. The interface has buttons to adjust the x, y, and z axes in degrees, and you can only edit one axis at a time. Clicking the Add button allows you to add additional quaternions to the stack.").lineLimit(nil).multilineTextAlignment(.center).padding()
             HStack {
@@ -64,9 +65,27 @@ struct QuaternionShiftView: View {
             }
             Divider()
             // initial orientation
-            (Text("p = ") + Text("\(motionController.getPoint()?.prettyPrint ?? "(will update)")"))
-            (Text("q = ") + Text(motionController.quaternionShift?.prettyPrint ?? "(none)"))
-            (Text("qpq' = ") + Text(motionController.permutedResult?.prettyPrint ?? "(dynamic)"))
+            VStack {
+                (Text("p = ") + Text("\(motionController.getPoint()?.prettyPrint ?? "(will update)")"))
+                (Text("q = ") + Text(motionController.quaternionShift?.prettyPrint ?? "(none)"))
+                (Text("qpq' = ") + Text(motionController.permutedResult?.prettyPrint ?? "(dynamic)"))
+            }
+            Divider()
+            // store to memory
+            HStack {
+                Text("Copy the activity name and the final quaternion (qpq') to your device's memory.").multilineTextAlignment(.center)
+            }
+            HStack {
+                TextField("activity", text: $motionController.activityName)
+                Button {
+                    let pasteboard = NSPasteboard.general
+                    pasteboard.clearContents()
+                    pasteboard.setString(motionController.activityName + ", q=" + (motionController.permutedResult?.prettyPrint ?? ""), forType: .string)
+                } label: {
+                    Text("Copy")
+                    Image(systemName: "paintbrush.fill")
+                }
+            }
         }.padding()
         .onChange(of: shifts, perform: { newShifts in
             if newShifts.isEmpty {
