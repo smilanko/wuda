@@ -20,5 +20,9 @@ struct WudaApp: App {
         Window("Quaternion Shifts", id: "shift") {
             QuaternionShiftView()
         }
+        
+        Window("X Axis Angle", id: "xaxisAngle") {
+            XaxisAngleView()
+        }
     }
 }
