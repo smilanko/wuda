@@ -19,7 +19,7 @@ class SphericalScene : SCNScene {
     private var faceToCenterMapping : [Int: SCNVector3] = [:]
     private let radius = 1.0
     
-    init(isoPattern: IcosahedronPattern) {
+    override init() {
         super.init()
         
         logController.addLogMessage(type: .info, msg: "Preparing the spherical scene")
@@ -30,7 +30,7 @@ class SphericalScene : SCNScene {
         sphereNode.name = Constants.rootNodeConstant
         
         let giRadius = radius - 0.06
-        let geodesicIcosahedron = SCNIcosahedron(isoPattern: isoPattern)
+        let geodesicIcosahedron = SCNIcosahedron()
         geodesicIcosahedron.transform = SCNMatrix4MakeScale(giRadius, giRadius, giRadius)
         geodesicIcosahedron.name = Constants.rootNodeForGeodasicMap
         totalFaces = geodesicIcosahedron.getFacesCount()

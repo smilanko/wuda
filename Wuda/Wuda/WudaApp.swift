@@ -21,6 +21,10 @@ struct WudaApp: App {
             QuaternionShiftView()
         }
         
+        Window("Map", id: "map") {
+            MapView()
+        }
+        
         Window("X Axis Angle", id: "xaxisAngle") {
             AngleView(axisSelection: .xAxis)
         }

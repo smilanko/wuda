@@ -38,6 +38,8 @@
 		CFEF2606297B8E5100A3D8CF /* QuaternionShift.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF2605297B8E5100A3D8CF /* QuaternionShift.swift */; };
 		CFEF2608297C4D8A00A3D8CF /* AngleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF2607297C4D8A00A3D8CF /* AngleView.swift */; };
 		CFEF2611297C5A1E00A3D8CF /* DirectionalLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF2610297C5A1E00A3D8CF /* DirectionalLine.swift */; };
+		CFEF2615297E1F1600A3D8CF /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF2614297E1F1600A3D8CF /* MapView.swift */; };
+		CFEF2617297E1F6F00A3D8CF /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF2616297E1F6F00A3D8CF /* MapController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +76,8 @@
 		CFEF2605297B8E5100A3D8CF /* QuaternionShift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuaternionShift.swift; sourceTree = "<group>"; };
 		CFEF2607297C4D8A00A3D8CF /* AngleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AngleView.swift; sourceTree = "<group>"; };
 		CFEF2610297C5A1E00A3D8CF /* DirectionalLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionalLine.swift; sourceTree = "<group>"; };
+		CFEF2614297E1F1600A3D8CF /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		CFEF2616297E1F6F00A3D8CF /* MapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,12 +107,13 @@
 		CF44F96D2974632B00EF96E2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				CFEF2607297C4D8A00A3D8CF /* AngleView.swift */,
 				CFD5A5CE296BC2D400708441 /* ExperimentationView.swift */,
 				CF44F97129746B9000EF96E2 /* LogView.swift */,
+				CFEF2614297E1F1600A3D8CF /* MapView.swift */,
 				CFEF2603297B8C3B00A3D8CF /* QuaternionShiftView.swift */,
 				CF44F97A2974C16600EF96E2 /* SphericalView.swift */,
 				CFCC13732977865800144668 /* SquareView.swift */,
-				CFEF2607297C4D8A00A3D8CF /* AngleView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -139,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				CF44F97F2974D0E200EF96E2 /* LogController.swift */,
+				CFEF2616297E1F6F00A3D8CF /* MapController.swift */,
 				CFD5A5CC296BA8CF00708441 /* MotionController.swift */,
 			);
 			path = Controller;
@@ -283,6 +289,7 @@
 				CFD5A5BE296BA87B00708441 /* WudaApp.swift in Sources */,
 				CF44F9842974EDAE00EF96E2 /* SCNVector3+Distance.swift in Sources */,
 				CFEF2606297B8E5100A3D8CF /* QuaternionShift.swift in Sources */,
+				CFEF2615297E1F1600A3D8CF /* MapView.swift in Sources */,
 				CF05014B2978D9F8001E245F /* simd+Formatted.swift in Sources */,
 				CF44F97929747F3300EF96E2 /* Date+Formatted.swift in Sources */,
 				CFBF23A02975E8B200006A9A /* Pattern.swift in Sources */,
@@ -299,6 +306,7 @@
 				CFBF23B029776A4700006A9A /* GeodesicIcosahedron4.swift in Sources */,
 				CFBF239E2975E7A000006A9A /* GeodesicIcosahedron1.swift in Sources */,
 				CFCC13782977964300144668 /* FaceOnMap.swift in Sources */,
+				CFEF2617297E1F6F00A3D8CF /* MapController.swift in Sources */,
 				CFEF2600297A0BF800A3D8CF /* History.swift in Sources */,
 				CFD5A5CD296BA8CF00708441 /* MotionController.swift in Sources */,
 				CF903A5F296F57F90018D17D /* SCNIcosahedron.swift in Sources */,

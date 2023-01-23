@@ -11,13 +11,12 @@ import SceneKit
 
 struct ExperimentationView: View {
     
+    @ObservedObject private var mapController = MapController.shared
     @ObservedObject private var motionController = MotionController.shared
     @ObservedObject private var logController = LogController.shared
     
     @State private var pointColor = Color(.sRGB, red: 122/255, green: 39/255, blue: 161/255)
-    @State private var sphericalScene : SphericalScene = SphericalScene(isoPattern: .geodasicPattern4)
-    @State private var rows : [GridItem] = []
-    @State private var faces : [FaceOnMap] = []
+    @State private var sphericalScene : SphericalScene = SphericalScene()
     @State private var exportFile = false
     @State private var motionFile : MotionDataFile?
     
@@ -27,7 +26,7 @@ struct ExperimentationView: View {
             // controls
             HStack {
                 HStack {
-                    ColorPicker("Point Color", selection: $pointColor)
+                    ColorPicker("Color", selection: $pointColor)
                     Button() {
                         pointColor = Color.random
                     } label: {
@@ -43,9 +42,7 @@ struct ExperimentationView: View {
                         // clear the sphere
                         sphericalScene.clearPoints()
                         // clear the face map
-                        faces.forEach({ entry in
-                            faces[entry.id].count = 0
-                        })
+                        mapController.clearMap()
                         // clear the memory
                         motionController.clearMemory()
                         if motionController.pauseDataUpdates != currentUpdateState {
@@ -53,7 +50,7 @@ struct ExperimentationView: View {
                             motionController.toggleUpdates()
                         }
                     } label: {
-                        Text("Clear Points")
+                        Text("Clear Memory")
                         Image(systemName: "trash.square.fill").foregroundColor(.red)
                     }
                     Button {
@@ -74,17 +71,6 @@ struct ExperimentationView: View {
 
             // sphere with the points
             SphericalView(scene: sphericalScene).padding()
-            
-            // map of faces
-            let totalEntries = Double(faces.filter({ $0.count > 0 }).count)
-            LazyHGrid(rows: rows, alignment: .center, spacing: 0, pinnedViews: [], content: {
-                ForEach(faces) { face in
-                    ZStack {
-                        Square(color: pointColor.opacity(face.count / totalEntries )).border(.black.opacity(0.2))
-                        Text("\(face.id)").opacity(0.7)
-                    }
-                }.background(Color(Constants.atmosphereColor).opacity(0.15))
-            }).frame(maxWidth: .infinity)
         }
         .onChange(of: pointColor, perform: { newColor in
             // when we change the color, we need to change the scene
@@ -99,19 +85,9 @@ struct ExperimentationView: View {
                 let closestFace = sphericalScene.getClosestFaceToPoint(pt: latestMotionPoint)
                 sphericalScene.addPoint(latestPoint: latestMotionPoint, pointColor: pointColor)
                 sphericalScene.addAngle(latestPoint: latestMotionPoint, angles: [lastPoint.xAngle, lastPoint.yAngle, lastPoint.zAngle])
-                faces[closestFace].count += 1
+                mapController.incrementFaceCount(faceId: closestFace)
             }
         })
-        .onAppear {
-            // build the number of faces for our 1d map
-            for idx in 0..<sphericalScene.getTotalFaces() {
-                faces.append(FaceOnMap(id: idx, count: 0))
-            }
-            // build the map using a grid system
-            for _ in 0..<(sphericalScene.getTotalFaces() / 20) {
-                rows.append(GridItem(.fixed(Constants.squareSize), spacing: 0, alignment: .center))
-            }
-        }
         .fileExporter(isPresented: $exportFile, document: motionFile, contentType: .plainText, defaultFilename: motionController.activityName, onCompletion: { (result) in
             if case .success = result {
                 logController.addLogMessage(type: .info, msg: "Exported data file")

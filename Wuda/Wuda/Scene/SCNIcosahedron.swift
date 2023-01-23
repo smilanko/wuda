@@ -9,12 +9,12 @@ import Foundation
 import SceneKit
 import SwiftUI
 
-enum IcosahedronPattern {
-    case geodasicPattern1
-    case geodasicPattern2
-    case geodasicPattern4
-    case geodasicPattern8
-    case geodasicPattern16
+enum IcosahedronPattern : Int {
+    case geodasicPattern1 = 60
+    case geodasicPattern2 = 80
+    case geodasicPattern4 = 180
+    case geodasicPattern8 = 380
+    case geodasicPattern16 = 780
 }
 
 class SCNIcosahedron : SCNNode, Icosahedron {
@@ -22,11 +22,11 @@ class SCNIcosahedron : SCNNode, Icosahedron {
     @ObservedObject private var logController = LogController.shared
     private var facesCount : Int = 0
     
-    init(isoPattern: IcosahedronPattern) {
+    override init() {
         super.init()
         
         logController.addLogMessage(type: .info, msg: "Preparing the icosahedron")
-        let pattern = getPatternFromType(isoPattern: isoPattern)
+        let pattern = getPatternFromType()
         let vertices = pattern.generateVertices()
         let faces = pattern.generateFaces()
 
@@ -68,8 +68,8 @@ class SCNIcosahedron : SCNNode, Icosahedron {
         fatalError("[ERROR] init(coder:) has not been implemented")
     }
     
-    private func getPatternFromType(isoPattern : IcosahedronPattern) -> Pattern {
-        switch isoPattern {
+    private func getPatternFromType() -> Pattern {
+        switch Constants.defaultGeodasicPattern {
         case .geodasicPattern1:
             return GeodesicIcosahedron1()
         case .geodasicPattern2:
