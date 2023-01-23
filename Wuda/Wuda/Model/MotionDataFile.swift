@@ -14,11 +14,11 @@ struct MotionDataFile: FileDocument {
     static var readableContentTypes = [UTType.plainText]
     var text = ""
 
-    // TODO:: export the map in here?
-    init(allHistory : [History]) {
+    init(allHistory : [History], closestFace: [Int]) {
         // prepare the header
-        text += "gravity_x,gravity_y,gravity_z,rotation_w,rotation_x,rotation_y,rotation_z,position_x,position_y,position_z,x_angle,y_angle,z_angle,wrist_orientation,time\n"
-        for history in allHistory {
+        text += "gravity_x,gravity_y,gravity_z,rotation_w,rotation_x,rotation_y,rotation_z,position_x,position_y,position_z,x_angle,y_angle,z_angle,wrist_orientation,closest_face,time\n"
+        for idx in 0..<allHistory.count {
+            let history = allHistory[idx]
             text += "\(history.gravity.vector.x),"
             text += "\(history.gravity.vector.y),"
             text += "\(history.gravity.vector.z),"
@@ -33,6 +33,8 @@ struct MotionDataFile: FileDocument {
             text += "\(history.position.yAngle),"
             text += "\(history.position.zAngle),"
             text += "\(history.orientation),"
+            text += "\(history.orientation),"
+            text += "\(closestFace[idx]),"
             text += "\(history.time)\n"
         }
     }

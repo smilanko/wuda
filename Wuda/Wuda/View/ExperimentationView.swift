@@ -60,7 +60,12 @@ struct ExperimentationView: View {
                         Image(systemName: motionController.pauseDataUpdates ? "play.fill" : "pause.fill"  ).foregroundColor(motionController.pauseDataUpdates ? .green : .red)
                     }
                     Button {
-                        motionFile = MotionDataFile(allHistory: motionController.dataHistory)
+                        let currentHistory = motionController.dataHistory
+                        var closestFaces : [Int] = []
+                        currentHistory.forEach({
+                            closestFaces.append(sphericalScene.getClosestFaceToPoint(pt: SCNVector3Make($0.position.x, $0.position.y, $0.position.z)))
+                        })
+                        motionFile = MotionDataFile(allHistory: currentHistory, closestFace: closestFaces)
                         exportFile.toggle()
                     } label : {
                         Text("Export")
