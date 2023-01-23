@@ -36,9 +36,7 @@
 		CFEF2602297A3F0400A3D8CF /* MotionDataFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF2601297A3F0400A3D8CF /* MotionDataFile.swift */; };
 		CFEF2604297B8C3B00A3D8CF /* QuaternionShiftView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF2603297B8C3B00A3D8CF /* QuaternionShiftView.swift */; };
 		CFEF2606297B8E5100A3D8CF /* QuaternionShift.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF2605297B8E5100A3D8CF /* QuaternionShift.swift */; };
-		CFEF2608297C4D8A00A3D8CF /* XaxisAngleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF2607297C4D8A00A3D8CF /* XaxisAngleView.swift */; };
-		CFEF260C297C561400A3D8CF /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF260B297C561400A3D8CF /* Plane.swift */; };
-		CFEF260E297C563700A3D8CF /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF260D297C563700A3D8CF /* Grid.swift */; };
+		CFEF2608297C4D8A00A3D8CF /* AngleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF2607297C4D8A00A3D8CF /* AngleView.swift */; };
 		CFEF2611297C5A1E00A3D8CF /* DirectionalLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF2610297C5A1E00A3D8CF /* DirectionalLine.swift */; };
 /* End PBXBuildFile section */
 
@@ -74,9 +72,7 @@
 		CFEF2601297A3F0400A3D8CF /* MotionDataFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionDataFile.swift; sourceTree = "<group>"; };
 		CFEF2603297B8C3B00A3D8CF /* QuaternionShiftView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuaternionShiftView.swift; sourceTree = "<group>"; };
 		CFEF2605297B8E5100A3D8CF /* QuaternionShift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuaternionShift.swift; sourceTree = "<group>"; };
-		CFEF2607297C4D8A00A3D8CF /* XaxisAngleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XaxisAngleView.swift; sourceTree = "<group>"; };
-		CFEF260B297C561400A3D8CF /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
-		CFEF260D297C563700A3D8CF /* Grid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
+		CFEF2607297C4D8A00A3D8CF /* AngleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AngleView.swift; sourceTree = "<group>"; };
 		CFEF2610297C5A1E00A3D8CF /* DirectionalLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionalLine.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -112,7 +108,7 @@
 				CFEF2603297B8C3B00A3D8CF /* QuaternionShiftView.swift */,
 				CF44F97A2974C16600EF96E2 /* SphericalView.swift */,
 				CFCC13732977865800144668 /* SquareView.swift */,
-				CFEF2607297C4D8A00A3D8CF /* XaxisAngleView.swift */,
+				CFEF2607297C4D8A00A3D8CF /* AngleView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -205,8 +201,6 @@
 		CFEF260F297C566C00A3D8CF /* Shapes */ = {
 			isa = PBXGroup;
 			children = (
-				CFEF260D297C563700A3D8CF /* Grid.swift */,
-				CFEF260B297C561400A3D8CF /* Plane.swift */,
 				CFEF2610297C5A1E00A3D8CF /* DirectionalLine.swift */,
 			);
 			path = Shapes;
@@ -298,14 +292,12 @@
 				CF44F9802974D0E200EF96E2 /* LogController.swift in Sources */,
 				CFBF23A62975F4F900006A9A /* GeodesicIcosahedron8.swift in Sources */,
 				CF44F976297479A700EF96E2 /* Position.swift in Sources */,
-				CFEF260E297C563700A3D8CF /* Grid.swift in Sources */,
 				CFCC13742977865800144668 /* SquareView.swift in Sources */,
 				CFEF2604297B8C3B00A3D8CF /* QuaternionShiftView.swift in Sources */,
 				CFBF23A42975F40500006A9A /* GeodesicIcosahedron2.swift in Sources */,
-				CFEF2608297C4D8A00A3D8CF /* XaxisAngleView.swift in Sources */,
+				CFEF2608297C4D8A00A3D8CF /* AngleView.swift in Sources */,
 				CFBF23B029776A4700006A9A /* GeodesicIcosahedron4.swift in Sources */,
 				CFBF239E2975E7A000006A9A /* GeodesicIcosahedron1.swift in Sources */,
-				CFEF260C297C561400A3D8CF /* Plane.swift in Sources */,
 				CFCC13782977964300144668 /* FaceOnMap.swift in Sources */,
 				CFEF2600297A0BF800A3D8CF /* History.swift in Sources */,
 				CFD5A5CD296BA8CF00708441 /* MotionController.swift in Sources */,

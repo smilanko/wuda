@@ -22,7 +22,15 @@ struct WudaApp: App {
         }
         
         Window("X Axis Angle", id: "xaxisAngle") {
-            XaxisAngleView()
+            AngleView(axisSelection: .xAxis)
+        }
+        
+        Window("Y Axis Angle", id: "yaxisAngle") {
+            AngleView(axisSelection: .yAxis)
+        }
+        
+        Window("Z Axis Angle", id: "zaxisAngle") {
+            AngleView(axisSelection: .zAxis)
         }
     }
 }
