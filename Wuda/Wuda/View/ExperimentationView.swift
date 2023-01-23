@@ -60,7 +60,7 @@ struct ExperimentationView: View {
                         motionController.toggleUpdates()
                     } label: {
                         Text(motionController.pauseDataUpdates ? "Resume" : "Pause")
-                        Image(systemName: motionController.pauseDataUpdates ? "flag.circle.fill" : "stop.circle.fill"  ).foregroundColor(motionController.pauseDataUpdates ? .green : .red)
+                        Image(systemName: motionController.pauseDataUpdates ? "play.fill" : "pause.fill"  ).foregroundColor(motionController.pauseDataUpdates ? .green : .red)
                     }
                     Button {
                         motionFile = MotionDataFile(allHistory: motionController.dataHistory)
