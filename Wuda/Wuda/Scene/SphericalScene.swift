@@ -51,7 +51,7 @@ class SphericalScene : SCNScene {
         anglesSphereNode.name = Constants.rootNodeForAngles
         
         let telescopeGeometry = SCNCylinder(radius: 0.005, height: 0.05)
-        telescopeGeometry.firstMaterial?.diffuse.contents = NSColor.black
+        telescopeGeometry.firstMaterial?.diffuse.contents = Constants.gradientStartColor
         let telescopeNode = SCNNode(geometry: telescopeGeometry)
         telescopeNode.name = Constants.rootNodeForTelescope
         telescopeNode.look(at: SCNVector3(1, 0, 0))
