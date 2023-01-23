@@ -15,6 +15,7 @@ enum AxisSelection {
 
 struct AngleView: View {
     
+    @Environment(\.colorScheme) var colorScheme
     @ObservedObject private var motionController = MotionController.shared
     @State public var centerColor = Color(Constants.gradientStartColor)
     @State public var angle : Double = 0.0
@@ -51,7 +52,7 @@ struct AngleView: View {
                     // our line, a background circle to hold it, and value
                     ZStack {
                         DirectionalLine(degrees: $angle).stroke(.black, lineWidth: 2)
-                        Circle().fill(.white).frame(minWidth: 50, maxWidth: 100, minHeight: 50, maxHeight: 100).padding(90)
+                        Circle().fill( colorScheme == .dark ? .black : .white).frame(minWidth: 50, maxWidth: 100, minHeight: 50, maxHeight: 100).padding(90)
                         Text("\(Int(angle))\u{00B0}")
                     }
                 }
