@@ -9,25 +9,33 @@ import Foundation
 import SwiftUI
 import SceneKit
 
-struct LogView <Content: View>: View {
+struct LogView: View {
     
-    @State private var isExpanded = false
-    @ViewBuilder let expandableView : Content
+    @ObservedObject private var logController = LogController.shared
     
     var body: some View {
         VStack {
-            Button(action: {
-                withAnimation(.easeIn(duration: 0.2)) {
-                    self.isExpanded.toggle()
+            Text("The log message list updates events and scrolls to the most recent automatically.").multilineTextAlignment(.center)
+            ScrollViewReader { scrollView in
+                ScrollView(.vertical) {
+                    LazyVStack {
+                        ForEach(logController.logMessages, id: \.self) { logMsg in
+                            Text(logMsg.id.isoDate + " " + logMsg.type.rawValue + " " + logMsg.msg).multilineTextAlignment(.leading).frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                    }
+                    .onChange(of: logController.logMessages, perform: { events in
+                        if events.isEmpty { return }
+                        scrollView.scrollTo(logController.logMessages[logController.logMessages.endIndex - 1])
+                    })
                 }
-            }){
-                Text("Logs")
-                Image(systemName: "chevron.down.circle.fill")
             }
-            
-            if self.isExpanded {
-                self.expandableView.frame(maxHeight: 100)
+            Button {
+                logController.clearLogs()
+            } label: {
+                Text("Clear Logs")
+                Image(systemName: "trash.square.fill").foregroundColor(.red)
             }
         }
+        .padding()
     }
 }

@@ -32,5 +32,9 @@ struct WudaApp: App {
         Window("Z Axis Angle", id: "zaxisAngle") {
             AngleView(axisSelection: .zAxis)
         }
+        
+        Window("Logs", id: "logs") {
+            LogView()
+        }
     }
 }

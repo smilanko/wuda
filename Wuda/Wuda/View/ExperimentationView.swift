@@ -84,15 +84,7 @@ struct ExperimentationView: View {
                         Text("\(face.id)").opacity(0.7)
                     }
                 }.background(Color(Constants.atmosphereColor).opacity(0.15))
-            }).padding().frame(maxWidth: .infinity)
-
-            // logs
-            LogView {
-                List(logController.logMessages) { logMsg in
-                    Text(logMsg.id.isoDate + " " + logMsg.type.rawValue + " " + logMsg.msg)
-                }
-            }.padding()
-            
+            }).frame(maxWidth: .infinity)
         }
         .onChange(of: pointColor, perform: { newColor in
             // when we change the color, we need to change the scene

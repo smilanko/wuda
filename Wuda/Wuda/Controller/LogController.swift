@@ -16,7 +16,7 @@ enum LogMessageType : String {
     case severe = "[SEVERE]" // something really really bad
 }
 
-struct LogMessage : Identifiable {
+struct LogMessage : Identifiable, Hashable {
     let id = Date()
     let type : LogMessageType
     let msg : String
@@ -32,6 +32,10 @@ class LogController: ObservableObject {
     
     public func addLogMessage(type: LogMessageType, msg: String) {
         logMessages.append(LogMessage(type: type, msg: msg))
+    }
+    
+    public func clearLogs() {
+        logMessages = []
     }
     
 }
