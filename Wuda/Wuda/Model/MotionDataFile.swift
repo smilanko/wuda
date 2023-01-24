@@ -33,7 +33,6 @@ struct MotionDataFile: FileDocument {
             text += "\(history.position.yAngle),"
             text += "\(history.position.zAngle),"
             text += "\(history.orientation),"
-            text += "\(history.orientation),"
             text += "\(closestFace[idx]),"
             text += "\(history.time)\n"
         }
