@@ -18,6 +18,7 @@
 		CF73BC42296D1FA900CC5012 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF73BC41296D1FA900CC5012 /* Constants.swift */; };
 		CF903A5F296F57F90018D17D /* SCNIcosahedron.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF903A5E296F57F90018D17D /* SCNIcosahedron.swift */; };
 		CF903A62296F583D0018D17D /* GeodesicIcosahedron16.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF903A61296F583D0018D17D /* GeodesicIcosahedron16.swift */; };
+		CFBF0B6F2981C89F00C9A13E /* GeodesicIcosahedron6.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBF0B6E2981C89F00C9A13E /* GeodesicIcosahedron6.swift */; };
 		CFBF239E2975E7A000006A9A /* GeodesicIcosahedron1.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBF239D2975E7A000006A9A /* GeodesicIcosahedron1.swift */; };
 		CFBF23A02975E8B200006A9A /* Pattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBF239F2975E8B200006A9A /* Pattern.swift */; };
 		CFBF23A42975F40500006A9A /* GeodesicIcosahedron2.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBF23A32975F40500006A9A /* GeodesicIcosahedron2.swift */; };
@@ -54,6 +55,7 @@
 		CF73BC41296D1FA900CC5012 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CF903A5E296F57F90018D17D /* SCNIcosahedron.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNIcosahedron.swift; sourceTree = "<group>"; };
 		CF903A61296F583D0018D17D /* GeodesicIcosahedron16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeodesicIcosahedron16.swift; sourceTree = "<group>"; };
+		CFBF0B6E2981C89F00C9A13E /* GeodesicIcosahedron6.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeodesicIcosahedron6.swift; sourceTree = "<group>"; };
 		CFBF239D2975E7A000006A9A /* GeodesicIcosahedron1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeodesicIcosahedron1.swift; sourceTree = "<group>"; };
 		CFBF239F2975E8B200006A9A /* Pattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pattern.swift; sourceTree = "<group>"; };
 		CFBF23A32975F40500006A9A /* GeodesicIcosahedron2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeodesicIcosahedron2.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 				CFBF239D2975E7A000006A9A /* GeodesicIcosahedron1.swift */,
 				CFBF23A32975F40500006A9A /* GeodesicIcosahedron2.swift */,
 				CFBF23AF29776A4700006A9A /* GeodesicIcosahedron4.swift */,
+				CFBF0B6E2981C89F00C9A13E /* GeodesicIcosahedron6.swift */,
 				CFBF23A52975F4F900006A9A /* GeodesicIcosahedron8.swift */,
 				CF903A61296F583D0018D17D /* GeodesicIcosahedron16.swift */,
 				CFBF239F2975E8B200006A9A /* Pattern.swift */,
@@ -311,6 +314,7 @@
 				CFD5A5CD296BA8CF00708441 /* MotionController.swift in Sources */,
 				CF903A5F296F57F90018D17D /* SCNIcosahedron.swift in Sources */,
 				CFD5A5CF296BC2D400708441 /* ExperimentationView.swift in Sources */,
+				CFBF0B6F2981C89F00C9A13E /* GeodesicIcosahedron6.swift in Sources */,
 				CF44F97229746B9000EF96E2 /* LogView.swift in Sources */,
 				CF73BC42296D1FA900CC5012 /* Constants.swift in Sources */,
 			);

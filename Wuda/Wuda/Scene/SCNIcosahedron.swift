@@ -13,6 +13,7 @@ enum IcosahedronPattern : Int {
     case geodasicPattern1 = 60
     case geodasicPattern2 = 80
     case geodasicPattern4 = 180
+    case geodasicPattern6 = 260
     case geodasicPattern8 = 380
     case geodasicPattern16 = 780
 }
@@ -76,6 +77,8 @@ class SCNIcosahedron : SCNNode, Icosahedron {
             return GeodesicIcosahedron2()
         case .geodasicPattern4:
             return GeodesicIcosahedron4()
+        case .geodasicPattern6:
+            return GeodesicIcosahedron6()
         case .geodasicPattern8:
             return GeodesicIcosahedron8()
         case .geodasicPattern16:

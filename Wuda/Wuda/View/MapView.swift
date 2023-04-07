@@ -41,6 +41,8 @@ struct MapView: View {
                     }
                 }.background(Color(Constants.atmosphereColor).opacity(0.15))
             }).frame(maxWidth: .infinity)
-        }.padding()
+        }
+        .frame(maxHeight: .infinity)
+        .padding()
     }
 }
