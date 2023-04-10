@@ -69,6 +69,7 @@ struct QuaternionShiftView: View {
                 (Text("p = ") + Text("\(motionController.getPoint()?.prettyPrint ?? "(will update)")"))
                 (Text("q = ") + Text(motionController.quaternionShift?.prettyPrint ?? "(none)"))
                 (Text("qpq' = ") + Text(motionController.permutedResult?.prettyPrint ?? "(dynamic)"))
+                (Text("orientation = ") + Text(String(motionController.smartwatchOrientation ?? 0)))
             }
             Divider()
             // store to memory

@@ -28,8 +28,10 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
     @Published private(set) var pauseDataUpdates: Bool = false
     @Published private(set) var dataHistory : [History] = []
     @Published private(set) var initialSmartWatchPosition : simd_quatd?
+    @Published private(set) var smartwatchOrientation: Double?
     @Published private(set) var quaternionShift : simd_quatd?
     @Published private(set) var permutedResult : simd_quatd?
+
     
     @Published var activityName : String = ""
     @Published var defaultPoint : Reference = .zminus
@@ -124,6 +126,7 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
             } else {
                 result = rotation * point * rotation.conjugate
             }
+            smartwatchOrientation = orientation
             
             let norm = (result!.vector.w * result!.vector.w) + (result!.vector.x * result!.vector.x) + (result!.vector.y * result!.vector.y) + (result!.vector.z * result!.vector.z)
             let position = Position(x: result!.vector.x, y: result!.vector.y, z: result!.vector.z, xAngle: getAngle(axis: result!.vector.x, norm: norm), yAngle: getAngle(axis: result!.vector.y, norm: norm), zAngle: getAngle(axis: result!.vector.z, norm: norm))
