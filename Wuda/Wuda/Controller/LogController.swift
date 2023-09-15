@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-enum LogMessageType : String {
+enum LogLevel : String {
     case info = "[INFO]" // good to know
     case warning = "[WARNING]" // good to think about
     case error = "[ERROR]" // something bad
@@ -18,24 +18,24 @@ enum LogMessageType : String {
 
 struct LogMessage : Identifiable, Hashable {
     let id = Date()
-    let type : LogMessageType
-    let msg : String
+    let level: LogLevel
+    let msg: String
 }
 
-class LogController: ObservableObject {
+final class LogController: ObservableObject {
     
-    @Published private(set) var logMessages : [LogMessage] = []
+    @Published private(set) var logs : [LogMessage] = []
     
     public static var shared = LogController()
     
     private init() {}
     
-    public func addLogMessage(type: LogMessageType, msg: String) {
-        logMessages.append(LogMessage(type: type, msg: msg))
+    public func log(level: LogLevel, msg: String) {
+        logs.append(LogMessage(level: level, msg: msg))
     }
     
     public func clearLogs() {
-        logMessages = []
+        logs = []
     }
     
 }

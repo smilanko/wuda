@@ -19,13 +19,13 @@ struct LogView: View {
             ScrollViewReader { scrollView in
                 ScrollView(.vertical) {
                     LazyVStack {
-                        ForEach(logController.logMessages, id: \.self) { logMsg in
-                            Text(logMsg.id.isoDate + " " + logMsg.type.rawValue + " " + logMsg.msg).multilineTextAlignment(.leading).frame(maxWidth: .infinity, alignment: .leading)
+                        ForEach(logController.logs, id: \.self) { logMsg in
+                            Text(logMsg.id.isoDate + " " + logMsg.level.rawValue + " " + logMsg.msg).multilineTextAlignment(.leading).frame(maxWidth: .infinity, alignment: .leading)
                         }
                     }
-                    .onChange(of: logController.logMessages, perform: { events in
+                    .onChange(of: logController.logs, perform: { events in
                         if events.isEmpty { return }
-                        scrollView.scrollTo(logController.logMessages[logController.logMessages.endIndex - 1])
+                        scrollView.scrollTo(logController.logs[logController.logs.endIndex - 1])
                     })
                 }
             }

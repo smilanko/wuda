@@ -22,7 +22,7 @@ class SphericalScene : SCNScene {
     override init() {
         super.init()
         
-        logController.addLogMessage(type: .info, msg: "Preparing the spherical scene")
+        logController.log(type: .info, msg: "Preparing the spherical scene")
         let sphere = SCNSphere(radius: radius)
         sphere.firstMaterial?.diffuse.contents = Constants.atmosphereColor.withAlphaComponent(0.2)
         let sphereNode = SCNNode(geometry: sphere)
@@ -71,7 +71,7 @@ class SphericalScene : SCNScene {
     public func addPoint(latestPoint: SCNVector3, pointColor: Color) {
         if let sphere = self.rootNode.childNodes.first {
             if sphere.name != Constants.rootNodeConstant {
-                logController.addLogMessage(type: .fatal, msg: "Points must draw on the root!")
+                logController.log(type: .fatal, msg: "Points must draw on the root!")
             }
             let pointGeometry = SCNSphere(radius: 0.01)
             pointGeometry.firstMaterial?.diffuse.contents = NSColor(pointColor)
@@ -96,7 +96,7 @@ class SphericalScene : SCNScene {
     }
     
     public func clearPoints() {
-        logController.addLogMessage(type: .info, msg: "Clearing sphere")
+        logController.log(type: .info, msg: "Clearing sphere")
         if let sphere = self.rootNode.childNodes.first {
             sphere.enumerateChildNodes { (node, stop) in
                 node.removeFromParentNode()
@@ -105,7 +105,7 @@ class SphericalScene : SCNScene {
     }
     
     public func updatePointColors(newColor: NSColor) {
-        logController.addLogMessage(type: .info, msg: "Updating sphere color")
+        logController.log(type: .info, msg: "Updating sphere color")
         if let sphere = self.rootNode.childNodes.first {
             sphere.enumerateChildNodes { (node, stop) in
                 node.geometry?.firstMaterial?.diffuse.contents = newColor

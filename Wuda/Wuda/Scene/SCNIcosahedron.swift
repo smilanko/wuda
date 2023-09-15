@@ -26,7 +26,7 @@ class SCNIcosahedron : SCNNode, Icosahedron {
     override init() {
         super.init()
         
-        logController.addLogMessage(type: .info, msg: "Preparing the icosahedron")
+        logController.log(type: .info, msg: "Preparing the icosahedron")
         let pattern = getPatternFromType()
         let vertices = pattern.generateVertices()
         let faces = pattern.generateFaces()

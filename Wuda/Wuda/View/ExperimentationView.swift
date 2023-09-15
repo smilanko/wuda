@@ -36,7 +36,7 @@ struct ExperimentationView: View {
                     Button {
                         let currentUpdateState = motionController.pauseDataUpdates
                         if !currentUpdateState {
-                            logController.addLogMessage(type: .info, msg: "Pausing data updates while cleaning")
+                            logController.log(type: .info, msg: "Pausing data updates while cleaning")
                             motionController.toggleUpdates()
                         }
                         // clear the sphere
@@ -46,7 +46,7 @@ struct ExperimentationView: View {
                         // clear the memory
                         motionController.clearMemory()
                         if motionController.pauseDataUpdates != currentUpdateState {
-                            logController.addLogMessage(type: .info, msg: "Cleanup complete. Enabling data updates")
+                            logController.log(type: .info, msg: "Cleanup complete. Enabling data updates")
                             motionController.toggleUpdates()
                         }
                     } label: {
@@ -95,9 +95,9 @@ struct ExperimentationView: View {
         })
         .fileExporter(isPresented: $exportFile, document: motionFile, contentType: .plainText, defaultFilename: motionController.activityName, onCompletion: { (result) in
             if case .success = result {
-                logController.addLogMessage(type: .info, msg: "Exported data file")
+                logController.log(type: .info, msg: "Exported data file")
             } else {
-                logController.addLogMessage(type: .error, msg: "Cannot export data")
+                logController.log(type: .error, msg: "Cannot export data")
             }
         })
     }
