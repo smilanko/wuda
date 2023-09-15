@@ -23,7 +23,6 @@ enum Reference: String, CaseIterable, Identifiable {
 
 class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate {
 
-    @ObservedObject private var logController = LogController.shared
     @Published private(set) var positions : [Position] = []
     @Published private(set) var pauseDataUpdates: Bool = false
     @Published private(set) var dataHistory : [History] = []
@@ -63,18 +62,18 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
             peripheralManager.add(motionService)
             // Start advertising the service.
             peripheralManager.startAdvertising([CBAdvertisementDataServiceUUIDsKey: [wudaPeripheralService]])
-            logController.log(type: .info, msg: "Advertising to wudica 🥰")
+            LogController.shared.log(level: .info, msg: "Advertising to wudica 🥰")
         case .poweredOff, .resetting, .unauthorized, .unsupported:
             // Stop advertising the service.
             peripheralManager.stopAdvertising()
-            logController.log(type: .info, msg: "Stopping service. Bye wudica 🛌")
+            LogController.shared.log(level: .info, msg: "Stopping service. Bye wudica 🛌")
         default:
             break
         }
     }
     
     func peripheralManager(_ peripheral: CBPeripheralManager, didReceiveRead request: CBATTRequest) {
-        logController.log(type: .info, msg: "Wudica sent me a read request 💌")
+        LogController.shared.log(level: .info, msg: "Wudica sent me a read request 💌")
     }
     
     func peripheralManager(_ peripheral: CBPeripheralManager, didReceiveWrite requests: [CBATTRequest]) {
@@ -90,7 +89,7 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
                         // this is the end signal, i.e the user clicked stop on the smartwatch
                         // next time the user clicks start, they will provide the starting posion
                         initialSmartWatchPosition = nil
-                        logController.log(type: .info, msg: "Wudica sent a de-init!")
+                        LogController.shared.log(level: .info, msg: "Wudica sent a de-init!")
                         return
                     }
                     
@@ -112,10 +111,10 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
         smartWatchRotationEntries.append(rotation)
         if initialSmartWatchPosition == nil {
             initialSmartWatchPosition = gravity
-            logController.log(type: .info, msg: "Wudica sent an init!")
+            LogController.shared.log(level: .info, msg: "Wudica sent an init!")
             
             if !positions.isEmpty || !dataHistory.isEmpty {
-                logController.log(type: .severe, msg: "Mixing data! Initial smartwatch position changed, yet memory holds old data!")
+                LogController.shared.log(level: .severe, msg: "Mixing data! Initial smartwatch position changed, yet memory holds old data!")
             }
         }
         if let point = getPoint() {
@@ -170,11 +169,11 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
     public func updateShift(q: simd_quatd?) {
         if let q = q {
             quaternionShift = q
-            logController.log(type: .warning, msg: "shift=" + q.prettyPrint)
+            LogController.shared.log(level: .warning, msg: "shift=" + q.prettyPrint)
             return
         }
         
-        logController.log(type: .info, msg: "Quaternion shifting disabled")
+        LogController.shared.log(level: .info, msg: "Quaternion shifting disabled")
         quaternionShift = nil
         return
     }

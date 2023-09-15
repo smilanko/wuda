@@ -12,10 +12,10 @@ import simd
 
 class MapController: ObservableObject {
  
-    @Published public var rows : [GridItem] = []
-    @Published public var faces : [FaceOnMap] = []
+    @Published public var rows: [GridItem] = []
+    @Published public var faces: [FaceOnMap] = []
     
-    public static var shared = MapController()
+    public static let shared = MapController()
     
     private init() {
         let totalFaces = Constants.defaultGeodasicPattern.rawValue

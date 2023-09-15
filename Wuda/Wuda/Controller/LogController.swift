@@ -24,7 +24,7 @@ struct LogMessage : Identifiable, Hashable {
 
 final class LogController: ObservableObject {
     
-    @Published private(set) var logs : [LogMessage] = []
+    @Published private(set) var logs: [LogMessage] = []
     
     public static var shared = LogController()
     
@@ -35,7 +35,7 @@ final class LogController: ObservableObject {
     }
     
     public func clearLogs() {
-        logs = []
+        logs.removeAll()
     }
     
 }

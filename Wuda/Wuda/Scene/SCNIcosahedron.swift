@@ -20,13 +20,12 @@ enum IcosahedronPattern : Int {
 
 class SCNIcosahedron : SCNNode, Icosahedron {
     
-    @ObservedObject private var logController = LogController.shared
     private var facesCount : Int = 0
     
     override init() {
         super.init()
         
-        logController.log(type: .info, msg: "Preparing the icosahedron")
+        LogController.shared.log(level: .info, msg: "Preparing the icosahedron")
         let pattern = getPatternFromType()
         let vertices = pattern.generateVertices()
         let faces = pattern.generateFaces()
