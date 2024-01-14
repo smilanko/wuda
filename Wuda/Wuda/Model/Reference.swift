@@ -2,7 +2,7 @@ import Foundation
 
 enum Reference: String, CaseIterable, Identifiable {
     var id: Self { self }
-    case smartWatch = "smartWatch"
+    case smartDevice = "smartDevice"
     case zminus = "0,0,-1"
     case yminus = "0,-1,0"
     case xminus = "-1,0,0"

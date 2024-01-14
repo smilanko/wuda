@@ -36,24 +36,24 @@ struct ExperimentationView: View {
                         let currentUpdateState = motionController.pauseDataUpdates
                         if !currentUpdateState {
                             LogController.shared.log(level: .info, msg: "Pausing data updates while cleaning")
-                            motionController.toggleUpdates()
+                            motionController.toggle()
                         }
                         // clear the sphere
                         sphericalScene.clearPoints()
                         // clear the face map
                         mapController.clear()
                         // clear the memory
-                        motionController.clearMemory()
+                        motionController.clear()
                         if motionController.pauseDataUpdates != currentUpdateState {
                             LogController.shared.log(level: .info, msg: "Cleanup complete. Enabling data updates")
-                            motionController.toggleUpdates()
+                            motionController.toggle()
                         }
                     } label: {
                         Text("Clear Memory")
                         Image(systemName: "trash.square.fill").foregroundColor(.red)
                     }
                     Button {
-                        motionController.toggleUpdates()
+                        motionController.toggle()
                     } label: {
                         Text(motionController.pauseDataUpdates ? "Resume" : "Pause")
                         Image(systemName: motionController.pauseDataUpdates ? "play.fill" : "pause.fill"  ).foregroundColor(motionController.pauseDataUpdates ? .green : .red)
@@ -92,7 +92,7 @@ struct ExperimentationView: View {
                 mapController.increment(faceId: closestFace)
             }
         })
-        .fileExporter(isPresented: $exportFile, document: motionFile, contentType: .plainText, defaultFilename: motionController.activityName, onCompletion: { (result) in
+        .fileExporter(isPresented: $exportFile, document: motionFile, contentType: .plainText, defaultFilename: "motionController.activityName", onCompletion: { (result) in
             if case .success = result {
                 LogController.shared.log(level: .info, msg: "Exported data file")
             } else {

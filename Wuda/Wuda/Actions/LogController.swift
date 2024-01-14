@@ -15,7 +15,7 @@ struct LogMessage: Identifiable, Hashable {
     let msg: String
 }
 
-final class LogController: ObservableObject {
+final class LogController: ObservableObject, Action {
     
     @Published private(set) var logs: [LogMessage] = []
     public static let shared = LogController()
@@ -25,7 +25,7 @@ final class LogController: ObservableObject {
         logs.append(LogMessage(level: level, msg: msg))
     }
     
-    public func clearLogs() {
+    public func clear() {
         logs.removeAll()
     }
     

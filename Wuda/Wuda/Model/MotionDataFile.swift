@@ -23,22 +23,22 @@ struct MotionDataFile: FileDocument {
         // prepare the header
         text += "gravity_x,gravity_y,gravity_z,rotation_w,rotation_x,rotation_y,rotation_z,position_x,position_y,position_z,x_angle,y_angle,z_angle,wrist_orientation,closest_face,time\n"
         for (idx, history) in allHistory.enumerated() {
-            text += "\(history.gravity.vector.x),"
-            text += "\(history.gravity.vector.y),"
-            text += "\(history.gravity.vector.z),"
-            text += "\(history.rotation.vector.w),"
-            text += "\(history.rotation.vector.x),"
-            text += "\(history.rotation.vector.y),"
-            text += "\(history.rotation.vector.z),"
+            text += "\(history.message.gravity.vector.x),"
+            text += "\(history.message.gravity.vector.y),"
+            text += "\(history.message.gravity.vector.z),"
+            text += "\(history.message.rotation.vector.w),"
+            text += "\(history.message.rotation.vector.x),"
+            text += "\(history.message.rotation.vector.y),"
+            text += "\(history.message.rotation.vector.z),"
             text += "\(history.position.x),"
             text += "\(history.position.y),"
             text += "\(history.position.z),"
             text += "\(history.position.xAngle),"
             text += "\(history.position.yAngle),"
             text += "\(history.position.zAngle),"
-            text += "\(history.orientation),"
+            text += "\(history.message.orientation),"
             text += "\(closestFace[idx]),"
-            text += "\(history.time)\n"
+            text += "\(history.message.ts)\n"
         }
         return FileWrapper(regularFileWithContents: Data(text.utf8))
     }

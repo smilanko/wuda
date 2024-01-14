@@ -30,7 +30,7 @@ struct LogView: View {
                 }
             }
             Button {
-                logController.clearLogs()
+                logController.clear()
             } label: {
                 Text("Clear Logs")
                 Image(systemName: "trash.square.fill").foregroundColor(.red)

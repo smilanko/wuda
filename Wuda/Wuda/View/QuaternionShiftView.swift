@@ -3,25 +3,30 @@ import simd
 
 struct QuaternionShiftView: View {
     
-    @ObservedObject private var motionController = MotionController.shared
     @State private var shifts : [QuaternionShift] = []
-
     @State private var isConjugate: Bool = false
     @State private var selectedAxis: Axis = .x
     @State private var angle: Double = 0
+    @State private var activityName: String = ""
+    @State private var point: Reference = .zminus
+    
+    private let motionController = MotionController.shared
 
     
     var body: some View {
         VStack {
-            Picker("Reference", selection: $motionController.defaultPoint) {
+            Picker("Reference", selection: $point) {
                 Text(Reference.xminus.rawValue).tag(Reference.xminus)
                 Text(Reference.yminus.rawValue).tag(Reference.yminus)
                 Text(Reference.zminus.rawValue).tag(Reference.zminus)
                 Text(Reference.xplus.rawValue).tag(Reference.xplus)
                 Text(Reference.yplus.rawValue).tag(Reference.yplus)
                 Text(Reference.zplus.rawValue).tag(Reference.zplus)
-                Text(Reference.smartWatch.rawValue).tag(Reference.smartWatch)
+                Text(Reference.smartDevice.rawValue).tag(Reference.smartDevice)
+            }.onChange(of: point) { newPoint in
+                SessionState.shared.updatePoint(newPoint: newPoint)
             }
+            
             Divider()
             HStack {
                 Picker("", selection: $selectedAxis) {
@@ -71,7 +76,7 @@ struct QuaternionShiftView: View {
                 (Text("p = ") + Text("\(motionController.point?.formatted ?? "(will update)")"))
                 (Text("q = ") + Text(motionController.quaternionShift?.formatted ?? "(none)"))
                 (Text("qpq' = ") + Text(motionController.permutedResult?.formatted ?? "(dynamic)"))
-                (Text("orientation = ") + Text(String(motionController.smartwatchOrientation ?? 0)))
+                (Text("orientation = ") + Text(String(motionController.smartDeviceOrientation ?? 0)))
             }
             Divider()
             // store to memory
@@ -79,11 +84,11 @@ struct QuaternionShiftView: View {
                 Text("Copy the activity name and the final quaternion (qpq') to your device's memory.").multilineTextAlignment(.center)
             }
             HStack {
-                TextField("activity", text: $motionController.activityName)
+                TextField("activity", text: $activityName)
                 Button {
                     let pasteboard = NSPasteboard.general
                     pasteboard.clearContents()
-                    pasteboard.setString(motionController.activityName + ", q=" + (motionController.permutedResult?.formatted ?? ""), forType: .string)
+                    pasteboard.setString(SessionState.shared.defaultActivity + ", q=" + (motionController.permutedResult?.formatted ?? ""), forType: .string)
                 } label: {
                     Text("Copy")
                     Image(systemName: "paintbrush.fill")
@@ -91,15 +96,11 @@ struct QuaternionShiftView: View {
             }
         }.padding()
         .onChange(of: shifts, perform: { newShifts in
-            if newShifts.isEmpty {
-                motionController.updateShift(q: nil)
+            guard let shift = newShifts.first?.q else {
+                motionController.apply(shift: nil)
                 return
             }
-            var updatedShift = newShifts[0].q
-            for idx in 1..<newShifts.count {
-                updatedShift = updatedShift * newShifts[idx].q
-            }
-            motionController.updateShift(q: updatedShift)
+            motionController.apply(shift: newShifts.dropFirst().reduce(shift, { $0 * $1.q }))
         })
     }
 

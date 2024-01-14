@@ -6,7 +6,7 @@ struct Face: Identifiable {
     var count: Double
 }
 
-final class MapController: ObservableObject {
+final class MapController: ObservableObject, Action {
  
     @Published public var rows: [GridItem] = []
     @Published public var faces: [Face] = []
