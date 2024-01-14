@@ -5,38 +5,16 @@ import simd
 
 final class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate, Action {
 
-    @Published private(set) var positions: [Position] = []
+    @Published private(set) var history: [History] = []
     @Published private(set) var pauseDataUpdates: Bool = false
-    @Published private(set) var dataHistory: [History] = []
-    @Published private(set) var smartDevicePosition: simd_quatd?
     @Published private(set) var smartDeviceOrientation: Double?
     @Published private(set) var quaternionShift: simd_quatd?
-    @Published private(set) var permutedResult: simd_quatd?
+    public var point: simd_quatd? { SessionState.shared.defaultPoint.toSimd() }
     
-
-    private var messages: [Message] = []
+    private var smartDevicePosition: simd_quatd?
     private var peripheralManager: CBPeripheralManager!
     private var motionService: CBMutableService!
     private var motionDataCharacteristic: CBMutableCharacteristic!
-    
-    public var point: simd_quatd? {
-        switch SessionState.shared.defaultPoint {
-            case .zminus:
-                return simd_quatd(ix: 0, iy: 0, iz: -1, r: 0)
-            case .zplus:
-                return simd_quatd(ix: 0, iy: 0, iz: 1, r: 0)
-            case .yminus:
-                return simd_quatd(ix: 0, iy: -1, iz: 0, r: 0)
-            case .yplus:
-                return simd_quatd(ix: 0, iy: 1, iz: 0, r: 0)
-            case .xminus:
-                return simd_quatd(ix: -1, iy: 0, iz: 0, r: 0)
-            case .xplus:
-                return simd_quatd(ix: 1, iy: 0, iz: 0, r: 0)
-            case .smartDevice:
-                return smartDevicePosition
-        }
-    }
 
     public static let shared = MotionController()
     
@@ -45,7 +23,7 @@ final class MotionController: NSObject, ObservableObject, CBPeripheralManagerDel
         peripheralManager = CBPeripheralManager(delegate: self, queue: nil)
     }
     
-    func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
+    public func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
         switch peripheral.state {
         case .poweredOn:
             motionService = CBMutableService(type: Constants.wudaPeripheralService, primary: true)
@@ -58,15 +36,16 @@ final class MotionController: NSObject, ObservableObject, CBPeripheralManagerDel
             peripheralManager.stopAdvertising()
             LogController.shared.log(level: .info, msg: "Advertising end -> (\(peripheral.state.description). Bye wudica")
         default:
+            LogController.shared.log(level: .warning, msg: "Unknown ble state -> \(peripheral.state.description)")
             break
         }
     }
     
-    func peripheralManager(_ peripheral: CBPeripheralManager, didReceiveRead request: CBATTRequest) {
+    public func peripheralManager(_ peripheral: CBPeripheralManager, didReceiveRead request: CBATTRequest) {
         LogController.shared.log(level: .info, msg: "Wudica sent a read request")
     }
     
-    func peripheralManager(_ peripheral: CBPeripheralManager, didReceiveWrite requests: [CBATTRequest]) {
+    public func peripheralManager(_ peripheral: CBPeripheralManager, didReceiveWrite requests: [CBATTRequest]) {
         guard !pauseDataUpdates else { return }
         requests.forEach({ request in
             if request.characteristic == motionDataCharacteristic, let data = request.value {
@@ -90,38 +69,8 @@ final class MotionController: NSObject, ObservableObject, CBPeripheralManagerDel
         })
     }
     
-    private func parse(stream: [Double]) {
-        guard stream.count == 10 else {
-            LogController.shared.log(level: .fatal, msg: "Invalid Message")
-            return
-        }
-        
-        let message = Message(stream: stream)
-        messages.append(message)
-
-        if smartDevicePosition == nil {
-            smartDevicePosition = message.gravity
-            LogController.shared.log(level: .info, msg: "Wudica sent a new init")
-        }
-        
-        if let point {
-            let result = quaternionShift != nil ? message.rotation * quaternionShift! * point * quaternionShift!.conjugate * message.rotation.conjugate : message.rotation * point * message.rotation.conjugate
-            smartDeviceOrientation = message.orientation
-            let norm = (result.vector.w * result.vector.w) + (result.vector.x * result.vector.x) + (result.vector.y * result.vector.y) + (result.vector.z * result.vector.z)
-            let position = Position(x: result.vector.x, y: result.vector.y, z: result.vector.z, xAngle: getAngle(axis: result.vector.x, norm: norm), yAngle: getAngle(axis: result.vector.y, norm: norm), zAngle: getAngle(axis: result.vector.z, norm: norm))
-            positions.append(position)
-            dataHistory.append(History(message: message, position: position))
-        }
-    }
-    
-    private func getAngle(axis: Double, norm: Double) -> Double {
-        return Measurement(value: acos(axis / norm), unit: UnitAngle.radians).converted(to: .degrees).value
-    }
-    
     public func clear() {
-        messages.removeAll()
-        dataHistory.removeAll()
-        positions.removeAll()
+        history.removeAll()
     }
     
     public func toggle() {
@@ -135,6 +84,31 @@ final class MotionController: NSObject, ObservableObject, CBPeripheralManagerDel
             return
         }
         LogController.shared.log(level: .warning, msg: "shift=" + quaternionShift.formatted)
+    }
+    
+    private func parse(stream: [Double]) {
+        guard stream.count == 10 else {
+            LogController.shared.log(level: .fatal, msg: "Invalid Message")
+            return
+        }
+        
+        let message = Message(stream: stream)
+        if smartDevicePosition == nil {
+            smartDevicePosition = message.gravity
+            LogController.shared.log(level: .info, msg: "Wudica sent a new init")
+        }
+        
+        if let point {
+            let result = quaternionShift != nil ? quaternionShift! * message.rotation * point * message.rotation.conjugate * quaternionShift!.conjugate : message.rotation * point * message.rotation.conjugate
+            smartDeviceOrientation = message.orientation
+            let norm = (result.vector.w * result.vector.w) + (result.vector.x * result.vector.x) + (result.vector.y * result.vector.y) + (result.vector.z * result.vector.z)
+            let position = Position(x: result.vector.x, y: result.vector.y, z: result.vector.z, xAngle: getAngle(axis: result.vector.x, norm: norm), yAngle: getAngle(axis: result.vector.y, norm: norm), zAngle: getAngle(axis: result.vector.z, norm: norm))
+            history.append(History(message: message, position: position))
+        }
+    }
+    
+    private func getAngle(axis: Double, norm: Double) -> Double {
+        return Measurement(value: acos(axis / norm), unit: UnitAngle.radians).converted(to: .degrees).value
     }
 
 }

@@ -16,13 +16,13 @@ struct QuaternionShiftView: View {
     var body: some View {
         VStack {
             Picker("Reference", selection: $point) {
-                Text(Reference.xminus.rawValue).tag(Reference.xminus)
-                Text(Reference.yminus.rawValue).tag(Reference.yminus)
-                Text(Reference.zminus.rawValue).tag(Reference.zminus)
-                Text(Reference.xplus.rawValue).tag(Reference.xplus)
-                Text(Reference.yplus.rawValue).tag(Reference.yplus)
-                Text(Reference.zplus.rawValue).tag(Reference.zplus)
-                Text(Reference.smartDevice.rawValue).tag(Reference.smartDevice)
+                Text(Reference.xminus.description).tag(Reference.xminus)
+                Text(Reference.yminus.description).tag(Reference.yminus)
+                Text(Reference.zminus.description).tag(Reference.zminus)
+                Text(Reference.xplus.description).tag(Reference.xplus)
+                Text(Reference.yplus.description).tag(Reference.yplus)
+                Text(Reference.zplus.description).tag(Reference.zplus)
+                Text(Reference.smartDevice.description).tag(Reference.smartDevice)
             }.onChange(of: point) { newPoint in
                 SessionState.shared.updatePoint(newPoint: newPoint)
             }
@@ -75,7 +75,7 @@ struct QuaternionShiftView: View {
             VStack {
                 (Text("p = ") + Text("\(motionController.point?.formatted ?? "(will update)")"))
                 (Text("q = ") + Text(motionController.quaternionShift?.formatted ?? "(none)"))
-                (Text("qpq' = ") + Text(motionController.permutedResult?.formatted ?? "(dynamic)"))
+//                (Text("qpq' = ") + Text(motionController.permutedResult?.formatted ?? "(dynamic)"))
                 (Text("orientation = ") + Text(String(motionController.smartDeviceOrientation ?? 0)))
             }
             Divider()
@@ -88,7 +88,7 @@ struct QuaternionShiftView: View {
                 Button {
                     let pasteboard = NSPasteboard.general
                     pasteboard.clearContents()
-                    pasteboard.setString(SessionState.shared.defaultActivity + ", q=" + (motionController.permutedResult?.formatted ?? ""), forType: .string)
+//                    pasteboard.setString(SessionState.shared.defaultActivity + ", q=" + (motionController.permutedResult?.formatted ?? ""), forType: .string)
                 } label: {
                     Text("Copy")
                     Image(systemName: "paintbrush.fill")

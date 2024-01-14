@@ -61,8 +61,8 @@ struct AngleView: View {
             Text("270\u{00B0}").frame(maxHeight: .infinity, alignment: .top)
         }
         .padding()
-        .onReceive(motionController.$positions, perform: { newPoints in
-            if let lastPoint = newPoints.last {
+        .onReceive(motionController.$history, perform: { newEntry in
+            if let lastPoint = newEntry.last?.position {
                 switch axisSelection {
                 case .xAxis:
                     angle = lastPoint.xAngle

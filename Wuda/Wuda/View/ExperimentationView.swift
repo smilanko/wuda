@@ -59,7 +59,7 @@ struct ExperimentationView: View {
                         Image(systemName: motionController.pauseDataUpdates ? "play.fill" : "pause.fill"  ).foregroundColor(motionController.pauseDataUpdates ? .green : .red)
                     }
                     Button {
-                        let currentHistory = motionController.dataHistory
+                        let currentHistory = motionController.history
                         var closestFaces : [Int] = []
                         currentHistory.forEach({
                             closestFaces.append(sphericalScene.getClosestFaceToPoint(pt: SCNVector3Make($0.position.x, $0.position.y, $0.position.z)))
@@ -81,10 +81,10 @@ struct ExperimentationView: View {
             // the map will change by itself, since it binds to pointColor
             sphericalScene.updatePointColors(newColor: NSColor(newColor))
         })
-        .onReceive(motionController.$positions, perform: { newPoints in
+        .onReceive(motionController.$history, perform: { newEntry in
             // when we receive a new position form the motion controller,
             // we have to update the sphere ( 3d ), the angle ( 2d ), the map ( 1d )
-            if let lastPoint = newPoints.last {
+            if let lastPoint = newEntry.last?.position {
                 let latestMotionPoint = SCNVector3Make(lastPoint.x, lastPoint.y, lastPoint.z)
                 let closestFace = sphericalScene.getClosestFaceToPoint(pt: latestMotionPoint)
                 sphericalScene.addPoint(latestPoint: latestMotionPoint, pointColor: pointColor)
