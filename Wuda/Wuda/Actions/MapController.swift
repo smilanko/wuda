@@ -1,12 +1,12 @@
 import Foundation
 import SwiftUI
 
-public struct Face: Identifiable {
-    public var id: Int
+struct Face: Identifiable {
+    var id: Int
     var count: Double
 }
 
-public final class MapController: ObservableObject {
+final class MapController: ObservableObject {
  
     @Published public var rows: [GridItem] = []
     @Published public var faces: [Face] = []
