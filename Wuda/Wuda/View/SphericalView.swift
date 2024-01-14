@@ -1,10 +1,3 @@
-//
-//  SphericalView.swift
-//  Wuda
-//
-//  Created by Slobodan Milanko
-//
-
 import Foundation
 import SceneKit
 import SwiftUI

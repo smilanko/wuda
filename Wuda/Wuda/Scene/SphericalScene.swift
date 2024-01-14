@@ -115,7 +115,7 @@ class SphericalScene : SCNScene {
         var closestKey : Int = 0
         var closestDist : Float = Float.infinity
         faceToCenterMapping.forEach({ key, val in
-            let dist = pt.distance(to: val)
+            let dist = pt.distance(vector: val)
             if dist <= closestDist {
                 closestDist = dist
                 closestKey = key

@@ -1,10 +1,3 @@
-//
-//  QuaternionShiftView.swift
-//  Wuda
-//
-//  Created by Slobodan Milanko
-//
-
 import SwiftUI
 import simd
 
@@ -13,11 +6,10 @@ struct QuaternionShiftView: View {
     @ObservedObject private var motionController = MotionController.shared
     @State private var shifts : [QuaternionShift] = []
 
-    @State private var isConjugate : Bool = false
-    @State private var x : Double = 0
-    @State private var y : Double = 0
-    @State private var z : Double = 0
-    
+    @State private var isConjugate: Bool = false
+    @State private var selectedAxis: Axis = .x
+    @State private var angle: Double = 0
+
     
     var body: some View {
         VStack {
@@ -30,29 +22,39 @@ struct QuaternionShiftView: View {
                 Text(Reference.zplus.rawValue).tag(Reference.zplus)
                 Text(Reference.smartWatch.rawValue).tag(Reference.smartWatch)
             }
-            
             Divider()
-            Text("You can permute your signal using quaternions. The interface has buttons to adjust the x, y, and z axes in degrees, and you can only edit one axis at a time. Clicking the Add button allows you to add additional quaternions to the stack.").lineLimit(nil).multilineTextAlignment(.center).padding()
             HStack {
-                Stepper(value: $x, in: 0...360) { Text("x:\(Int(x))\u{00B0},") }.disabled( y > 0 || z > 0)
-                Stepper(value: $y, in: 0...360) { Text("y:\(Int(y))\u{00B0},") }.disabled( x > 0 || z > 0)
-                Stepper(value: $z, in: 0...360) { Text("z:\(Int(z))\u{00B0}") }.disabled( x > 0 || y > 0)
+                Picker("", selection: $selectedAxis) {
+                    ForEach(Axis.allCases, id: \.self) { axis in
+                        Text(axis.rawValue)
+                    }
+                }
+                .pickerStyle(.segmented)
+                
+                Stepper(value: $angle, in: 0...360) {
+                    Text("\(String(format: "%.0f", angle))\u{00B0}")
+                }
+
                 Toggle(isOn: $isConjugate) {
                     Text("Conjugate")
-                }.toggleStyle(CheckboxToggleStyle())
+                }.toggleStyle(.checkbox)
+                
                     
                 Button {
-                    let q = simd_quatd.build(x: x, y: y, z: z)
+                    let q = simd_quatd.buildQuaternionForRotation(angle: angle, axis: selectedAxis)
                     shifts.append(QuaternionShift(q: isConjugate ? q.conjugate : q))
-                    x = 0; y = 0; z = 0; isConjugate = false
+                    angle = 0
                 } label: {
                     Text("Add")
                     Image(systemName: "plus.square.fill.on.square.fill")
                 }
+                .disabled(angle < 1)
+                .help("You can apply additional rotations to your signal using quaternions. Select an axis and the number of degrees to rotate by. If you want a counter-clockwise rotation, remember to check the Conjugate box. Click Add to add the quaternion to the stack. You can add as many as you'd like.")
             }
+            
             List(shifts, id:\.id) { shift in
                 HStack {
-                    Text(shift.q.prettyPrint).frame(maxWidth: .infinity, alignment: .leading)
+                    Text(shift.q.formatted).frame(maxWidth: .infinity, alignment: .leading)
                     Button {
                         var newArray : [QuaternionShift] = []
                         shifts.filter({ $0.id != shift.id }).forEach({ newArray.append($0) })
@@ -66,9 +68,9 @@ struct QuaternionShiftView: View {
             Divider()
             // initial orientation
             VStack {
-                (Text("p = ") + Text("\(motionController.getPoint()?.prettyPrint ?? "(will update)")"))
-                (Text("q = ") + Text(motionController.quaternionShift?.prettyPrint ?? "(none)"))
-                (Text("qpq' = ") + Text(motionController.permutedResult?.prettyPrint ?? "(dynamic)"))
+                (Text("p = ") + Text("\(motionController.point?.formatted ?? "(will update)")"))
+                (Text("q = ") + Text(motionController.quaternionShift?.formatted ?? "(none)"))
+                (Text("qpq' = ") + Text(motionController.permutedResult?.formatted ?? "(dynamic)"))
                 (Text("orientation = ") + Text(String(motionController.smartwatchOrientation ?? 0)))
             }
             Divider()
@@ -81,7 +83,7 @@ struct QuaternionShiftView: View {
                 Button {
                     let pasteboard = NSPasteboard.general
                     pasteboard.clearContents()
-                    pasteboard.setString(motionController.activityName + ", q=" + (motionController.permutedResult?.prettyPrint ?? ""), forType: .string)
+                    pasteboard.setString(motionController.activityName + ", q=" + (motionController.permutedResult?.formatted ?? ""), forType: .string)
                 } label: {
                     Text("Copy")
                     Image(systemName: "paintbrush.fill")

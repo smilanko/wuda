@@ -1,14 +1,6 @@
-//
-//  SquareView.swift
-//  Wuda
-//
-//  Created by Slobodan Milanko
-//
-
 import Foundation
 import SwiftUI
 
-// Our square
 struct Square: View {
     var color: Color
     

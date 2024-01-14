@@ -1,26 +1,22 @@
-//
-//  MapController.swift
-//  Wuda
-//
-//  Created by Slobodan Milanko
-//
-
 import Foundation
 import SwiftUI
-import simd
 
+public struct Face: Identifiable {
+    public var id: Int
+    var count: Double
+}
 
-class MapController: ObservableObject {
+public final class MapController: ObservableObject {
  
     @Published public var rows: [GridItem] = []
-    @Published public var faces: [FaceOnMap] = []
+    @Published public var faces: [Face] = []
     
     public static let shared = MapController()
     
     private init() {
         let totalFaces = Constants.defaultGeodasicPattern.rawValue
         for idx in 0..<totalFaces {
-            faces.append(FaceOnMap(id: idx, count: 0))
+            faces.append(Face(id: idx, count: 0))
         }
         // build the map using a grid system
         for _ in 0..<(totalFaces / 20) {

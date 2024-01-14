@@ -1,10 +1,3 @@
-//
-//  Date+Formatted.swift
-//  Wuda
-//
-//  Created by Slobodan Milanko
-//
-
 import Foundation
 
 extension Date {

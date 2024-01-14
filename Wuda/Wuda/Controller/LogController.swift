@@ -1,14 +1,7 @@
-//
-//  LogController.swift
-//  Wuda
-//
-//  Created by Slobodan Milanko
-//
-
 import Foundation
-import SwiftUI
+import Combine
 
-enum LogLevel : String {
+enum LogLevel: String {
     case info = "[INFO]" // good to know
     case warning = "[WARNING]" // good to think about
     case error = "[ERROR]" // something bad
@@ -16,7 +9,7 @@ enum LogLevel : String {
     case severe = "[SEVERE]" // something really really bad
 }
 
-struct LogMessage : Identifiable, Hashable {
+struct LogMessage: Identifiable, Hashable {
     let id = Date()
     let level: LogLevel
     let msg: String
@@ -25,9 +18,7 @@ struct LogMessage : Identifiable, Hashable {
 final class LogController: ObservableObject {
     
     @Published private(set) var logs: [LogMessage] = []
-    
-    public static var shared = LogController()
-    
+    public static let shared = LogController()
     private init() {}
     
     public func log(level: LogLevel, msg: String) {

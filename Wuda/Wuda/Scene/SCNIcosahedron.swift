@@ -1,15 +1,8 @@
-//
-//  SCNGeodesicIcosahedron.swift
-//  Wuda
-//
-//  Created by Slobodan Milanko
-//
-
 import Foundation
 import SceneKit
 import SwiftUI
 
-enum IcosahedronPattern : Int {
+enum IcosahedronPattern: Int {
     case geodasicPattern1 = 60
     case geodasicPattern2 = 80
     case geodasicPattern4 = 180
@@ -18,17 +11,17 @@ enum IcosahedronPattern : Int {
     case geodasicPattern16 = 780
 }
 
-class SCNIcosahedron : SCNNode, Icosahedron {
+class SCNIcosahedron: SCNNode, Icosahedron {
     
-    private var facesCount : Int = 0
+    private var facesCount: Int = 0
     
     override init() {
         super.init()
         
         LogController.shared.log(level: .info, msg: "Preparing the icosahedron")
         let pattern = getPatternFromType()
-        let vertices = pattern.generateVertices()
-        let faces = pattern.generateFaces()
+        let vertices = pattern.verteces
+        let faces = pattern.faces
 
         var faceGeometries = [SCNGeometry]()
         var centers = [SCNVector3]()

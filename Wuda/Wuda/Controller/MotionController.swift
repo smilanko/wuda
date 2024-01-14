@@ -1,10 +1,3 @@
-//
-//  MotionController.swift
-//  Wuda
-//
-//  Created by Slobodan Milanko
-//
-
 import Foundation
 import CoreBluetooth
 import SwiftUI
@@ -31,7 +24,6 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
     @Published private(set) var quaternionShift : simd_quatd?
     @Published private(set) var permutedResult : simd_quatd?
 
-    
     @Published var activityName : String = ""
     @Published var defaultPoint : Reference = .zminus
     
@@ -39,6 +31,24 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
     private let wudaPeripheralMotionCharacteristicUuid = CBUUID(string: "12345678-1234-1234-1234-123456789013")
     private var smartWatchGravityEntries : [simd_quatd] = []
     private var smartWatchRotationEntries : [simd_quatd] = []
+    public var point: simd_quatd? {
+        switch defaultPoint {
+            case .zminus:
+                return simd_quatd(ix: 0, iy: 0, iz: -1, r: 0)
+            case .zplus:
+                return simd_quatd(ix: 0, iy: 0, iz: 1, r: 0)
+            case .yminus:
+                return simd_quatd(ix: 0, iy: -1, iz: 0, r: 0)
+            case .yplus:
+                return simd_quatd(ix: 0, iy: 1, iz: 0, r: 0)
+            case .xminus:
+                return simd_quatd(ix: -1, iy: 0, iz: 0, r: 0)
+            case .xplus:
+                return simd_quatd(ix: 1, iy: 0, iz: 0, r: 0)
+            case .smartWatch:
+                return initialSmartWatchPosition
+        }
+    }
 
     private var peripheralManager: CBPeripheralManager!
     private var motionService: CBMutableService!
@@ -117,8 +127,8 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
                 LogController.shared.log(level: .severe, msg: "Mixing data! Initial smartwatch position changed, yet memory holds old data!")
             }
         }
-        if let point = getPoint() {
-            var result : simd_quatd?
+        if let point {
+            var result: simd_quatd?
             if let quaternionShift = quaternionShift {
                 permutedResult = quaternionShift * point * quaternionShift.conjugate
                 result = rotation * permutedResult! * rotation.conjugate
@@ -138,25 +148,6 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
         return Measurement(value: acos(axis / norm), unit: UnitAngle.radians).converted(to: .degrees).value
     }
     
-    public func getPoint() -> simd_quatd? {
-        switch defaultPoint {
-            case .zminus:
-                return simd_quatd(ix: 0, iy: 0, iz: -1, r: 0)
-            case .zplus:
-                return simd_quatd(ix: 0, iy: 0, iz: 1, r: 0)
-            case .yminus:
-                return simd_quatd(ix: 0, iy: -1, iz: 0, r: 0)
-            case .yplus:
-                return simd_quatd(ix: 0, iy: 1, iz: 0, r: 0)
-            case .xminus:
-                return simd_quatd(ix: -1, iy: 0, iz: 0, r: 0)
-            case .xplus:
-                return simd_quatd(ix: 1, iy: 0, iz: 0, r: 0)
-            case .smartWatch:
-                return initialSmartWatchPosition
-        }
-    }
-    
     public func clearMemory() {
         dataHistory.removeAll()
         positions.removeAll()
@@ -169,7 +160,7 @@ class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate 
     public func updateShift(q: simd_quatd?) {
         if let q = q {
             quaternionShift = q
-            LogController.shared.log(level: .warning, msg: "shift=" + q.prettyPrint)
+            LogController.shared.log(level: .warning, msg: "shift=" + q.formatted)
             return
         }
         
