@@ -96,10 +96,10 @@
 		CF44F96A29745AD000EF96E2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				CFBF239C2975E77A00006A9A /* Patterns */,
 				CF73BC41296D1FA900CC5012 /* Constants.swift */,
 				CFEF25FF297A0BF800A3D8CF /* History.swift */,
 				CFEF2601297A3F0400A3D8CF /* MotionDataFile.swift */,
+				CFBF239C2975E77A00006A9A /* Patterns */,
 				CF44F975297479A700EF96E2 /* Position.swift */,
 				CFEF2605297B8E5100A3D8CF /* QuaternionShift.swift */,
 				CF26984E2B5448720037D7F9 /* Reference.swift */,
@@ -185,9 +185,9 @@
 		CFD5A5BC296BA87B00708441 /* Wuda */ = {
 			isa = PBXGroup;
 			children = (
+				CF44F97E2974C86F00EF96E2 /* Actions */,
 				CF44F97729747F2500EF96E2 /* Extensions */,
 				CF44F96A29745AD000EF96E2 /* Model */,
-				CF44F97E2974C86F00EF96E2 /* Actions */,
 				CF44F97029746AC000EF96E2 /* Scene */,
 				CFEF260F297C566C00A3D8CF /* Shapes */,
 				CF44F96D2974632B00EF96E2 /* View */,
