@@ -12,9 +12,7 @@
 		CF2698512B544D410037D7F9 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2698502B544D410037D7F9 /* Action.swift */; };
 		CF2698542B5451E60037D7F9 /* SessionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2698532B5451E60037D7F9 /* SessionState.swift */; };
 		CF2698562B5463B70037D7F9 /* CBManagerState+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2698552B5463B70037D7F9 /* CBManagerState+String.swift */; };
-		CF2698582B5467DB0037D7F9 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2698572B5467DB0037D7F9 /* Message.swift */; };
 		CF44F97229746B9000EF96E2 /* LogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF44F97129746B9000EF96E2 /* LogView.swift */; };
-		CF44F976297479A700EF96E2 /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF44F975297479A700EF96E2 /* Position.swift */; };
 		CF44F97929747F3300EF96E2 /* Date+Formatted.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF44F97829747F3300EF96E2 /* Date+Formatted.swift */; };
 		CF44F97B2974C16600EF96E2 /* SphericalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF44F97A2974C16600EF96E2 /* SphericalView.swift */; };
 		CF44F97D2974C79200EF96E2 /* Color+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF44F97C2974C79200EF96E2 /* Color+Random.swift */; };
@@ -53,9 +51,7 @@
 		CF2698502B544D410037D7F9 /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		CF2698532B5451E60037D7F9 /* SessionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionState.swift; sourceTree = "<group>"; };
 		CF2698552B5463B70037D7F9 /* CBManagerState+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CBManagerState+String.swift"; sourceTree = "<group>"; };
-		CF2698572B5467DB0037D7F9 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		CF44F97129746B9000EF96E2 /* LogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogView.swift; sourceTree = "<group>"; };
-		CF44F975297479A700EF96E2 /* Position.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
 		CF44F97829747F3300EF96E2 /* Date+Formatted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Formatted.swift"; sourceTree = "<group>"; };
 		CF44F97A2974C16600EF96E2 /* SphericalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphericalView.swift; sourceTree = "<group>"; };
 		CF44F97C2974C79200EF96E2 /* Color+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Random.swift"; sourceTree = "<group>"; };
@@ -114,10 +110,8 @@
 			children = (
 				CF73BC41296D1FA900CC5012 /* Constants.swift */,
 				CFEF25FF297A0BF800A3D8CF /* History.swift */,
-				CF2698572B5467DB0037D7F9 /* Message.swift */,
 				CFEF2601297A3F0400A3D8CF /* MotionDataFile.swift */,
 				CFBF239C2975E77A00006A9A /* Patterns */,
-				CF44F975297479A700EF96E2 /* Position.swift */,
 				CFEF2605297B8E5100A3D8CF /* QuaternionShift.swift */,
 				CF26984E2B5448720037D7F9 /* Reference.swift */,
 			);
@@ -323,10 +317,8 @@
 				CFCC137629778ECF00144668 /* Icosahedron.swift in Sources */,
 				CF44F9802974D0E200EF96E2 /* LogController.swift in Sources */,
 				CFBF23A62975F4F900006A9A /* GeodesicIcosahedron8.swift in Sources */,
-				CF44F976297479A700EF96E2 /* Position.swift in Sources */,
 				CFCC13742977865800144668 /* SquareView.swift in Sources */,
 				CFEF2604297B8C3B00A3D8CF /* QuaternionShiftView.swift in Sources */,
-				CF2698582B5467DB0037D7F9 /* Message.swift in Sources */,
 				CF2698562B5463B70037D7F9 /* CBManagerState+String.swift in Sources */,
 				CFBF23A42975F40500006A9A /* GeodesicIcosahedron2.swift in Sources */,
 				CFEF2608297C4D8A00A3D8CF /* AngleView.swift in Sources */,
