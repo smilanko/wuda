@@ -10,7 +10,6 @@ public final class MapController: ObservableObject {
  
     @Published public var rows: [GridItem] = []
     @Published public var faces: [Face] = []
-    
     public static let shared = MapController()
     
     private init() {
@@ -24,18 +23,12 @@ public final class MapController: ObservableObject {
         }
     }
     
-    public func clearMap() {
-        faces.forEach({ entry in
-            faces[entry.id].count = 0
-        })
+    public func clear() {
+        faces.forEach({ faces[$0.id].count = 0 })
     }
     
-    public func incrementFaceCount(faceId: Int) {
+    public func increment(faceId: Int) {
         faces[faceId].count += 1
-    }
-    
-    public func addRow() {
-        rows.append(GridItem(.fixed(Constants.squareSize), spacing: 0, alignment: .center))
     }
     
 }

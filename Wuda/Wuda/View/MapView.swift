@@ -24,7 +24,7 @@ struct MapView: View {
                 }
                 Button {
                     // clear the face map
-                    mapController.clearMap()
+                    mapController.clear()
                 } label: {
                     Text("Clear Map")
                     Image(systemName: "trash.square.fill").foregroundColor(.red)

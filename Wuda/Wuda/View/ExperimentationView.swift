@@ -41,7 +41,7 @@ struct ExperimentationView: View {
                         // clear the sphere
                         sphericalScene.clearPoints()
                         // clear the face map
-                        mapController.clearMap()
+                        mapController.clear()
                         // clear the memory
                         motionController.clearMemory()
                         if motionController.pauseDataUpdates != currentUpdateState {
@@ -89,7 +89,7 @@ struct ExperimentationView: View {
                 let closestFace = sphericalScene.getClosestFaceToPoint(pt: latestMotionPoint)
                 sphericalScene.addPoint(latestPoint: latestMotionPoint, pointColor: pointColor)
                 sphericalScene.addAngle(latestPoint: latestMotionPoint, angles: [lastPoint.xAngle, lastPoint.yAngle, lastPoint.zAngle])
-                mapController.incrementFaceCount(faceId: closestFace)
+                mapController.increment(faceId: closestFace)
             }
         })
         .fileExporter(isPresented: $exportFile, document: motionFile, contentType: .plainText, defaultFilename: motionController.activityName, onCompletion: { (result) in

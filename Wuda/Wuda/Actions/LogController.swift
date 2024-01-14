@@ -2,11 +2,11 @@ import Foundation
 import Combine
 
 enum LogLevel: String {
-    case info = "[INFO]" // good to know
-    case warning = "[WARNING]" // good to think about
-    case error = "[ERROR]" // something bad
-    case fatal = "[FATAL]" // something really bad
-    case severe = "[SEVERE]" // something really really bad
+    case info = "[INFO]"
+    case warning = "[WARNING]"
+    case error = "[ERROR]"
+    case fatal = "[FATAL]"
+    case severe = "[SEVERE]"
 }
 
 struct LogMessage: Identifiable, Hashable {

@@ -139,14 +139,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		CF44F97E2974C86F00EF96E2 /* Controller */ = {
+		CF44F97E2974C86F00EF96E2 /* Actions */ = {
 			isa = PBXGroup;
 			children = (
 				CF44F97F2974D0E200EF96E2 /* LogController.swift */,
 				CFEF2616297E1F6F00A3D8CF /* MapController.swift */,
 				CFD5A5CC296BA8CF00708441 /* MotionController.swift */,
 			);
-			path = Controller;
+			path = Actions;
 			sourceTree = "<group>";
 		};
 		CFBF239C2975E77A00006A9A /* Patterns */ = {
@@ -184,7 +184,7 @@
 			children = (
 				CF44F97729747F2500EF96E2 /* Extensions */,
 				CF44F96A29745AD000EF96E2 /* Model */,
-				CF44F97E2974C86F00EF96E2 /* Controller */,
+				CF44F97E2974C86F00EF96E2 /* Actions */,
 				CF44F97029746AC000EF96E2 /* Scene */,
 				CFEF260F297C566C00A3D8CF /* Shapes */,
 				CF44F96D2974632B00EF96E2 /* View */,
