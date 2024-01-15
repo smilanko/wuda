@@ -1,10 +1,3 @@
-//
-//  SceneView.swift
-//  Wuda
-//
-//  Created by Slobodan Milanko
-//
-
 import Foundation
 import SwiftUI
 import SceneKit
@@ -39,7 +32,7 @@ struct ExperimentationView: View {
                             motionController.toggle()
                         }
                         // clear the sphere
-                        sphericalScene.clearPoints()
+                        sphericalScene.clear()
                         // clear the face map
                         mapController.clear()
                         // clear the memory

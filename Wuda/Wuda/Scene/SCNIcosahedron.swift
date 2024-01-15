@@ -9,17 +9,36 @@ enum IcosahedronPattern: Int {
     case geodasicPattern6 = 260
     case geodasicPattern8 = 380
     case geodasicPattern16 = 780
+    
+    func pattern() -> Pattern {
+        switch self {
+        case .geodasicPattern1:
+            return GeodesicIcosahedron1()
+        case .geodasicPattern2:
+            return GeodesicIcosahedron2()
+        case .geodasicPattern4:
+            return GeodesicIcosahedron4()
+        case .geodasicPattern6:
+            return GeodesicIcosahedron6()
+        case .geodasicPattern8:
+            return GeodesicIcosahedron8()
+        case .geodasicPattern16:
+            return GeodesicIcosahedron16()
+        }
+    }
+}
+
+protocol Icosahedron {
+    var facesCount: Int { get }
 }
 
 class SCNIcosahedron: SCNNode, Icosahedron {
     
-    private var facesCount: Int = 0
+    let pattern = Constants.defaultGeodasicPattern.pattern()
+    var facesCount: Int = 0
     
     override init() {
         super.init()
-        
-        LogController.shared.log(level: .info, msg: "Preparing the icosahedron")
-        let pattern = getPatternFromType()
         let vertices = pattern.verteces
         let faces = pattern.faces
 
@@ -55,34 +74,16 @@ class SCNIcosahedron: SCNNode, Icosahedron {
             self.addChildNode(mapNode)
             self.addChildNode(centerPointNode)
         }
+        
+        LogController.shared.log(level: .info, msg: "Prepared the icosahedron with \(facesCount) faces")
     }
     
     required init?(coder: NSCoder) {
         fatalError("[ERROR] init(coder:) has not been implemented")
     }
     
-    private func getPatternFromType() -> Pattern {
-        switch Constants.defaultGeodasicPattern {
-        case .geodasicPattern1:
-            return GeodesicIcosahedron1()
-        case .geodasicPattern2:
-            return GeodesicIcosahedron2()
-        case .geodasicPattern4:
-            return GeodesicIcosahedron4()
-        case .geodasicPattern6:
-            return GeodesicIcosahedron6()
-        case .geodasicPattern8:
-            return GeodesicIcosahedron8()
-        case .geodasicPattern16:
-            return GeodesicIcosahedron16()
-        }
-    }
-    
     private func interpolateColor(color1: NSColor, color2: NSColor, proportion: Double) -> NSColor {
-        let red = color1.redComponent + (color2.redComponent - color1.redComponent) * CGFloat(proportion)
-        let green = color1.greenComponent + (color2.greenComponent - color1.greenComponent) * CGFloat(proportion)
-        let blue = color1.blueComponent + (color2.blueComponent - color1.blueComponent) * CGFloat(proportion)
-        return NSColor(red: red, green: green, blue: blue, alpha: 1)
+        NSColor(red: color1.redComponent + (color2.redComponent - color1.redComponent) * CGFloat(proportion), green: color1.greenComponent + (color2.greenComponent - color1.greenComponent) * CGFloat(proportion), blue: color1.blueComponent + (color2.blueComponent - color1.blueComponent) * CGFloat(proportion), alpha: 1)
     }
     
     private func createText(_ label: String) -> SCNNode {
@@ -97,10 +98,6 @@ class SCNIcosahedron: SCNNode, Icosahedron {
     private func normalize(vector: SCNVector3) -> SCNVector3 {
         let length = sqrt(pow(vector.x, 2) + pow(vector.y, 2) + pow(vector.z, 2))
         return SCNVector3Make(vector.x / length, vector.y / length, vector.z / length)
-    }
-    
-    func getFacesCount() -> Int {
-        return facesCount
     }
 
 }

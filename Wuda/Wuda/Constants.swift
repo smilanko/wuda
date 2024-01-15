@@ -6,6 +6,7 @@ struct Constants {
     
     private init() {}
     
+    public static let maxPointsOnPlot: Int = 5000
     public static let squareSize: CGFloat = 15.0
     public static let defaultGeodasicPattern: IcosahedronPattern = .geodasicPattern4
     

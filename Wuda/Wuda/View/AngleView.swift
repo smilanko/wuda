@@ -1,10 +1,3 @@
-//
-//  XaxisAngleView.swift
-//  Wuda
-//
-//  Created by Slobodan Milanko
-//
-
 import SwiftUI
 
 enum AxisSelection {
@@ -16,14 +9,23 @@ enum AxisSelection {
 struct AngleView: View {
     
     @Environment(\.colorScheme) var colorScheme
-    @ObservedObject private var motionController = MotionController.shared
     @State public var centerColor = Color(Constants.gradientStartColor)
-    @State public var angle : Double = 0.0
+    @State public var angle: Double = 0.0
     
-    public var axisSelection : AxisSelection
+    public var axisSelection: AxisSelection
+    
+    private var outerColor: Color {
+        switch axisSelection {
+        case .xAxis:
+            return .red
+        case .yAxis:
+            return .green
+        case .zAxis:
+            return .blue
+        }
+    }
     
     var body: some View {
-
         VStack {
             Text("90\u{00B0}").frame(maxHeight: .infinity, alignment: .bottom)
             HStack {
@@ -35,7 +37,7 @@ struct AngleView: View {
                         Circle().strokeBorder(.black,lineWidth: 1)
                         // gradient circle
                         Circle()
-                            .fill(RadialGradient(gradient: Gradient(colors: [centerColor, getOuterColor()]), center: .center, startRadius: 50, endRadius: 100))
+                            .fill(RadialGradient(gradient: Gradient(colors: [centerColor, outerColor]), center: .center, startRadius: 50, endRadius: 100))
                             .padding(1)
                         // inner circle
                         Circle().strokeBorder(.black.opacity(0.3),lineWidth: 1).padding(40)
@@ -52,7 +54,9 @@ struct AngleView: View {
                     // our line, a background circle to hold it, and value
                     ZStack {
                         DirectionalLine(degrees: $angle).stroke(.black, lineWidth: 2)
-                        Circle().fill( colorScheme == .dark ? .black : .white).frame(minWidth: 50, maxWidth: 100, minHeight: 50, maxHeight: 100).padding(90)
+                        Circle().fill(colorScheme == .dark ? .black : .white)
+                            .frame(minWidth: 50, maxWidth: 100, minHeight: 50, maxHeight: 100)
+                            .padding(90)
                         Text("\(Int(angle))\u{00B0}")
                     }
                 }
@@ -61,7 +65,7 @@ struct AngleView: View {
             Text("270\u{00B0}").frame(maxHeight: .infinity, alignment: .top)
         }
         .padding()
-        .onReceive(motionController.$history, perform: { newEntry in
+        .onReceive(MotionController.shared.$history, perform: { newEntry in
             if let lastPoint = newEntry.last?.position {
                 switch axisSelection {
                 case .xAxis:
@@ -73,17 +77,6 @@ struct AngleView: View {
                 }
             }
         })
-    }
-    
-    private func getOuterColor() -> Color {
-        switch axisSelection {
-        case .xAxis:
-            return .red
-        case .yAxis:
-            return .green
-        case .zAxis:
-            return .blue
-        }
     }
     
 }

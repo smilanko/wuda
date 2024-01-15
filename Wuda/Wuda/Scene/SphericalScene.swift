@@ -1,26 +1,20 @@
-//
-//  SphericalScene.swift
-//  Wuda
-//
-//  Created by Slobodan Milanko
-//
-
 import Foundation
 import SceneKit
 import SceneKit.SCNSceneRenderer
 import SwiftUI
 import simd
 
-class SphericalScene : SCNScene {
+class SphericalScene: SCNScene {
     
-    private var totalFaces : Int = 0
-    private var faceToCenterMapping : [Int: SCNVector3] = [:]
+    private let geodesicIcosahedron = SCNIcosahedron()
     private let radius = 1.0
+    private var faceToCenterMapping: [Int: SCNVector3] = [:]
+    private var addingPointToSphere: Bool = false
+    private var addingAngleToSphere: Bool = false
     
     override init() {
         super.init()
-        
-        LogController.shared.log(level: .info, msg: "Preparing the spherical scene")
+
         let sphere = SCNSphere(radius: radius)
         sphere.firstMaterial?.diffuse.contents = Constants.atmosphereColor.withAlphaComponent(0.2)
         let sphereNode = SCNNode(geometry: sphere)
@@ -28,10 +22,8 @@ class SphericalScene : SCNScene {
         sphereNode.name = Constants.rootNodeConstant
         
         let giRadius = radius - 0.06
-        let geodesicIcosahedron = SCNIcosahedron()
         geodesicIcosahedron.transform = SCNMatrix4MakeScale(giRadius, giRadius, giRadius)
         geodesicIcosahedron.name = Constants.rootNodeForGeodasicMap
-        totalFaces = geodesicIcosahedron.getFacesCount()
         
         let geoChildren = geodesicIcosahedron.childNodes
         for mapEntry in stride(from: 0, to:geoChildren.count, by: 3) {
@@ -64,36 +56,51 @@ class SphericalScene : SCNScene {
         self.rootNode.addChildNode(geodesicIcosahedron)
         self.rootNode.addChildNode(anglesSphereNode)
         self.rootNode.addChildNode(cameraNode)
+        
+        LogController.shared.log(level: .info, msg: "Prepared the spherical scene")
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     public func addPoint(latestPoint: SCNVector3, pointColor: Color) {
-        if let sphere = self.rootNode.childNodes.first {
-            if sphere.name != Constants.rootNodeConstant {
-                LogController.shared.log(level: .fatal, msg: "Points must draw on the root!")
-            }
+        // throttle
+        guard !addingPointToSphere, let sphere = self.rootNode.childNodes.first, sphere.name == Constants.rootNodeConstant else { return }
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            addingPointToSphere = true
             let pointGeometry = SCNSphere(radius: 0.01)
             pointGeometry.firstMaterial?.diffuse.contents = NSColor(pointColor)
             let pointNode = SCNNode(geometry: pointGeometry)
             pointNode.position = latestPoint
             sphere.addChildNode(pointNode)
+            // prevent exaustion by removing 20% of max Items
+            if sphere.childNodes.count >= Constants.maxPointsOnPlot {
+                sphere.childNodes.prefix(Int(Double(Constants.maxPointsOnPlot) * 0.2)).forEach({ $0.removeFromParentNode() })
+            }
+            addingPointToSphere = false
         }
+        
     }
     
     public func addAngle(latestPoint: SCNVector3, angles: [Double]) {
-        if let anglesSphere = self.rootNode.childNodes.first(where: { $0.name == Constants.rootNodeForAngles }) {
-            // update our telescope
+        // throttle
+        guard !addingAngleToSphere, let anglesSphere = self.rootNode.childNodes.first(where: { $0.name == Constants.rootNodeForAngles }) else { return }
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
             if let telescope = anglesSphere.childNodes.first(where: { $0.name == Constants.rootNodeForTelescope }) {
                 telescope.look(at: latestPoint, up: SCNVector3(0, 1, 0), localFront: SCNVector3(0, 1, 0))
             }
-            // redraw our axis
             anglesSphere.childNodes.filter({ $0.name != Constants.rootNodeForTelescope }).forEach({ $0.removeFromParentNode() })
             anglesSphere.addChildNode(createAxisAngle(angles[0], pos: SCNVector3(0.05,0,0)))
             anglesSphere.addChildNode(createAxisAngle(angles[1], pos: SCNVector3(0,0.05,0)))
             anglesSphere.addChildNode(createAxisAngle(angles[2], pos: SCNVector3(-0.05,0,-0.05)))
+            addingAngleToSphere = false
         }
     }
     
-    public func clearPoints() {
+    public func clear() {
         LogController.shared.log(level: .info, msg: "Clearing sphere")
         if let sphere = self.rootNode.childNodes.first {
             sphere.enumerateChildNodes { (node, stop) in
@@ -112,8 +119,8 @@ class SphericalScene : SCNScene {
     }
     
     public func getClosestFaceToPoint(pt: SCNVector3) -> Int {
-        var closestKey : Int = 0
-        var closestDist : Float = Float.infinity
+        var closestKey: Int = 0
+        var closestDist: Float = Float.infinity
         faceToCenterMapping.forEach({ key, val in
             let dist = pt.distance(vector: val)
             if dist <= closestDist {
@@ -124,10 +131,6 @@ class SphericalScene : SCNScene {
         return closestKey
     }
     
-    public func getTotalFaces() -> Int {
-        return totalFaces
-    }
-    
     private func createAxisAngle(_ degrees: Double, pos: SCNVector3) -> SCNNode {
         let txt = SCNText(string: String(format: "%.2f", degrees), extrusionDepth: 1)
         txt.font = .systemFont(ofSize: 3)
@@ -136,10 +139,6 @@ class SphericalScene : SCNScene {
         node.scale = SCNVector3(0.005, 0.005, 0.001) // adjust the scale
         node.position = pos
         return node
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 
 }
