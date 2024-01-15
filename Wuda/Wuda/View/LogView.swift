@@ -11,7 +11,7 @@ import SceneKit
 
 struct LogView: View {
     
-    private let logController = LogController.shared
+    @ObservedObject private var logController = LogController.shared
     
     var body: some View {
         VStack {

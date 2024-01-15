@@ -87,8 +87,8 @@ final class MotionController: NSObject, ObservableObject, CBPeripheralManagerDel
     }
     
     private func parse(stream: [Double]) {
-        guard stream.count == 10 else {
-            LogController.shared.log(level: .fatal, msg: "Invalid Message")
+        guard stream.count >= 10 else {
+            LogController.shared.log(level: .fatal, msg: "Invalid Message -> \(stream.count) items")
             return
         }
         

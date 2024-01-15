@@ -8,9 +8,9 @@ struct ExperimentationView: View {
     @ObservedObject private var motionController = MotionController.shared
     
     @State private var pointColor = Color(.sRGB, red: 122/255, green: 39/255, blue: 161/255)
-    @State private var sphericalScene : SphericalScene = SphericalScene()
+    @State private var sphericalScene: SphericalScene = SphericalScene()
     @State private var exportFile = false
-    @State private var motionFile : MotionDataFile?
+    @State private var motionFile: MotionDataFile?
     
     var body: some View {
         VStack {
