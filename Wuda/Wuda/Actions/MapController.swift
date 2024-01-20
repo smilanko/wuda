@@ -8,8 +8,8 @@ struct Face: Identifiable {
 
 final class MapController: ObservableObject, Action {
  
-    @Published public var rows: [GridItem] = []
-    @Published public var faces: [Face] = []
+    @Published private(set) var rows: [GridItem] = []
+    @Published private(set) var faces: [Face] = []
     public static let shared = MapController()
     
     private init() {

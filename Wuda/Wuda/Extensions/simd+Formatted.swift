@@ -26,3 +26,11 @@ extension simd_quatd {
     }
     
 }
+
+extension simd_double4 {
+    
+    var norm: Double {
+        (w * w) + (x * x) + (y * y) + (z * z)
+    }
+    
+}

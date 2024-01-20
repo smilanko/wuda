@@ -5,11 +5,12 @@ import simd
 
 final class MotionController: NSObject, ObservableObject, CBPeripheralManagerDelegate, Action {
 
+    public var point: simd_quatd? { SessionState.shared.defaultPoint.toSimd() }
+    
     @Published private(set) var history: [History] = []
     @Published private(set) var pauseDataUpdates: Bool = false
     @Published private(set) var smartDeviceOrientation: Double?
     @Published private(set) var quaternionShift: simd_quatd?
-    public var point: simd_quatd? { SessionState.shared.defaultPoint.toSimd() }
     
     private var smartDevicePosition: simd_quatd?
     private var peripheralManager: CBPeripheralManager!
@@ -47,8 +48,8 @@ final class MotionController: NSObject, ObservableObject, CBPeripheralManagerDel
     
     public func peripheralManager(_ peripheral: CBPeripheralManager, didReceiveWrite requests: [CBATTRequest]) {
         guard !pauseDataUpdates else { return }
-        requests.forEach({ request in
-            if request.characteristic == motionDataCharacteristic, let data = request.value {
+        requests.filter({ $0.characteristic == motionDataCharacteristic }).forEach({ request in
+            if let data = request.value {
                 var incomingStream = Array<Double>(repeating: 0, count: data.count/MemoryLayout<UInt32>.stride)
                 _ = incomingStream.withUnsafeMutableBytes { data.copyBytes(to: $0) }
                 guard incomingStream[0] != 0 else {
@@ -101,7 +102,7 @@ final class MotionController: NSObject, ObservableObject, CBPeripheralManagerDel
         if let point {
             let result = quaternionShift != nil ? quaternionShift! * message.rotation * point * message.rotation.conjugate * quaternionShift!.conjugate : message.rotation * point * message.rotation.conjugate
             smartDeviceOrientation = message.orientation
-            let norm = (result.vector.w * result.vector.w) + (result.vector.x * result.vector.x) + (result.vector.y * result.vector.y) + (result.vector.z * result.vector.z)
+            let norm = result.vector.norm
             let position = Position(x: result.vector.x, y: result.vector.y, z: result.vector.z, xAngle: getAngle(axis: result.vector.x, norm: norm), yAngle: getAngle(axis: result.vector.y, norm: norm), zAngle: getAngle(axis: result.vector.z, norm: norm))
             history.append(History(message: message, position: position))
         }
